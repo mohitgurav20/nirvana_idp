@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIRVAN | Next-Gen AI Healthcare OS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+
+    <style>
+        /* Modern CSS Variable Framework Architecture */
+        :root {
+            --bg-base: #030611;
+            --bg-surface: rgba(10, 15, 36, 0.7);
+            --bg-surface-solid: #0a0f24;
+            --border-glow: rgba(0, 242, 254, 0.15);
+            --border-line: rgba(255, 255, 255, 0.05);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --neon-cyan: #00f2fe;
+            --neon-purple: #9d4edd;
+            --neon-rose: #ff2a74;
+            --neon-amber: #f59e0b;
+            --glass-blur: blur(16px);
+            --card-tilt-transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-base: #f1f5f9;
+            --bg-surface: rgba(255, 255, 255, 0.8);
+            --bg-surface-solid: #ffffff;
+            --border-glow: rgba(2, 132, 199, 0.15);
+            --border-line: rgba(15, 23, 42, 0.08);
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --neon-cyan: #0284c7;
+            --neon-purple: #7c3aed;
+            --neon-rose: #dc2626;
+            --neon-amber: #d97706;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Exo 2', sans-serif;
+            transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), border 0.5s ease, color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Neural Particle System Visualization background */
+        .neural-background-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* Cinematic App Initialized Loading Screen Overlay */
+        #global-loader-screen {
+            position: fixed;
+            inset: 0;
+            background: #03050f;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .loader-ring-system {
+            width: 120px;
+            height: 120px;
+            border: 4px solid transparent;
+            border-top-color: var(--neon-cyan);
+            border-bottom-color: var(--neon-purple);
+            border-radius: 50%;
+            position: relative;
+            animation: spinningSystem 2s linear infinite;
+        }
+
+        .loader-ring-system::after {
+            content: '';
+            position: absolute;
+            inset: 12px;
+            border: 3px dashed var(--neon-rose);
+            border-radius: 50%;
+            animation: spinningSystemReverse 3s linear infinite;
+        }
+
+        /* Core Structure Layout Wrapper */
+        #app-dashboard-frame {
+            max-width: 1700px;
+            margin: 0 auto;
+            padding: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: entranceAnimation 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.4s;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-line);
+            margin-bottom: 30px;
+        }
+
+        .brand-title-box h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .brand-title-box h1 span {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        .control-actions-hub {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Glassmorphism Generic Premium Button Controls styling */
+        .premium-sys-btn {
+            background: var(--bg-surface);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-line);
+            color: var(--text-primary);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateZ(0);
+            transition: var(--card-tilt-transition);
+        }
+
+        .premium-sys-btn:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px var(--border-glow);
+            transform: translateY(-2px);
+        }
+
+        .premium-sys-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Multichannel Interactive Metric Grid Display Layout mapping */
+        .metrics-multichannel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .interactive-metric-card {
+            background: var(--bg-surface);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-line);
+            border-radius: 20px;
+            padding: 24px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: var(--card-tilt-transition);
+        }
+
+        .interactive-metric-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 5px;
+            background: var(--neon-cyan);
+        }
+
+        .interactive-metric-card.card-purple::before { background: var(--neon-purple); }
+        .interactive-metric-card.card-rose::before { background: var(--neon-rose); }
+        .interactive-metric-card.card-amber::before { background: var(--neon-amber); }
+
+        .interactive-metric-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--border-glow);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2), 0 0 20px var(--border-glow);
+        }
+
+        .card-header-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .live-value-display {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 14px 0 6px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .live-value-display span {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Biometric Real-Time Pulse Animation Effect */
+        .biometric-pulse-line-wrapper {
+            width: 100%;
+            height: 30px;
+            margin-top: 10px;
+            opacity: 0.6;
+            position: relative;
+        }
+
+        .sparkline-placeholder {
+            width: 100%; height: 100%;
+        }
+
+        /* Grid Configuration System Architecture Details Layout styling */
+        .dashboard-body-architecture {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .analytical-panel-box {
+            background: var(--bg-surface);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-line);
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .panel-headline-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .panel-headline-row h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .primary-viewport-container {
+            height: 400px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Right Hand Metrics Display Layout */
+        .right-hand-column-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Sleep Score Premium Gauge SVG Ring layout structure */
+        .circular-gauge-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        .radial-score-svg {
+            width: 180px; height: 180px;
+            transform: rotate(-90deg);
+        }
+
+        .radial-track {
+            fill: none;
+            stroke: rgba(255,255,255,0.03);
+            stroke-width: 14;
+        }
+        [data-theme="light"] .radial-track {
+            stroke: rgba(0,0,0,0.04);
+        }
+
+        .radial-progress-bar {
+            fill: none;
+            stroke: url(#cyanPurpleGradient);
+            stroke-width: 14;
+            stroke-linecap: round;
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* AI Notification Alert System and Real-Time Diagnostic Feed Layout styling */
+        .diagnostic-alerts-feed-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .alert-node-banner {
+            background: rgba(255, 42, 116, 0.06);
+            border: 1px solid rgba(255, 42, 116, 0.15);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 0.82rem;
+            color: var(--neon-rose);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: nodeInsertion 0.4s ease-out;
+        }
+
+        .insight-node-banner {
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.12);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 0.82rem;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        /* Floating Modern Interactive Panel Interface (Modal Component Base Styles) */
+        .sliding-overlay-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 5, 15, 0.6);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .sliding-overlay-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .premium-modal-window {
+            background: var(--bg-surface-solid);
+            border: 1px solid var(--border-line);
+            border-radius: 28px;
+            width: 90%;
+            max-width: 650px;
+            padding: 36px;
+            transform: scale(0.9) translateY(20px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .sliding-overlay-modal.active .premium-modal-window {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-headline-block {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        .modal-headline-block h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--neon-cyan);
+        }
+
+        .modal-close-trigger {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal-close-trigger:hover { color: var(--neon-rose); }
+
+        .metric-details-grid-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .content-subnode-item {
+            background: rgba(255,255,255,0.02);
+            [data-theme="light"] & { background: rgba(0,0,0,0.02); }
+            border: 1px solid var(--border-line);
+            padding: 16px;
+            border-radius: 14px;
+        }
+
+        .content-subnode-item h4 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--neon-purple);
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Custom Floating AI Assistant Sidebar layout */
+        .floating-chat-trigger-icon {
+            position: fixed;
+            bottom: 35px;
+            right: 35px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            width: 65px; height: 65px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.6rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.3);
+            z-index: 9999;
+            border: none;
+        }
+
+        .floating-chat-trigger-icon:hover {
+            transform: scale(1.08) rotate(5deg);
+        }
+
+        .assistant-chat-panel-frame {
+            position: fixed;
+            bottom: 115px;
+            right: 35px;
+            width: 400px;
+            height: 550px;
+            background: var(--bg-surface-solid);
+            border: 1px solid var(--border-line);
+            border-radius: 24px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(30px);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 9998;
+        }
+
+        .assistant-chat-panel-frame.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .chat-header-bar {
+            background: rgba(255,255,255,0.02);
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-line);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages-scroll-area {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .msg-bubble-node {
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            max-width: 85%;
+            line-height: 1.45;
+        }
+
+        .msg-bubble-node.bot {
+            background: rgba(255,255,255,0.03);
+            border-left: 3px solid var(--neon-cyan);
+            align-self: flex-start;
+            color: var(--text-primary);
+        }
+
+        .msg-bubble-node.user {
+            background: var(--neon-purple);
+            color: #ffffff;
+            align-self: flex-end;
+        }
+
+        /* Typing & Loading Animation Component Placeholder styles */
+        .typing-indicator-dot-box {
+            display: flex;
+            gap: 5px;
+            padding: 6px 10px;
+            align-self: flex-start;
+        }
+
+        .typing-dot {
+            width: 7px; height: 7px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: pulseDots 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        .chat-input-delivery-row {
+            padding: 16px;
+            border-top: 1px solid var(--border-line);
+            display: flex;
+            gap: 10px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .chat-input-delivery-row input {
+            flex-grow: 1;
+            background: rgba(255,255,255,0.03);
+            [data-theme="light"] & { background: rgba(0,0,0,0.03); }
+            border: 1px solid var(--border-line);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .chat-input-delivery-row input:focus {
+            border-color: var(--neon-cyan);
+        }
+
+        /* Modern Form Framework Architecture styling */
+        .modern-form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .modern-form-row label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .modern-form-row input, .modern-form-row select {
+            background: rgba(255,255,255,0.02);
+            [data-theme="light"] & { background: rgba(0,0,0,0.03); }
+            border: 1px solid var(--border-line);
+            color: var(--text-primary);
+            padding: 12px;
+            border-radius: 10px;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .modern-form-row input:focus { border-color: var(--neon-cyan); }
+
+        /* Animation Matrices Keyframe Loops Configuration */
+        @keyframes spinningSystem { to { transform: rotate(360deg); } }
+        @keyframes spinningSystemReverse { to { transform: rotate(-360deg); } }
+        @keyframes entranceAnimation { to { opacity: 1; transform: translateY(0); } }
+        @keyframes nodeInsertion { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulseDots { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <canvas id="neuralParticlesCanvas" class="neural-background-canvas"></canvas>
+
+    <div id="global-loader-screen">
+        <div class="loader-ring-system"></div>
+        <div style="font-family:'Orbitron'; font-size:0.8rem; letter-spacing:4px; color:var(--neon-cyan); margin-top:30px;">NIRVAN OS CORE LOADED</div>
+    </div>
+
+    <div id="app-dashboard-frame">
+        <header>
+            <div class="brand-title-box">
+                <h1>NIRVAN <span>OS</span></h1>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">Premium Next-Generation AI Healthcare Platform</p>
+            </div>
+            <div class="control-actions-hub">
+                <button class="premium-sys-btn" onclick="openSystemModalWindow('settings-config-modal')">⚙️ CONFIG PROFILE</button>
+                <button class="premium-sys-btn" onclick="togglePlatformColorPaletteTheme()">🌓 SWITCH THEME</button>
+                <div style="font-family:'Orbitron'; font-size:0.8rem; border:1px solid var(--border-line); padding:10px 18px; border-radius:12px; background:var(--bg-surface);" id="live-runtime-timestamp">SYNCING TIME...</div>
+            </div>
+        </header>
+
+        <section class="metrics-multichannel-grid">
+            
+            <div class="interactive-metric-card" onclick="triggerMetricInsightsInspection('heart_rate')">
+                <div class="card-header-label">Cardio Rhythm</div>
+                <div class="live-value-display"><div id="metric-txt-hr">--</div> <span>BPM</span></div>
+                <div class="biometric-pulse-line-wrapper">
+                    <canvas id="sparklineHR" class="sparkline-placeholder"></canvas>
+                </div>
+            </div>
+
+            <div class="interactive-metric-card card-purple" onclick="triggerMetricInsightsInspection('movement')">
+                <div class="card-header-label">Actigraphy Kinetics</div>
+                <div class="live-value-display"><div id="metric-txt-mv">--</div> <span>Hz</span></div>
+                <div class="biometric-pulse-line-wrapper">
+                    <canvas id="sparklineMV" class="sparkline-placeholder"></canvas>
+                </div>
+            </div>
+
+            <div class="interactive-metric-card card-rose" onclick="triggerMetricInsightsInspection('light')">
+                <div class="card-header-label">Environmental Lux</div>
+                <div class="live-value-display"><div id="metric-txt-lt">--</div> <span>Lux</span></div>
+                <div class="biometric-pulse-line-wrapper">
+                    <canvas id="sparklineLT" class="sparkline-placeholder"></canvas>
+                </div>
+            </div>
+
+            <div class="interactive-metric-card card-amber" onclick="triggerMetricInsightsInspection('stress')">
+                <div class="card-header-label">ML Stress Predictor</div>
+                <div class="live-value-display"><div id="metric-txt-st">--</div> <span>Index</span></div>
+                <div class="biometric-pulse-line-wrapper">
+                    <canvas id="sparklineST" class="sparkline-placeholder"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+        <div class="dashboard-body-architecture">
+            
+            <div class="analytical-panel-box">
+                <div class="panel-headline-row">
+                    <h3>📊 Live Biosphere Waveform Arrays</h3>
+                    <button class="premium-sys-btn" style="padding: 6px 12px; font-size: 0.75rem;" onclick="resetAnalyticalViewportScale()">RESET CHART ZOOM</button>
+                </div>
+                <div class="primary-viewport-container">
+                    <canvas id="nirvanMainChartCanvas"></canvas>
+                </div>
+            </div>
+
+            <div class="right-hand-column-stack">
+                
+                <div class="analytical-panel-box">
+                    <div class="panel-headline-row">
+                        <h3>🌙 Rest Index Evaluation</h3>
+                    </div>
+                    <div class="circular-gauge-container">
+                        <div style="position:relative; width:180px; height:180px;">
+                            <svg class="radial-score-svg" viewBox="0 0 160 160">
+                                <circle class="radial-track" cx="80" cy="80" r="70"></circle>
+                                <circle class="radial-progress-bar" id="radialGaugeIndicatorBar" cx="80" cy="80" r="70"></circle>
+                            </svg>
+                            <div style="position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                                <span style="font-family:'Orbitron'; font-size:2.2rem; font-weight:900;" id="radial-gauge-score-txt">--%</span>
+                                <span style="font-size:0.65rem; text-transform:uppercase; color:var(--text-secondary); letter-spacing:1px; font-weight:700;" id="user-profile-name-badge">PATIENT CORE</span>
+                            </div>
+                        </div>
+                        <div style="margin-top:20px; font-family:'Orbitron'; font-size:0.9rem; font-weight:700; color:var(--neon-cyan); text-transform:uppercase; letter-spacing:1px;" id="metric-txt-stage">STAGE: SYNCHRONIZING</div>
+                    </div>
+                </div>
+
+                <div class="analytical-panel-box">
+                    <div class="panel-headline-row">
+                        <h3>🧠 Smart Diagnostic Alert Matrix</h3>
+                    </div>
+                    <div class="diagnostic-alerts-feed-wrapper" id="ui-alerts-injector-node">
+                        <div class="insight-node-banner">Awaiting network confirmation layers. Calibrating structural telemetry algorithms...</div>
+                    </div>
+                    <div class="diagnostic-alerts-feed-wrapper" id="ui-insights-injector-node" style="margin-top:10px; border-top:1px dashed var(--border-line); padding-top:10px;"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <button class="floating-chat-trigger-icon" onclick="toggleNirvanNeuralAssistantPanel()">🤖</button>
+    <div class="assistant-chat-panel-frame" id="nirvanChatbotDrawerBox">
+        <div class="chat-header-bar">
+            <span>NIRVAN INTELLIGENCE LINK</span>
+            <span style="cursor:pointer;" onclick="toggleNirvanNeuralAssistantPanel()">✕</span>
+        </div>
+        <div class="chat-messages-scroll-area" id="chatLogsScrollerBox">
+            <div class="msg-bubble-node bot">Platform initialization complete. I can analyze biological patterns, environmental factors, or the status of your machine learning models. How can I assist you today?</div>
+        </div>
+        <div class="chat-input-delivery-row">
+            <input type="text" id="chatTextInputField" placeholder="Ask about sleep stages, lux levels, etc..." onkeydown="if(event.key==='Enter') transmitUserChatPayload()">
+            <button class="premium-sys-btn" style="padding: 10px 16px;" onclick="transmitUserChatPayload()">RUN</button>
+        </div>
+    </div>
+
+    <div class="sliding-overlay-modal" id="metric-inspection-overlay-panel">
+        <div class="premium-modal-window">
+            <div class="modal-headline-block">
+                <h2 id="modal-metric-title">METRIC METADATA MATRIX</h2>
+                <span class="modal-close-trigger" onclick="closeSystemModalWindow('metric-inspection-overlay-panel')">✕</span>
+            </div>
+            <div class="metric-details-grid-content" id="modal-metric-body-grid">
+                </div>
+        </div>
+    </div>
+
+    <div class="sliding-overlay-modal" id="settings-config-modal">
+        <div class="premium-modal-window">
+            <div class="modal-headline-block">
+                <h2>⚙️ CORE BIOSPHERE SYSTEM PREFERENCES</h2>
+                <span class="modal-close-trigger" onclick="closeSystemModalWindow('settings-config-modal')">✕</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <div class="modern-form-row">
+                    <label>User Identifier Profile Name</label>
+                    <input type="text" id="cfg-user-name" value="Alex Mercer">
+                </div>
+                <div class="modern-form-row">
+                    <label>Age Profile Value (Years)</label>
+                    <input type="number" id="cfg-user-age" value="23">
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <div class="modern-form-row">
+                    <label>Target Resting Goal (Hours)</label>
+                    <select id="cfg-sleep-goal">
+                        <option value="6">6 Hours</option>
+                        <option value="7">7 Hours</option>
+                        <option value="8" selected>8 Hours</option>
+                        <option value="9">9 Hours</option>
+                    </select>
+                </div>
+                <div class="modern-form-row">
+                    <label>Telemetry Polling Frequency</label>
+                    <select id="cfg-refresh-interval">
+                        <option value="2000" selected>2 Seconds (Real-Time)</option>
+                        <option value="5000">5 Seconds (Balanced)</option>
+                        <option value="10000">10 Seconds (Power Save)</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:14px; margin-top:20px; border-top:1px solid var(--border-line); padding-top:20px;">
+                <button class="premium-sys-btn" style="background:transparent; border:none;" onclick="closeSystemModalWindow('settings-config-modal')">CANCEL</button>
+                <button class="premium-sys-btn" style="background:var(--neon-cyan); color:#000; font-weight:700;" onclick="commitPlatformConfigurationSettings()">SAVE COMPONENT CONFIG</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* State Variables Storage Hub */
+        let primaryLineChartInstance = null;
+        let pollingIntervalTimerRef = null;
+        const sparklineInstancesDictionary = {};
+
+        const metricExplainsDatabase = {
+            heart_rate: {
+                title: "Cardio Rhythm Telemetry (BPM)",
+                meaning: "Measures cardiac cycles per minute to reflect autonomic nervous system balance.",
+                logic: "Calculated directly using multi-wavelength photoplethysmography (PPG) infrared sensor matrices.",
+                formula: "BPM = (Total Pulse Peaks Captured / Tracking Frame Duration in Seconds) * 60",
+                ranges: "Optimal Rest Baseline: 55 - 75 BPM. Tachycardia Zone: Above 100 BPM.",
+                impacts: "Directly affected by somatic motion transitions, psychological stressors, and ambient temperature deviations.",
+                medical: "Key for mapping heart rate variability (HRV) and confirming transition into restorative stage N3 sleep.",
+                advice: "Avoid caffeine consumption 6 hours before your rest target to keep nocturnal cardiovascular patterns stable."
+            },
+            movement: {
+                title: "Actigraphy Kinetics Monitoring",
+                meaning: "Tracks physical displacement during rest cycles to detect micro-arousals and body position shifts.",
+                logic: "Monitors positional deviations using micro-electromechanical (MEMS) tri-axial accelerometer systems.",
+                formula: "Hz Frequency = sqrt(Delta_X^2 + Delta_Y^2 + Delta_Z^2) integrated over time.",
+                ranges: "Quiescent Baseline: 0 - 2 Hz. Elevated Activity Flux: Above 6 Hz.",
+                impacts: "Driven by physical discomfort, restless legs syndrome vectors, sleep transitions, or external disruptions.",
+                medical: "Essential for marking borders between wakefulness, REM phases, and deep non-REM structures.",
+                advice: "Ensure your sleep environment uses adaptive memory foam materials to help lower body alignment adjustments."
+            },
+            light: {
+                title: "Ambient Environmental Luminescence",
+                meaning: "Monitors light pollution levels affecting your sleep environment.",
+                logic: "Captured using a high-sensitivity silicon photodiode sensor array with custom lux tracking ranges.",
+                formula: "Lux Output = Captured Photonic Volumetric Current * Calibration Variable Factor",
+                ranges: "Optimal Environment: Below 10 Lux. Sleep Disturbance Threshold: Above 100 Lux.",
+                impacts: "Affected by electronic screens, unshielded windows, smart device indicators, or morning transitions.",
+                medical: "Directly regulates circadian pacing by managing melatonin suppression pathways in the brain.",
+                advice: "Install black-out window panels to keep light interference at 0 Lux throughout your rest cycle."
+            },
+            stress: {
+                title: "Predictive ML Stress Analytics",
+                meaning: "Real-time mathematical estimation of physiological stress markers across all telemetry layers.",
+                logic: "Calculated continuously by applying a multivariate linear regression model across our live biometric parameters.",
+                formula: "$Stress Score = (HR * 0.26) + (Kinetics * 4.6) + (Lux * 0.015)$",
+                ranges: "Optimal Adaptation: 0 - 35 Index Points. Systemic Overload: Above 75 Index Points.",
+                impacts: "Calculated automatically based on sudden spikes in heart rate occurring during high kinetic activity windows.",
+                medical: "Evaluates autonomic strain to predict overall recovery efficiency and prevent sleep fragmentation.",
+                advice: "Try 5 minutes of guided box breathing if your index consistently runs high during your pre-rest cycles."
+            }
+        };
+
+        /* Background Particle System Canvas Animation Loops Configuration */
+        function initializeNeuralBackgroundGenerator() {
+            const canvas = document.getElementById('neuralParticlesCanvas');
+            const ctx = canvas.getContext('2d');
+            let array = [];
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.4;
+                    this.vy = (Math.random() - 0.5) * 0.4;
+                    this.r = Math.random() * 2 + 1;
+                }
+                render() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                    ctx.fillStyle = document.documentElement.getAttribute('data-theme') === 'light' ? 'rgba(2,132,199,0.15)' : 'rgba(0,242,254,0.2)';
+                    ctx.fill();
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if(this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if(this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+            }
+
+            for(let i=0; i<45; i++) array.push(new Particle());
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                array.forEach(p => p.render());
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        /* Chart.js Dynamic Initializations Logic Block */
+        function buildHighTierCoreVisualizerChart() {
+            const ctx = document.getElementById('nirvanMainChartCanvas').getContext('2d');
+            
+            // Premium Gradient Fills Creation System Matrix
+            const cyanGrad = ctx.createLinearGradient(0, 0, 0, 350);
+            cyanGrad.addColorStop(0, 'rgba(0, 242, 254, 0.25)');
+            cyanGrad.addColorStop(1, 'rgba(0, 242, 254, 0.0)');
+
+            const purpleGrad = ctx.createLinearGradient(0, 0, 0, 350);
+            purpleGrad.addColorStop(0, 'rgba(157, 78, 221, 0.25)');
+            purpleGrad.addColorStop(1, 'rgba(157, 78, 221, 0.0)');
+
+            primaryLineChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Cardio Rhythm (BPM)',
+                            data: [],
+                            borderColor: '#00f2fe',
+                            borderWidth: 3,
+                            fill: true,
+                            backgroundColor: cyanGrad,
+                            tension: 0.4,
+                            pointRadius: 2,
+                            pointHoverRadius: 7,
+                            pointHoverBackgroundColor: '#00f2fe',
+                            yAxisID: 'y-axis-cardio'
+                        },
+                        {
+                            label: 'Actigraphy Movement (Hz)',
+                            data: [],
+                            borderColor: '#9d4edd',
+                            borderWidth: 3,
+                            fill: true,
+                            backgroundColor: purpleGrad,
+                            tension: 0.4,
+                            pointRadius: 2,
+                            pointHoverRadius: 7,
+                            pointHoverBackgroundColor: '#9d4edd',
+                            yAxisID: 'y-axis-motion'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animations: {
+                        tension: { duration: 600, easing: 'linear' }
+                    },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { color: 'rgba(148, 163, 184, 0.8)', font: { family: 'Rajdhani', size: 13, weight: 600 } }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(10, 15, 36, 0.95)',
+                            titleFont: { family: 'Orbitron', size: 12 },
+                            bodyFont: { family: 'Exo 2', size: 12 },
+                            borderColor: '#00f2fe',
+                            borderWidth: 1,
+                            padding: 14,
+                            cornerRadius: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed.y;
+                                    const datasetName = context.dataset.label;
+                                    let summary = "";
+                                    
+                                    if(datasetName.includes("Cardio")) {
+                                        const status = value > 90 ? "Elevated Strain Pattern" : "Normal Resting Rhythm";
+                                        summary = `\nVal: ${value} BPM\nStatus: ${status}\nInsight: Tracks cellular recovery stability.`;
+                                    } else {
+                                        const status = value > 5 ? "Somatic Disruption" : "Stable Deep Atrophy";
+                                        summary = `\nVal: ${value} Hz\nStatus: ${status}\nInsight: Tracks physical body position adjustments.`;
+                                    }
+                                    return summary;
+                                }
+                            }
+                        },
+                        zoom: {
+                            pan: { enabled: true, mode: 'x' },
+                            zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#64748b', font: { family: 'Orbitron', size: 10 } }
+                        },
+                        'y-axis-cardio': {
+                            type: 'linear',
+                            position: 'left',
+                            min: 40, max: 140,
+                            grid: { color: 'rgba(255,255,255,0.03)' },
+                            ticks: { color: '#00f2fe' }
+                        },
+                        'y-axis-motion': {
+                            type: 'linear',
+                            position: 'right',
+                            min: 0, max: 12,
+                            grid: { display: false },
+                            ticks: { color: '#9d4edd' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function buildMiniatureSparklineElementNode(elementId, colorHex) {
+            const ctx = document.getElementById(elementId).getContext('2d');
+            return new Chart(ctx, {
+                type: 'line',
+                data: { labels: Array(10).fill(''), datasets: [{ data: [], borderColor: colorHex, borderWidth: 2, pointRadius: 0, fill: false, tension: 0.4 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { enabled: false } }, scales: { x: { display: false }, y: { display: false } } }
+            });
+        }
+
+        function resetAnalyticalViewportScale() {
+            if (primaryLineChartInstance) primaryLineChartInstance.resetZoom();
+        }
+
+        /* Metric Detail Modals Construction Logic Engine */
+        function triggerMetricInsightsInspection(metricId) {
+            const targetData = metricExplainsDatabase[metricId];
+            if (!targetData) return;
+
+            document.getElementById('modal-metric-title').innerText = targetData.title;
+            
+            const gridHTML = `
+                <div class="content-subnode-item">
+                    <h4>Definition</h4>
+                    <p>${targetData.meaning}</p>
+                </div>
+                <div class="content-subnode-item">
+                    <h4>Calculation Strategy</h4>
+                    <p>${targetData.logic}</p>
+                </div>
+                <div class="content-subnode-item">
+                    <h4>Algorithmic Expression</h4>
+                    <p style="font-family:'Orbitron', monospace; font-size:0.75rem; color:var(--neon-cyan);">${targetData.formula}</p>
+                </div>
+                <div class="content-subnode-item">
+                    <h4>Physiological Index Thresholds</h4>
+                    <p>${targetData.ranges}</p>
+                </div>
+                <div class="content-subnode-item">
+                    <h4>External Variables Affected</h4>
+                    <p>${targetData.impacts}</p>
+                </div>
+                <div class="content-subnode-item">
+                    <h4>Clinical Importance</h4>
+                    <p>${targetData.medical}</p>
+                </div>
+                <div class="content-subnode-item" style="grid-column: span 2;">
+                    <h4>AI Healthcare Guidance Recommendation</h4>
+                    <p style="color:var(--neon-amber); font-weight:600;">✨ ${targetData.advice}</p>
+                </div>
+            `;
+            
+            document.getElementById('modal-metric-body-grid').innerHTML = gridHTML;
+            openSystemModalWindow('metric-inspection-overlay-panel');
+        }
+
+        function openSystemModalWindow(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeSystemModalWindow(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        /* Modern Settings Operations Managers System */
+        function commitPlatformConfigurationSettings() {
+            const userName = document.getElementById('cfg-user-name').value;
+            const age = document.getElementById('cfg-user-age').value;
+            const sleepGoal = document.getElementById('cfg-sleep-goal').value;
+            const pollingSpeed = document.getElementById('cfg-refresh-interval').value;
+
+            localStorage.setItem('nirvan_name', userName);
+            localStorage.setItem('nirvan_age', age);
+            localStorage.setItem('nirvan_goal', sleepGoal);
+            localStorage.setItem('nirvan_speed', pollingSpeed);
+
+            document.getElementById('user-profile-name-badge').innerText = userName.toUpperCase();
+            
+            closeSystemModalWindow('settings-config-modal');
+            reinitializeDataPollingSchedule();
+        }
+
+        function hydrationProfileSettingsFromStorage() {
+            if(localStorage.getItem('nirvan_name')) {
+                document.getElementById('cfg-user-name').value = localStorage.getItem('nirvan_name');
+                document.getElementById('cfg-user-age').value = localStorage.getItem('nirvan_age');
+                document.getElementById('cfg-sleep-goal').value = localStorage.getItem('nirvan_goal');
+                document.getElementById('cfg-refresh-interval').value = localStorage.getItem('nirvan_speed');
+                document.getElementById('user-profile-name-badge').innerText = localStorage.getItem('nirvan_name').toUpperCase();
+            }
+        }
+
+        /* Color Management System Configurations */
+        function togglePlatformColorPaletteTheme() {
+            const activeTheme = document.documentElement.getAttribute('data-theme');
+            const targetTheme = activeTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            localStorage.setItem('nirvan_theme', targetTheme);
+        }
+
+        function hydrateThemePreferences() {
+            const cachedTheme = localStorage.getItem('nirvan_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', cachedTheme);
+        }
+
+        /* AI Assistant Engine Interface Panels Implementation */
+        function toggleNirvanNeuralAssistantPanel() {
+            document.getElementById('nirvanChatbotDrawerBox').classList.toggle('open');
+        }
+
+        async function transmitUserChatPayload() {
+            const inputField = document.getElementById('chatTextInputField');
+            const logsArea = document.getElementById('chatLogsScrollerBox');
+            const text = inputField.value.trim();
+            if(!text) return;
+
+            // Render User Bubble
+            logsArea.innerHTML += `<div class="msg-bubble-node user">${text}</div>`;
+            inputField.value = "";
+            logsArea.scrollTop = logsArea.scrollHeight;
+
+            // Render Animated Loader Dots
+            const loaderId = 'loader_' + Date.now();
+            logsArea.innerHTML += `
+                <div class="typing-indicator-dot-box" id="${loaderId}">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+            logsArea.scrollTop = logsArea.scrollHeight;
+
+            try {
+                const res = await fetch("/chat", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({message: text})
+                });
+                const data = await res.json();
+                
+                document.getElementById(loaderId).remove();
+                logsArea.innerHTML += `<div class="msg-bubble-node bot">${data.reply}</div>`;
+            } catch {
+                document.getElementById(loaderId).remove();
+                logsArea.innerHTML += `<div class="msg-bubble-node bot">Transmission failure inside local routing node arrays.</div>`;
+            }
+            logsArea.scrollTop = logsArea.scrollHeight;
+        }
+
+        /* High-Performance Analytics Dynamic Engine Polling Pipeline */
+        async function runPlatformDataSyncCycle() {
+            try {
+                const dataRes = await fetch("/data");
+                const historicalRecords = await dataRes.json();
+
+                if(historicalRecords && historicalRecords.length > 0) {
+                    const activeFrame = historicalRecords[historicalRecords.length - 1];
+
+                    // Hydrate Text Interfaces
+                    document.getElementById('metric-txt-hr').innerText = activeFrame.heart_rate;
+                    document.getElementById('metric-txt-mv').innerText = activeFrame.movement;
+                    document.getElementById('metric-txt-lt').innerText = activeFrame.light;
+                    document.getElementById('metric-txt-st').innerText = activeFrame.stress;
+
+                    // Hydrate Main Complex Visualization Plotting Arrays
+                    primaryLineChartInstance.data.labels = historicalRecords.map(r => r.timestamp);
+                    primaryLineChartInstance.data.datasets[0].data = historicalRecords.map(r => r.heart_rate);
+                    primaryLineChartInstance.data.datasets[1].data = historicalRecords.map(r => r.movement);
+                    primaryLineChartInstance.update('none'); // Update without full layout recalculations
+
+                    // Hydrate Sparklines Components Arrays
+                    updateSparklineDataset(sparklineInstancesDictionary.hr, historicalRecords.map(r => r.heart_rate));
+                    updateSparklineDataset(sparklineInstancesDictionary.mv, historicalRecords.map(r => r.movement));
+                    updateSparklineDataset(sparklineInstancesDictionary.lt, historicalRecords.map(r => r.light));
+                    updateSparklineDictionaryStress(sparklineInstancesDictionary.st, historicalRecords.map(r => r.stress));
+                }
+            } catch (err) { console.log("Connecting with live biometric data stream..."); }
+
+            try {
+                const predictRes = await fetch("/predict");
+                if(predictRes.ok) {
+                    const payload = await predictRes.json();
+
+                    const score = payload.sleep_score;
+                    document.getElementById('radial-gauge-score-txt').innerText = score + "%";
+                    document.getElementById('metric-txt-stage').innerText = `✨ ${payload.sleep_stage}`;
+
+                    // Evaluate SVG Dash Circles offsets
+                    const circle = document.getElementById('radialGaugeIndicatorBar');
+                    const circumference = 2 * Math.PI * 70;
+                    circle.style.strokeDasharray = circumference;
+                    circle.style.strokeDashoffset = circumference - (score / 100) * circumference;
+
+                    // Hydrate Warning Alerts Boards Text Fields
+                    const alertContainer = document.getElementById('ui-alerts-injector-node');
+                    if(payload.alerts.length > 0) {
+                        alertContainer.innerHTML = payload.alerts.map(a => `<div class="alert-node-banner">${a}</div>`).join('');
+                    } else {
+                        alertContainer.innerHTML = `<div class="insight-node-banner" style="color:var(--neon-cyan);">✓ All biological channels verified clear.</div>`;
+                    }
+
+                    const insightContainer = document.getElementById('ui-insights-injector-node');
+                    insightContainer.innerHTML = payload.insights.map(i => `<div class="insight-node-banner">💡 AI Analysis: ${i}</div>`).join('');
+
+                    document.getElementById('live-runtime-timestamp').innerText = `SYS_TIME: ${payload.last_updated}`;
+                }
+            } catch (err) { console.log("Awaiting predictive pipeline resolution channels..."); }
+        }
+
+        function updateSparklineDataset(instance, fullDataArray) {
+            const chopped = fullDataArray.slice(-10);
+            instance.data.labels = Array(chopped.length).fill('');
+            instance.data.datasets[0].data = chopped;
+            instance.update('none');
+        }
+
+        function updateSparklineDictionaryStress(instance, fullDataArray) {
+            const chopped = fullDataArray.slice(-10);
+            instance.data.labels = Array(chopped.length).fill('');
+            instance.data.datasets[0].data = chopped.map(v => parseFloat(v));
+            instance.update('none');
+        }
+
+        function reinitializeDataPollingSchedule() {
+            if(pollingIntervalTimerRef) clearInterval(pollingIntervalTimerRef);
+            const userSpeedSetting = parseInt(localStorage.getItem('nirvan_speed') || "2000");
+            pollingIntervalTimerRef = setInterval(runPlatformDataSyncCycle, userSpeedSetting);
+        }
+
+        /* Initializations Hooks Execution Core */
+        window.addEventListener('DOMContentLoaded', () => {
+            hydrateThemePreferences();
+            initializeNeuralBackgroundGenerator();
+            buildHighTierCoreVisualizerChart();
+            hydrationProfileSettingsFromStorage();
+
+            // Build miniature data trends graphics lines
+            sparklineInstancesDictionary.hr = buildMiniatureSparklineElementNode('sparklineHR', '#00f2fe');
+            sparklineInstancesDictionary.mv = buildMiniatureSparklineElementNode('sparklineMV', '#9d4edd');
+            sparklineInstancesDictionary.lt = buildMiniatureSparklineElementNode('sparklineLT', '#ff2a74');
+            sparklineInstancesDictionary.st = buildMiniatureSparklineElementNode('sparklineST', '#f59e0b');
+
+            // Hide cinematic cover block and initialize loops mapping pipelines
+            setTimeout(() => {
+                document.getElementById('global-loader-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('global-loader-screen').style.display = 'none';
+                }, 600);
+                
+                runPlatformDataSyncCycle();
+                reinitializeDataPollingSchedule();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
