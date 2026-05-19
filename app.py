@@ -1,8 +1,8 @@
 """
-NIRVAN OS - Next-Gen AI Healthcare Monitoring Platform
+Nirvana OS - Next-Gen AI Healthcare Monitoring Platform
 Backend Engine & Telemetry Routing Module
 """
-print("Initializing NIRVAN Intelligence Platform Engine...")
+print("Initializing Nirvana Intelligence Platform Engine...")
 
 from flask import Flask, jsonify, render_template, request
 import pandas as pd
@@ -12,7 +12,7 @@ import random
 from datetime import datetime
 
 app = Flask(__name__)
-CSV_FILE = r"C:\Users\Admin\OneDrive\Desktop\SLEEPTRACKERPROJECT\data.csv"
+CSV_FILE = os.path.join(os.path.dirname(__file__), "data.csv")
 
 def load_and_clean_data():
     try:
@@ -114,15 +114,15 @@ def context_aware_assistant():
     
     # Predefined smart medical-grade structural responses
     if "heart" in user_query or "bpm" in user_query:
-        reply = "NIRVAN AI: Autonomic nervous system monitoring reveals your heart rate variance is deeply linked with stage N3 deep sleep stability. Lower resting heart rates are optimal for cellular repairs."
+        reply = "Nirvana AI: Autonomic nervous system monitoring reveals your heart rate variance is deeply linked with stage N3 deep sleep stability. Lower resting heart rates are optimal for cellular repairs."
     elif "stress" in user_query or "regression" in user_query:
-        reply = "NIRVAN AI: The embedded multivariate linear regression engine estimates stress indicators by processing real-time links between actigraphy metrics, autonomic pacing, and light parameters."
+        reply = "Nirvana AI: The embedded multivariate linear regression engine estimates stress indicators by processing real-time links between actigraphy metrics, autonomic pacing, and light parameters."
     elif "movement" in user_query or "restless" in user_query:
-        reply = "NIRVAN AI: Frequent movement spikes typically indicate brief micro-arousals. This points to possible adjustments in sleep position or environmental interferences."
+        reply = "Nirvana AI: Frequent movement spikes typically indicate brief micro-arousals. This points to possible adjustments in sleep position or environmental interferences."
     elif "light" in user_query or "lux" in user_query:
-        reply = "NIRVAN AI: High ambient light levels can disrupt natural melatonin synthesis. Keeping light levels below 50 Lux helps safeguard your circadian rhythm."
+        reply = "Nirvana AI: High ambient light levels can disrupt natural melatonin synthesis. Keeping light levels below 50 Lux helps safeguard your circadian rhythm."
     else:
-        reply = "NIRVAN AI: Telemetry pathways are fully operational. I am tracking your biometrics in real time. Feel free to ask about your heart rate trends, sleep stage classification models, or environmental metrics."
+        reply = "Nirvana AI: Telemetry pathways are fully operational. I am tracking your biometrics in real time. Feel free to ask about your heart rate trends, sleep stage classification models, or environmental metrics."
         
     return jsonify({"reply": reply})
 

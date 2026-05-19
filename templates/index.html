@@ -3,42 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIRVAN | Next-Gen AI Healthcare OS</title>
+    <title>Nirvana | Next-Gen AI Healthcare OS</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
 
     <style>
-        /* Modern CSS Variable Framework Architecture */
+        /* Modern Clean CSS Variable Design Tokens */
         :root {
-            --bg-base: #030611;
-            --bg-surface: rgba(10, 15, 36, 0.7);
-            --bg-surface-solid: #0a0f24;
-            --border-glow: rgba(0, 242, 254, 0.15);
-            --border-line: rgba(255, 255, 255, 0.05);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --neon-cyan: #00f2fe;
-            --neon-purple: #9d4edd;
-            --neon-rose: #ff2a74;
-            --neon-amber: #f59e0b;
-            --glass-blur: blur(16px);
-            --card-tilt-transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            --bg-base: #090d16;
+            --bg-surface: #111827;
+            --bg-surface-solid: #1f2937;
+            --border-glow: rgba(59, 130, 246, 0.2);
+            --border-line: rgba(255, 255, 255, 0.08);
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --neon-cyan: #3b82f6; /* Nirvana Blue */
+            --neon-purple: #6366f1; /* Indigo */
+            --neon-rose: #ef4444; /* Alert Red */
+            --neon-amber: #f59e0b; /* Warning Amber */
+            --glass-blur: none;
+            --card-tilt-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         [data-theme="light"] {
-            --bg-base: #f1f5f9;
-            --bg-surface: rgba(255, 255, 255, 0.8);
-            --bg-surface-solid: #ffffff;
-            --border-glow: rgba(2, 132, 199, 0.15);
-            --border-line: rgba(15, 23, 42, 0.08);
+            --bg-base: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-surface-solid: #f1f5f9;
+            --border-glow: rgba(37, 99, 235, 0.15);
+            --border-line: rgba(15, 23, 42, 0.06);
             --text-primary: #0f172a;
             --text-secondary: #64748b;
-            --neon-cyan: #0284c7;
-            --neon-purple: #7c3aed;
+            --neon-cyan: #2563eb;
+            --neon-purple: #4f46e5;
             --neon-rose: #dc2626;
             --neon-amber: #d97706;
         }
@@ -47,8 +47,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Exo 2', sans-serif;
-            transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), border 0.5s ease, color 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), border 0.3s ease, color 0.3s ease;
         }
 
         body {
@@ -59,20 +59,16 @@
             position: relative;
         }
 
-        /* Ambient Neural Particle System Visualization background */
+        /* Ambient Neural Particle System Visualization background - Hidden to de-vibecode */
         .neural-background-canvas {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.4;
+            display: none;
         }
 
-        /* Cinematic App Initialized Loading Screen Overlay */
+        /* Minimalist Modern Loading Screen Overlay */
         #global-loader-screen {
             position: fixed;
             inset: 0;
-            background: #03050f;
+            background: var(--bg-base);
             z-index: 99999;
             display: flex;
             flex-direction: column;
@@ -82,33 +78,22 @@
         }
 
         .loader-ring-system {
-            width: 120px;
-            height: 120px;
-            border: 4px solid transparent;
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border-line);
             border-top-color: var(--neon-cyan);
-            border-bottom-color: var(--neon-purple);
             border-radius: 50%;
-            position: relative;
-            animation: spinningSystem 2s linear infinite;
-        }
-
-        .loader-ring-system::after {
-            content: '';
-            position: absolute;
-            inset: 12px;
-            border: 3px dashed var(--neon-rose);
-            border-radius: 50%;
-            animation: spinningSystemReverse 3s linear infinite;
+            animation: spinningSystem 1s linear infinite;
         }
 
         /* Core Structure Layout Wrapper */
         #app-dashboard-frame {
-            max-width: 1700px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 30px;
+            padding: 40px 30px;
             opacity: 0;
-            transform: translateY(30px);
-            animation: entranceAnimation 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.4s;
+            transform: translateY(15px);
+            animation: entranceAnimation 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.3s;
         }
 
         header {
@@ -117,76 +102,70 @@
             align-items: center;
             padding-bottom: 24px;
             border-bottom: 1px solid var(--border-line);
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .brand-title-box h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 2rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
         }
 
         .brand-title-box h1 span {
             color: var(--neon-cyan);
-            text-shadow: 0 0 15px var(--neon-cyan);
         }
 
         .control-actions-hub {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
-        /* Glassmorphism Generic Premium Button Controls styling */
+        /* Modern Premium Button Controls */
         .premium-sys-btn {
             background: var(--bg-surface);
-            backdrop-filter: var(--glass-blur);
             border: 1px solid var(--border-line);
             color: var(--text-primary);
-            padding: 10px 20px;
-            border-radius: 12px;
+            padding: 10px 18px;
+            border-radius: 8px;
             font-weight: 600;
             font-size: 0.85rem;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transform: translateZ(0);
+            gap: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             transition: var(--card-tilt-transition);
         }
 
         .premium-sys-btn:hover {
             border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px var(--border-glow);
-            transform: translateY(-2px);
+            background: var(--bg-surface-solid);
+            transform: translateY(-1px);
         }
 
         .premium-sys-btn:active {
             transform: translateY(0);
         }
 
-        /* Multichannel Interactive Metric Grid Display Layout mapping */
+        /* Metric Grid Display Layout */
         .metrics-multichannel-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 24px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .interactive-metric-card {
             background: var(--bg-surface);
-            backdrop-filter: var(--glass-blur);
             border: 1px solid var(--border-line);
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 24px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            transform-style: preserve-3d;
-            perspective: 1000px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
             transition: var(--card-tilt-transition);
         }
 
@@ -194,7 +173,7 @@
             content: '';
             position: absolute;
             left: 0; top: 0; bottom: 0;
-            width: 5px;
+            width: 4px;
             background: var(--neon-cyan);
         }
 
@@ -203,42 +182,42 @@
         .interactive-metric-card.card-amber::before { background: var(--neon-amber); }
 
         .interactive-metric-card:hover {
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-4px);
             border-color: var(--border-glow);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.2), 0 0 20px var(--border-glow);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 8px 16px -6px rgba(0, 0, 0, 0.1);
         }
 
         .card-header-label {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             color: var(--text-secondary);
             font-weight: 700;
         }
 
         .live-value-display {
-            font-family: 'Orbitron', sans-serif;
             font-size: 2.2rem;
-            font-weight: 700;
-            margin: 14px 0 6px 0;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 12px 0 4px 0;
             display: flex;
             align-items: baseline;
-            gap: 6px;
+            gap: 4px;
         }
 
         .live-value-display span {
-            font-family: 'Exo 2', sans-serif;
             font-size: 1rem;
+            font-weight: 500;
             color: var(--text-secondary);
+            letter-spacing: normal;
         }
 
         /* Biometric Real-Time Pulse Animation Effect */
         .biometric-pulse-line-wrapper {
             width: 100%;
-            height: 30px;
-            margin-top: 10px;
-            opacity: 0.6;
+            height: 35px;
+            margin-top: 15px;
+            opacity: 0.8;
             position: relative;
         }
 
@@ -246,7 +225,7 @@
             width: 100%; height: 100%;
         }
 
-        /* Grid Configuration System Architecture Details Layout styling */
+        /* Grid Configuration System Architecture Details Layout */
         .dashboard-body-architecture {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -256,11 +235,11 @@
 
         .analytical-panel-box {
             background: var(--bg-surface);
-            backdrop-filter: var(--glass-blur);
             border: 1px solid var(--border-line);
-            border-radius: 24px;
+            border-radius: 16px;
             padding: 30px;
             position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
         }
 
         .panel-headline-row {
@@ -271,13 +250,12 @@
         }
 
         .panel-headline-row h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            letter-spacing: 1px;
+            font-size: 1.1rem;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            color: var(--text-primary);
         }
 
         .primary-viewport-container {
@@ -299,7 +277,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px 0;
+            padding: 10px 0;
         }
 
         .radial-score-svg {
@@ -309,21 +287,18 @@
 
         .radial-track {
             fill: none;
-            stroke: rgba(255,255,255,0.03);
-            stroke-width: 14;
-        }
-        [data-theme="light"] .radial-track {
-            stroke: rgba(0,0,0,0.04);
+            stroke: var(--border-line);
+            stroke-width: 12;
         }
 
         .radial-progress-bar {
             fill: none;
-            stroke: url(#cyanPurpleGradient);
-            stroke-width: 14;
+            stroke: var(--neon-cyan);
+            stroke-width: 12;
             stroke-linecap: round;
             stroke-dasharray: 440;
             stroke-dashoffset: 440;
-            transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* AI Notification Alert System and Real-Time Diagnostic Feed Layout styling */
@@ -336,41 +311,42 @@
         }
 
         .alert-node-banner {
-            background: rgba(255, 42, 116, 0.06);
-            border: 1px solid rgba(255, 42, 116, 0.15);
-            border-radius: 12px;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 8px;
             padding: 12px 16px;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             color: var(--neon-rose);
             display: flex;
             align-items: center;
             gap: 12px;
+            font-weight: 500;
             animation: nodeInsertion 0.4s ease-out;
         }
 
         .insight-node-banner {
-            background: rgba(0, 242, 254, 0.05);
-            border: 1px solid rgba(0, 242, 254, 0.12);
-            border-radius: 12px;
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.12);
+            border-radius: 8px;
             padding: 12px 16px;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             color: var(--text-primary);
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         /* Floating Modern Interactive Panel Interface (Modal Component Base Styles) */
         .sliding-overlay-modal {
             position: fixed;
             inset: 0;
-            background: rgba(3, 5, 15, 0.6);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(8px);
             z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 0.3s ease;
         }
 
         .sliding-overlay-modal.active {
@@ -379,19 +355,19 @@
         }
 
         .premium-modal-window {
-            background: var(--bg-surface-solid);
+            background: var(--bg-surface);
             border: 1px solid var(--border-line);
-            border-radius: 28px;
+            border-radius: 16px;
             width: 90%;
-            max-width: 650px;
-            padding: 36px;
-            transform: scale(0.9) translateY(20px);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            max-width: 600px;
+            padding: 32px;
+            transform: scale(0.95);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .sliding-overlay-modal.active .premium-modal-window {
-            transform: scale(1) translateY(0);
+            transform: scale(1);
         }
 
         .modal-headline-block {
@@ -404,15 +380,16 @@
         }
 
         .modal-headline-block h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
-            color: var(--neon-cyan);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
         .modal-close-trigger {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
             color: var(--text-secondary);
+            padding: 4px;
         }
 
         .modal-close-trigger:hover { color: var(--neon-rose); }
@@ -428,16 +405,15 @@
         }
 
         .content-subnode-item {
-            background: rgba(255,255,255,0.02);
-            [data-theme="light"] & { background: rgba(0,0,0,0.02); }
+            background: rgba(255,255,255,0.015);
+            [data-theme="light"] & { background: rgba(0,0,0,0.015); }
             border: 1px solid var(--border-line);
             padding: 16px;
-            border-radius: 14px;
+            border-radius: 10px;
         }
 
         .content-subnode-item h4 {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             color: var(--neon-purple);
             margin-bottom: 6px;
@@ -450,40 +426,43 @@
             position: fixed;
             bottom: 35px;
             right: 35px;
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-            width: 65px; height: 65px;
+            background: var(--neon-cyan);
+            color: #ffffff;
+            width: 60px; height: 60px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.3);
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
             z-index: 9999;
             border: none;
+            transition: all 0.2s ease;
         }
 
         .floating-chat-trigger-icon:hover {
-            transform: scale(1.08) rotate(5deg);
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
         }
 
         .assistant-chat-panel-frame {
             position: fixed;
-            bottom: 115px;
+            bottom: 110px;
             right: 35px;
-            width: 400px;
-            height: 550px;
-            background: var(--bg-surface-solid);
+            width: 380px;
+            height: 520px;
+            background: var(--bg-surface);
             border: 1px solid var(--border-line);
-            border-radius: 24px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
             overflow: hidden;
             opacity: 0;
             pointer-events: none;
-            transform: translateY(30px);
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(15px);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 9998;
         }
 
@@ -494,11 +473,10 @@
         }
 
         .chat-header-bar {
-            background: rgba(255,255,255,0.02);
-            padding: 18px 24px;
+            background: rgba(255,255,255,0.01);
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border-line);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 700;
             display: flex;
             justify-content: space-between;
@@ -515,37 +493,37 @@
         }
 
         .msg-bubble-node {
-            padding: 12px 16px;
-            border-radius: 14px;
+            padding: 10px 14px;
+            border-radius: 10px;
             font-size: 0.85rem;
             max-width: 85%;
             line-height: 1.45;
         }
 
         .msg-bubble-node.bot {
-            background: rgba(255,255,255,0.03);
-            border-left: 3px solid var(--neon-cyan);
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-line);
             align-self: flex-start;
             color: var(--text-primary);
         }
 
         .msg-bubble-node.user {
-            background: var(--neon-purple);
+            background: var(--neon-cyan);
             color: #ffffff;
             align-self: flex-end;
         }
 
-        /* Typing & Loading Animation Component Placeholder styles */
+        /* Typing & Loading Animation Component */
         .typing-indicator-dot-box {
             display: flex;
-            gap: 5px;
+            gap: 4px;
             padding: 6px 10px;
             align-self: flex-start;
         }
 
         .typing-dot {
-            width: 7px; height: 7px;
-            background: var(--neon-cyan);
+            width: 6px; height: 6px;
+            background: var(--text-secondary);
             border-radius: 50%;
             animation: pulseDots 1.4s infinite ease-in-out both;
         }
@@ -557,15 +535,15 @@
             border-top: 1px solid var(--border-line);
             display: flex;
             gap: 10px;
-            background: rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.05);
         }
 
         .chat-input-delivery-row input {
             flex-grow: 1;
-            background: rgba(255,255,255,0.03);
-            [data-theme="light"] & { background: rgba(0,0,0,0.03); }
+            background: rgba(255,255,255,0.02);
+            [data-theme="light"] & { background: rgba(0,0,0,0.02); }
             border: 1px solid var(--border-line);
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 10px 14px;
             color: var(--text-primary);
             font-size: 0.85rem;
@@ -580,36 +558,37 @@
         .modern-form-row {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             margin-bottom: 18px;
         }
 
         .modern-form-row label {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 700;
+            font-size: 0.8rem;
+            font-weight: 600;
             text-transform: uppercase;
             color: var(--text-secondary);
+            letter-spacing: 0.5px;
         }
 
         .modern-form-row input, .modern-form-row select {
-            background: rgba(255,255,255,0.02);
-            [data-theme="light"] & { background: rgba(0,0,0,0.03); }
+            background: rgba(255,255,255,0.015);
+            [data-theme="light"] & { background: rgba(0,0,0,0.015); }
             border: 1px solid var(--border-line);
             color: var(--text-primary);
-            padding: 12px;
-            border-radius: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
             outline: none;
             font-size: 0.9rem;
         }
 
-        .modern-form-row input:focus { border-color: var(--neon-cyan); }
+        .modern-form-row input:focus, .modern-form-row select:focus {
+            border-color: var(--neon-cyan);
+        }
 
         /* Animation Matrices Keyframe Loops Configuration */
         @keyframes spinningSystem { to { transform: rotate(360deg); } }
-        @keyframes spinningSystemReverse { to { transform: rotate(-360deg); } }
         @keyframes entranceAnimation { to { opacity: 1; transform: translateY(0); } }
-        @keyframes nodeInsertion { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes nodeInsertion { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         @keyframes pulseDots { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
     </style>
 </head>
@@ -619,19 +598,19 @@
 
     <div id="global-loader-screen">
         <div class="loader-ring-system"></div>
-        <div style="font-family:'Orbitron'; font-size:0.8rem; letter-spacing:4px; color:var(--neon-cyan); margin-top:30px;">NIRVAN OS CORE LOADED</div>
+        <div style="font-size:0.85rem; font-weight:800; letter-spacing:3px; color:var(--neon-cyan); margin-top:24px; text-transform:uppercase;">Nirvana OS</div>
     </div>
 
     <div id="app-dashboard-frame">
         <header>
             <div class="brand-title-box">
-                <h1>NIRVAN <span>OS</span></h1>
-                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">Premium Next-Generation AI Healthcare Platform</p>
+                <h1>Nirvana <span>OS</span></h1>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; font-weight: 500;">AI-Powered Autonomic Health & Biometrics Dashboard</p>
             </div>
             <div class="control-actions-hub">
-                <button class="premium-sys-btn" onclick="openSystemModalWindow('settings-config-modal')">⚙️ CONFIG PROFILE</button>
-                <button class="premium-sys-btn" onclick="togglePlatformColorPaletteTheme()">🌓 SWITCH THEME</button>
-                <div style="font-family:'Orbitron'; font-size:0.8rem; border:1px solid var(--border-line); padding:10px 18px; border-radius:12px; background:var(--bg-surface);" id="live-runtime-timestamp">SYNCING TIME...</div>
+                <button class="premium-sys-btn" onclick="openSystemModalWindow('settings-config-modal')">⚙️ Settings</button>
+                <button class="premium-sys-btn" onclick="togglePlatformColorPaletteTheme()">🌓 Toggle Theme</button>
+                <div style="font-size:0.8rem; font-weight:600; border:1px solid var(--border-line); padding:10px 18px; border-radius:8px; background:var(--bg-surface); color:var(--text-secondary);" id="live-runtime-timestamp">SYNCING TIME...</div>
             </div>
         </header>
 
@@ -646,7 +625,7 @@
             </div>
 
             <div class="interactive-metric-card card-purple" onclick="triggerMetricInsightsInspection('movement')">
-                <div class="card-header-label">Actigraphy Kinetics</div>
+                <div class="card-header-label">Somatic Movement</div>
                 <div class="live-value-display"><div id="metric-txt-mv">--</div> <span>Hz</span></div>
                 <div class="biometric-pulse-line-wrapper">
                     <canvas id="sparklineMV" class="sparkline-placeholder"></canvas>
@@ -654,7 +633,7 @@
             </div>
 
             <div class="interactive-metric-card card-rose" onclick="triggerMetricInsightsInspection('light')">
-                <div class="card-header-label">Environmental Lux</div>
+                <div class="card-header-label">Ambient Light</div>
                 <div class="live-value-display"><div id="metric-txt-lt">--</div> <span>Lux</span></div>
                 <div class="biometric-pulse-line-wrapper">
                     <canvas id="sparklineLT" class="sparkline-placeholder"></canvas>
@@ -662,8 +641,8 @@
             </div>
 
             <div class="interactive-metric-card card-amber" onclick="triggerMetricInsightsInspection('stress')">
-                <div class="card-header-label">ML Stress Predictor</div>
-                <div class="live-value-display"><div id="metric-txt-st">--</div> <span>Index</span></div>
+                <div class="card-header-label">Stress Index</div>
+                <div class="live-value-display"><div id="metric-txt-st">--</div> <span>Points</span></div>
                 <div class="biometric-pulse-line-wrapper">
                     <canvas id="sparklineST" class="sparkline-placeholder"></canvas>
                 </div>
@@ -675,7 +654,7 @@
             
             <div class="analytical-panel-box">
                 <div class="panel-headline-row">
-                    <h3>📊 Live Biosphere Waveform Arrays</h3>
+                    <h3>📊 Live Biometric Waveforms</h3>
                     <button class="premium-sys-btn" style="padding: 6px 12px; font-size: 0.75rem;" onclick="resetAnalyticalViewportScale()">RESET CHART ZOOM</button>
                 </div>
                 <div class="primary-viewport-container">
@@ -687,7 +666,7 @@
                 
                 <div class="analytical-panel-box">
                     <div class="panel-headline-row">
-                        <h3>🌙 Rest Index Evaluation</h3>
+                        <h3>🌙 Sleep Score</h3>
                     </div>
                     <div class="circular-gauge-container">
                         <div style="position:relative; width:180px; height:180px;">
@@ -696,20 +675,20 @@
                                 <circle class="radial-progress-bar" id="radialGaugeIndicatorBar" cx="80" cy="80" r="70"></circle>
                             </svg>
                             <div style="position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                                <span style="font-family:'Orbitron'; font-size:2.2rem; font-weight:900;" id="radial-gauge-score-txt">--%</span>
+                                <span style="font-size:2.2rem; font-weight:800; letter-spacing:-1px;" id="radial-gauge-score-txt">--%</span>
                                 <span style="font-size:0.65rem; text-transform:uppercase; color:var(--text-secondary); letter-spacing:1px; font-weight:700;" id="user-profile-name-badge">PATIENT CORE</span>
                             </div>
                         </div>
-                        <div style="margin-top:20px; font-family:'Orbitron'; font-size:0.9rem; font-weight:700; color:var(--neon-cyan); text-transform:uppercase; letter-spacing:1px;" id="metric-txt-stage">STAGE: SYNCHRONIZING</div>
+                        <div style="margin-top:20px; font-size:0.85rem; font-weight:700; color:var(--neon-cyan); text-transform:uppercase; letter-spacing:0.5px;" id="metric-txt-stage">STAGE: SYNCHRONIZING</div>
                     </div>
                 </div>
 
                 <div class="analytical-panel-box">
                     <div class="panel-headline-row">
-                        <h3>🧠 Smart Diagnostic Alert Matrix</h3>
+                        <h3>🧠 AI Diagnostics & Insights</h3>
                     </div>
                     <div class="diagnostic-alerts-feed-wrapper" id="ui-alerts-injector-node">
-                        <div class="insight-node-banner">Awaiting network confirmation layers. Calibrating structural telemetry algorithms...</div>
+                        <div class="insight-node-banner">Awaiting connection. Calibrating real-time physiological algorithms...</div>
                     </div>
                     <div class="diagnostic-alerts-feed-wrapper" id="ui-insights-injector-node" style="margin-top:10px; border-top:1px dashed var(--border-line); padding-top:10px;"></div>
                 </div>
@@ -718,51 +697,51 @@
         </div>
     </div>
 
-    <button class="floating-chat-trigger-icon" onclick="toggleNirvanNeuralAssistantPanel()">🤖</button>
+    <button class="floating-chat-trigger-icon" onclick="toggleNirvanNeuralAssistantPanel()">💬</button>
     <div class="assistant-chat-panel-frame" id="nirvanChatbotDrawerBox">
         <div class="chat-header-bar">
-            <span>NIRVAN INTELLIGENCE LINK</span>
+            <span>Nirvana Assistant</span>
             <span style="cursor:pointer;" onclick="toggleNirvanNeuralAssistantPanel()">✕</span>
         </div>
         <div class="chat-messages-scroll-area" id="chatLogsScrollerBox">
             <div class="msg-bubble-node bot">Platform initialization complete. I can analyze biological patterns, environmental factors, or the status of your machine learning models. How can I assist you today?</div>
         </div>
         <div class="chat-input-delivery-row">
-            <input type="text" id="chatTextInputField" placeholder="Ask about sleep stages, lux levels, etc..." onkeydown="if(event.key==='Enter') transmitUserChatPayload()">
-            <button class="premium-sys-btn" style="padding: 10px 16px;" onclick="transmitUserChatPayload()">RUN</button>
+            <input type="text" id="chatTextInputField" placeholder="Ask about sleep stages, stress levels, etc..." onkeydown="if(event.key==='Enter') transmitUserChatPayload()">
+            <button class="premium-sys-btn" style="padding: 10px 16px; background: var(--neon-cyan); color: #ffffff; border-color: var(--neon-cyan);" onclick="transmitUserChatPayload()">Send</button>
         </div>
     </div>
 
     <div class="sliding-overlay-modal" id="metric-inspection-overlay-panel">
         <div class="premium-modal-window">
             <div class="modal-headline-block">
-                <h2 id="modal-metric-title">METRIC METADATA MATRIX</h2>
+                <h2 id="modal-metric-title">Metric Insights</h2>
                 <span class="modal-close-trigger" onclick="closeSystemModalWindow('metric-inspection-overlay-panel')">✕</span>
             </div>
             <div class="metric-details-grid-content" id="modal-metric-body-grid">
-                </div>
+            </div>
         </div>
     </div>
 
     <div class="sliding-overlay-modal" id="settings-config-modal">
         <div class="premium-modal-window">
             <div class="modal-headline-block">
-                <h2>⚙️ CORE BIOSPHERE SYSTEM PREFERENCES</h2>
+                <h2>⚙️ Profile & System Settings</h2>
                 <span class="modal-close-trigger" onclick="closeSystemModalWindow('settings-config-modal')">✕</span>
             </div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
                 <div class="modern-form-row">
-                    <label>User Identifier Profile Name</label>
+                    <label>Full Name</label>
                     <input type="text" id="cfg-user-name" value="Alex Mercer">
                 </div>
                 <div class="modern-form-row">
-                    <label>Age Profile Value (Years)</label>
+                    <label>Age (Years)</label>
                     <input type="number" id="cfg-user-age" value="23">
                 </div>
             </div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
                 <div class="modern-form-row">
-                    <label>Target Resting Goal (Hours)</label>
+                    <label>Daily Sleep Goal</label>
                     <select id="cfg-sleep-goal">
                         <option value="6">6 Hours</option>
                         <option value="7">7 Hours</option>
@@ -771,7 +750,7 @@
                     </select>
                 </div>
                 <div class="modern-form-row">
-                    <label>Telemetry Polling Frequency</label>
+                    <label>Data Polling Rate</label>
                     <select id="cfg-refresh-interval">
                         <option value="2000" selected>2 Seconds (Real-Time)</option>
                         <option value="5000">5 Seconds (Balanced)</option>
@@ -780,8 +759,8 @@
                 </div>
             </div>
             <div style="display:flex; justify-content:flex-end; gap:14px; margin-top:20px; border-top:1px solid var(--border-line); padding-top:20px;">
-                <button class="premium-sys-btn" style="background:transparent; border:none;" onclick="closeSystemModalWindow('settings-config-modal')">CANCEL</button>
-                <button class="premium-sys-btn" style="background:var(--neon-cyan); color:#000; font-weight:700;" onclick="commitPlatformConfigurationSettings()">SAVE COMPONENT CONFIG</button>
+                <button class="premium-sys-btn" style="background:transparent; border:none;" onclick="closeSystemModalWindow('settings-config-modal')">Cancel</button>
+                <button class="premium-sys-btn" style="background:var(--neon-cyan); color:#ffffff; font-weight:600; border-color:var(--neon-cyan);" onclick="commitPlatformConfigurationSettings()">Save Changes</button>
             </div>
         </div>
     </div>
@@ -837,59 +816,21 @@
 
         /* Background Particle System Canvas Animation Loops Configuration */
         function initializeNeuralBackgroundGenerator() {
-            const canvas = document.getElementById('neuralParticlesCanvas');
-            const ctx = canvas.getContext('2d');
-            let array = [];
-
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.vx = (Math.random() - 0.5) * 0.4;
-                    this.vy = (Math.random() - 0.5) * 0.4;
-                    this.r = Math.random() * 2 + 1;
-                }
-                render() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-                    ctx.fillStyle = document.documentElement.getAttribute('data-theme') === 'light' ? 'rgba(2,132,199,0.15)' : 'rgba(0,242,254,0.2)';
-                    ctx.fill();
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    if(this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                    if(this.y < 0 || this.y > canvas.height) this.vy *= -1;
-                }
-            }
-
-            for(let i=0; i<45; i++) array.push(new Particle());
-
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                array.forEach(p => p.render());
-                requestAnimationFrame(draw);
-            }
-            draw();
+            // Particle generator disabled to optimize CPU and de-vibecode UI.
         }
 
         /* Chart.js Dynamic Initializations Logic Block */
         function buildHighTierCoreVisualizerChart() {
             const ctx = document.getElementById('nirvanMainChartCanvas').getContext('2d');
             
-            // Premium Gradient Fills Creation System Matrix
+            // Clean Modern Gradient Fills
             const cyanGrad = ctx.createLinearGradient(0, 0, 0, 350);
-            cyanGrad.addColorStop(0, 'rgba(0, 242, 254, 0.25)');
-            cyanGrad.addColorStop(1, 'rgba(0, 242, 254, 0.0)');
+            cyanGrad.addColorStop(0, 'rgba(59, 130, 246, 0.25)');
+            cyanGrad.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
 
             const purpleGrad = ctx.createLinearGradient(0, 0, 0, 350);
-            purpleGrad.addColorStop(0, 'rgba(157, 78, 221, 0.25)');
-            purpleGrad.addColorStop(1, 'rgba(157, 78, 221, 0.0)');
+            purpleGrad.addColorStop(0, 'rgba(99, 102, 241, 0.25)');
+            purpleGrad.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
 
             primaryLineChartInstance = new Chart(ctx, {
                 type: 'line',
@@ -899,27 +840,27 @@
                         {
                             label: 'Cardio Rhythm (BPM)',
                             data: [],
-                            borderColor: '#00f2fe',
+                            borderColor: '#3b82f6',
                             borderWidth: 3,
                             fill: true,
                             backgroundColor: cyanGrad,
                             tension: 0.4,
                             pointRadius: 2,
                             pointHoverRadius: 7,
-                            pointHoverBackgroundColor: '#00f2fe',
+                            pointHoverBackgroundColor: '#3b82f6',
                             yAxisID: 'y-axis-cardio'
                         },
                         {
                             label: 'Actigraphy Movement (Hz)',
                             data: [],
-                            borderColor: '#9d4edd',
+                            borderColor: '#6366f1',
                             borderWidth: 3,
                             fill: true,
                             backgroundColor: purpleGrad,
                             tension: 0.4,
                             pointRadius: 2,
                             pointHoverRadius: 7,
-                            pointHoverBackgroundColor: '#9d4edd',
+                            pointHoverBackgroundColor: '#6366f1',
                             yAxisID: 'y-axis-motion'
                         }
                     ]
@@ -936,17 +877,17 @@
                     },
                     plugins: {
                         legend: {
-                            labels: { color: 'rgba(148, 163, 184, 0.8)', font: { family: 'Rajdhani', size: 13, weight: 600 } }
+                            labels: { color: 'rgba(148, 163, 184, 0.8)', font: { family: 'Inter', size: 12, weight: 600 } }
                         },
                         tooltip: {
                             enabled: true,
-                            backgroundColor: 'rgba(10, 15, 36, 0.95)',
-                            titleFont: { family: 'Orbitron', size: 12 },
-                            bodyFont: { family: 'Exo 2', size: 12 },
-                            borderColor: '#00f2fe',
+                            backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                            titleFont: { family: 'Inter', size: 12, weight: 700 },
+                            bodyFont: { family: 'Inter', size: 12 },
+                            borderColor: '#3b82f6',
                             borderWidth: 1,
                             padding: 14,
-                            cornerRadius: 12,
+                            cornerRadius: 8,
                             callbacks: {
                                 label: function(context) {
                                     const value = context.parsed.y;
@@ -972,21 +913,21 @@
                     scales: {
                         x: {
                             grid: { display: false },
-                            ticks: { color: '#64748b', font: { family: 'Orbitron', size: 10 } }
+                            ticks: { color: '#64748b', font: { family: 'Inter', size: 10 } }
                         },
                         'y-axis-cardio': {
                             type: 'linear',
                             position: 'left',
                             min: 40, max: 140,
                             grid: { color: 'rgba(255,255,255,0.03)' },
-                            ticks: { color: '#00f2fe' }
+                            ticks: { color: '#3b82f6' }
                         },
                         'y-axis-motion': {
                             type: 'linear',
                             position: 'right',
                             min: 0, max: 12,
                             grid: { display: false },
-                            ticks: { color: '#9d4edd' }
+                            ticks: { color: '#6366f1' }
                         }
                     }
                 }
@@ -1229,9 +1170,9 @@
             hydrationProfileSettingsFromStorage();
 
             // Build miniature data trends graphics lines
-            sparklineInstancesDictionary.hr = buildMiniatureSparklineElementNode('sparklineHR', '#00f2fe');
-            sparklineInstancesDictionary.mv = buildMiniatureSparklineElementNode('sparklineMV', '#9d4edd');
-            sparklineInstancesDictionary.lt = buildMiniatureSparklineElementNode('sparklineLT', '#ff2a74');
+            sparklineInstancesDictionary.hr = buildMiniatureSparklineElementNode('sparklineHR', '#3b82f6');
+            sparklineInstancesDictionary.mv = buildMiniatureSparklineElementNode('sparklineMV', '#6366f1');
+            sparklineInstancesDictionary.lt = buildMiniatureSparklineElementNode('sparklineLT', '#ef4444');
             sparklineInstancesDictionary.st = buildMiniatureSparklineElementNode('sparklineST', '#f59e0b');
 
             // Hide cinematic cover block and initialize loops mapping pipelines
