@@ -1,1190 +1,1543 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nirvana | Next-Gen AI Healthcare OS</title>
+    <title>Bio-Sync | Adaptive Biometric Stress Monitoring for High Performance</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+    <!-- FontAwesome for clean minimal line icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Modern Clean CSS Variable Design Tokens */
+        /* Custom Premium Variable Design Tokens (Non-Negotiable Color Palette) */
         :root {
-            --bg-base: #090d16;
-            --bg-surface: #111827;
-            --bg-surface-solid: #1f2937;
-            --border-glow: rgba(59, 130, 246, 0.2);
-            --border-line: rgba(255, 255, 255, 0.08);
-            --text-primary: #f9fafb;
-            --text-secondary: #9ca3af;
-            --neon-cyan: #3b82f6; /* Nirvana Blue */
-            --neon-purple: #6366f1; /* Indigo */
-            --neon-rose: #ef4444; /* Alert Red */
-            --neon-amber: #f59e0b; /* Warning Amber */
-            --glass-blur: none;
-            --card-tilt-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Palette Colors */
+            --color-deep-teal: #22577A;
+            --color-teal: #38A3A5;
+            --color-mint: #57CC99;
+            --color-light-green: #80ED99;
+            --color-very-light-green: #C7F9CC;
+
+            /* Utility Design Tokens */
+            --font-headings: 'Space Grotesk', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            --glow-teal: rgba(56, 163, 165, 0.4);
+            --glow-mint: rgba(87, 204, 153, 0.4);
+            
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-hover: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        [data-theme="light"] {
-            --bg-base: #f8fafc;
-            --bg-surface: #ffffff;
-            --bg-surface-solid: #f1f5f9;
-            --border-glow: rgba(37, 99, 235, 0.15);
-            --border-line: rgba(15, 23, 42, 0.06);
-            --text-primary: #0f172a;
-            --text-secondary: #64748b;
-            --neon-cyan: #2563eb;
-            --neon-purple: #4f46e5;
-            --neon-rose: #dc2626;
-            --neon-amber: #d97706;
-        }
-
+        /* Basic Resets & Aesthetics */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), border 0.3s ease, color 0.3s ease;
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-base);
-            color: var(--text-primary);
-            min-height: 100vh;
+            font-family: var(--font-body);
+            background-color: var(--color-deep-teal);
+            color: #ffffff;
             overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-headings);
+            letter-spacing: -0.02em;
+        }
+
+        /* ---------------------------------------------------- */
+        /* STYLISH GRADIENT SECTIONS SCROLL PATTERN             */
+        /* Rule: Sections transition gradually into next color. */
+        /* ---------------------------------------------------- */
+        
+        /* Section 1: Hero (Deep Teal) */
+        #hero-section {
+            background: linear-gradient(180deg, var(--color-deep-teal) 0%, rgba(34, 87, 122, 0.95) 70%, rgba(56, 163, 165, 0.15) 100%);
+            position: relative;
+            padding: 120px 0 100px 0;
+            min-height: 95vh;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Section 2: Three Core Metrics (Deep Teal to Teal) */
+        #metrics-section {
+            background: linear-gradient(180deg, rgba(34, 87, 122, 0.95) 0%, var(--color-teal) 50%, rgba(87, 204, 153, 0.2) 100%);
+            padding: 100px 0;
             position: relative;
         }
 
-        /* Ambient Neural Particle System Visualization background - Hidden to de-vibecode */
-        .neural-background-canvas {
-            display: none;
+        /* Section 3: Physiological Stress Index (Teal to Mint Green) */
+        #stress-section {
+            background: linear-gradient(180deg, var(--color-teal) 0%, rgba(87, 204, 153, 0.9) 60%, rgba(128, 237, 153, 0.15) 100%);
+            padding: 100px 0;
+            position: relative;
+            color: #0b1f2b; /* Dark text for contrast on lighter background */
         }
 
-        /* Minimalist Modern Loading Screen Overlay */
-        #global-loader-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-base);
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        /* Section 4: Interactive Stress Simulator (Mint to Light Green) */
+        #simulator-section {
+            background: linear-gradient(180deg, rgba(87, 204, 153, 0.95) 0%, var(--color-light-green) 60%, rgba(199, 249, 204, 0.2) 100%);
+            padding: 100px 0;
+            position: relative;
+            color: #0c2b18; /* Contrast adjustment */
         }
 
-        .loader-ring-system {
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--border-line);
-            border-top-color: var(--neon-cyan);
-            border-radius: 50%;
-            animation: spinningSystem 1s linear infinite;
+        /* Section 5: Hardware & Specs (Light Green to Very Light Green) */
+        #hardware-section {
+            background: linear-gradient(180deg, var(--color-light-green) 0%, var(--color-very-light-green) 55%, rgba(34, 87, 122, 0.15) 100%);
+            padding: 100px 0;
+            position: relative;
+            color: #0d2f17;
         }
 
-        /* Core Structure Layout Wrapper */
-        #app-dashboard-frame {
-            max-width: 1600px;
+        /* Section 6: Footer (Very Light Green back to Deep Teal) */
+        footer {
+            background: linear-gradient(180deg, var(--color-very-light-green) 0%, rgba(34, 87, 122, 0.95) 80%, var(--color-deep-teal) 100%);
+            padding: 80px 0 40px 0;
+            position: relative;
+            color: #ffffff;
+        }
+
+        /* ---------------------------------------------------- */
+        /* LAYOUT CONTAINER & UTILITIES                         */
+        /* ---------------------------------------------------- */
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 30px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        @media (max-width: 968px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        /* ---------------------------------------------------- */
+        /* 7 SCROLL & INTERACTIVE ANIMATIONS REQUIREMENTS        */
+        /* ---------------------------------------------------- */
+
+        /* 1. Parallax Depth background accents */
+        .parallax-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .parallax-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 70%);
+            will-change: transform;
+        }
+
+        .shape-1 { width: 400px; height: 400px; top: 10%; left: -10%; }
+        .shape-2 { width: 500px; height: 500px; bottom: 10%; right: -15%; }
+        .shape-3 { width: 300px; height: 300px; top: 35%; left: 80%; }
+
+        /* 2. Fade-in on Scroll Framework */
+        .scroll-fade {
             opacity: 0;
-            transform: translateY(15px);
-            animation: entranceAnimation 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.3s;
+            transform: translateY(30px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--border-line);
-            margin-bottom: 40px;
-        }
-
-        .brand-title-box h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--text-primary);
-        }
-
-        .brand-title-box h1 span {
-            color: var(--neon-cyan);
-        }
-
-        .control-actions-hub {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        /* Modern Premium Button Controls */
-        .premium-sys-btn {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-line);
-            color: var(--text-primary);
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            transition: var(--card-tilt-transition);
-        }
-
-        .premium-sys-btn:hover {
-            border-color: var(--neon-cyan);
-            background: var(--bg-surface-solid);
-            transform: translateY(-1px);
-        }
-
-        .premium-sys-btn:active {
+        .scroll-fade.active {
+            opacity: 1;
             transform: translateY(0);
         }
 
-        /* Metric Grid Display Layout */
-        .metrics-multichannel-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
+        /* Stagger helper */
+        .stagger-1 { transition-delay: 100ms; }
+        .stagger-2 { transition-delay: 200ms; }
+        .stagger-3 { transition-delay: 300ms; }
+
+        /* 3. Alternate Left/Right Slide-In for cards */
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .interactive-metric-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-line);
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide-in-left.active, .slide-in-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 4. Hover Scale */
+        .hover-scale {
+            transition: var(--transition-hover);
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+
+        /* 5. Stats Counter section styled grids */
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
             border-radius: 16px;
             padding: 24px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-            transition: var(--card-tilt-transition);
+            text-align: center;
+            box-shadow: var(--glass-shadow);
         }
 
-        .interactive-metric-card::before {
+        .stat-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            font-family: var(--font-headings);
+            background: linear-gradient(135deg, #ffffff 0%, var(--color-mint) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 600;
+        }
+
+        /* 6. Expanding Gradient Underline on Hover */
+        .gradient-link {
+            position: relative;
+            text-decoration: none;
+            color: var(--color-light-green);
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-block;
+            padding-bottom: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .gradient-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, var(--color-teal) 0%, var(--color-mint) 50%, var(--color-light-green) 100%);
+            transition: width 0.3s ease;
+        }
+
+        .gradient-link:hover::after {
+            width: 100%;
+        }
+
+        .gradient-link:hover {
+            color: #ffffff;
+        }
+
+        /* 7. Keyframe-driven loops for Floating Accents */
+        .floating-accent {
+            animation: float-continuous 2s ease-in-out infinite;
+        }
+
+        @keyframes float-continuous {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .orbital-wrapper {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto;
+        }
+
+        /* Orbital animation system rotation 360deg every 8s */
+        .orbital-ring {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: rotate-orbit 8s linear infinite;
+        }
+
+        @keyframes rotate-orbit {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Rotating node icons */
+        .orbital-node {
+            position: absolute;
+            width: 50px; height: 50px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-light-green);
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(8px);
+            animation: pulse-node 2s ease-in-out infinite alternate;
+        }
+
+        .node-1 { top: -25px; left: calc(50% - 25px); }
+        .node-2 { bottom: 20px; left: -10px; }
+        .node-3 { bottom: 20px; right: -10px; }
+
+        @keyframes pulse-node {
+            0% { opacity: 0.85; transform: scale(0.95); box-shadow: 0 0 10px rgba(87, 204, 153, 0.2); }
+            100% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 20px rgba(87, 204, 153, 0.5); }
+        }
+
+        /* ---------------------------------------------------- */
+        /* PREMIUM NAVBAR                                       */
+        /* ---------------------------------------------------- */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 80px;
+            background: rgba(34, 87, 122, 0.65);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .brand-logo {
+            font-family: var(--font-headings);
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo span {
+            color: var(--color-light-green);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition-hover);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-light-green);
+        }
+
+        /* Primary Button */
+        .btn-primary {
+            background: var(--color-teal);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 14px rgba(56, 163, 165, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-light-green);
+            color: #0b1f2b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(128, 237, 153, 0.4);
+        }
+
+        /* ---------------------------------------------------- */
+        /* HERO COPY & STYLES                                   */
+        /* ---------------------------------------------------- */
+        .hero-left h1 {
+            font-size: 3.25rem;
+            line-height: 1.15;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .hero-left h1 span {
+            color: var(--color-light-green);
+        }
+
+        .hero-subheading {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .hero-body {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 36px;
+            line-height: 1.6;
+        }
+
+        .hero-ctas {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .center-graphic {
+            position: relative;
+            z-index: 2;
+        }
+
+        .radar-sweep {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 280px; height: 280px;
+            border-radius: 50%;
+            border: 2px solid rgba(128, 237, 153, 0.1);
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 50px rgba(56, 163, 165, 0.1) inset;
+        }
+
+        /* ---------------------------------------------------- */
+        /* THREE CORE METRICS SECTIONS                          */
+        /* ---------------------------------------------------- */
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 3 feature cards premium glassmorphism styling */
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 36px 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(20px);
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 480px;
+        }
+
+        .metric-card::before {
             content: '';
             position: absolute;
             left: 0; top: 0; bottom: 0;
-            width: 4px;
-            background: var(--neon-cyan);
+            width: 6px;
         }
 
-        .interactive-metric-card.card-purple::before { background: var(--neon-purple); }
-        .interactive-metric-card.card-rose::before { background: var(--neon-rose); }
-        .interactive-metric-card.card-amber::before { background: var(--neon-amber); }
+        /* Left Borders Custom Design (Strict colors) */
+        .card-cardio { border-color: var(--color-mint); }
+        .card-cardio::before { background-color: var(--color-teal); }
+        
+        .card-kinetics { border-color: var(--color-light-green); }
+        .card-kinetics::before { background-color: var(--color-mint); }
+        
+        .card-lux { border-color: var(--color-very-light-green); }
+        .card-lux::before { background-color: var(--color-light-green); }
 
-        .interactive-metric-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--border-glow);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 8px 16px -6px rgba(0, 0, 0, 0.1);
+        .metric-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .card-header-label {
+        .metric-icon-box {
+            width: 64px; height: 64px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-cardio .metric-icon-box { color: var(--color-mint); }
+        .card-kinetics .metric-icon-box { color: var(--color-light-green); }
+        .card-lux .metric-icon-box { color: var(--color-very-light-green); }
+
+        .metric-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .metric-hw-badge {
+            display: inline-block;
+            font-family: var(--font-mono);
             font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            font-weight: 700;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        .live-value-display {
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin: 12px 0 4px 0;
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-        }
-
-        .live-value-display span {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            letter-spacing: normal;
-        }
-
-        /* Biometric Real-Time Pulse Animation Effect */
-        .biometric-pulse-line-wrapper {
-            width: 100%;
-            height: 35px;
-            margin-top: 15px;
-            opacity: 0.8;
-            position: relative;
-        }
-
-        .sparkline-placeholder {
-            width: 100%; height: 100%;
-        }
-
-        /* Grid Configuration System Architecture Details Layout */
-        .dashboard-body-architecture {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
-            align-items: start;
-        }
-
-        .analytical-panel-box {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-line);
-            border-radius: 16px;
-            padding: 30px;
-            position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        .panel-headline-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .metric-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
             margin-bottom: 24px;
+            line-height: 1.6;
         }
 
-        .panel-headline-row h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-primary);
-        }
-
-        .primary-viewport-container {
-            height: 400px;
-            width: 100%;
-            position: relative;
-        }
-
-        /* Right Hand Metrics Display Layout */
-        .right-hand-column-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        /* Sleep Score Premium Gauge SVG Ring layout structure */
-        .circular-gauge-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 0;
-        }
-
-        .radial-score-svg {
-            width: 180px; height: 180px;
-            transform: rotate(-90deg);
-        }
-
-        .radial-track {
-            fill: none;
-            stroke: var(--border-line);
-            stroke-width: 12;
-        }
-
-        .radial-progress-bar {
-            fill: none;
-            stroke: var(--neon-cyan);
-            stroke-width: 12;
-            stroke-linecap: round;
-            stroke-dasharray: 440;
-            stroke-dashoffset: 440;
-            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* AI Notification Alert System and Real-Time Diagnostic Feed Layout styling */
-        .diagnostic-alerts-feed-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-
-        .alert-node-banner {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            border-radius: 8px;
-            padding: 12px 16px;
-            font-size: 0.85rem;
-            color: var(--neon-rose);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 500;
-            animation: nodeInsertion 0.4s ease-out;
-        }
-
-        .insight-node-banner {
-            background: rgba(59, 130, 246, 0.05);
-            border: 1px solid rgba(59, 130, 246, 0.12);
-            border-radius: 8px;
-            padding: 12px 16px;
-            font-size: 0.85rem;
-            color: var(--text-primary);
-            line-height: 1.45;
-        }
-
-        /* Floating Modern Interactive Panel Interface (Modal Component Base Styles) */
-        .sliding-overlay-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(8px);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .sliding-overlay-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .premium-modal-window {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-line);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 600px;
-            padding: 32px;
-            transform: scale(0.95);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .sliding-overlay-modal.active .premium-modal-window {
-            transform: scale(1);
-        }
-
-        .modal-headline-block {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-line);
-            padding-bottom: 16px;
-            margin-bottom: 24px;
-        }
-
-        .modal-headline-block h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .modal-close-trigger {
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-            padding: 4px;
-        }
-
-        .modal-close-trigger:hover { color: var(--neon-rose); }
-
-        .metric-details-grid-content {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            font-size: 0.88rem;
-            line-height: 1.5;
-            max-height: 450px;
-            overflow-y: auto;
-        }
-
-        .content-subnode-item {
-            background: rgba(255,255,255,0.015);
-            [data-theme="light"] & { background: rgba(0,0,0,0.015); }
-            border: 1px solid var(--border-line);
-            padding: 16px;
+        .metric-live-feed {
+            background: rgba(0, 0, 0, 0.25);
             border-radius: 10px;
+            padding: 12px 16px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .content-subnode-item h4 {
-            font-size: 0.85rem;
+        .live-feed-header {
+            font-size: 0.65rem;
             text-transform: uppercase;
-            color: var(--neon-purple);
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.4);
             margin-bottom: 6px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        /* Custom Floating AI Assistant Sidebar layout */
-        .floating-chat-trigger-icon {
-            position: fixed;
-            bottom: 35px;
-            right: 35px;
-            background: var(--neon-cyan);
-            color: #ffffff;
-            width: 60px; height: 60px;
-            border-radius: 50%;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
-            z-index: 9999;
-            border: none;
-            transition: all 0.2s ease;
+            gap: 6px;
         }
 
-        .floating-chat-trigger-icon:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        .live-feed-header i {
+            color: #ef4444;
+            animation: pulse-dot 1.2s ease-in-out infinite alternate;
         }
 
-        .assistant-chat-panel-frame {
-            position: fixed;
-            bottom: 110px;
-            right: 35px;
-            width: 380px;
-            height: 520px;
-            background: var(--bg-surface);
-            border: 1px solid var(--border-line);
-            border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
+        @keyframes pulse-dot {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .live-feed-value {
+            color: var(--color-light-green);
+        }
+
+        /* ---------------------------------------------------- */
+        /* PHYSIOLOGICAL STRESS INDEX SECTION                   */
+        /* ---------------------------------------------------- */
+        .formula-card {
+            background: rgba(34, 87, 122, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .formula-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--color-light-green);
+            margin-bottom: 20px;
             display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(15px);
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            z-index: 9998;
+            align-items: center;
+            gap: 12px;
         }
 
-        .assistant-chat-panel-frame.open {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
+        /* Monospace monospace formula box code-style background #22577A */
+        .monospace-box {
+            background: var(--color-deep-teal);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--color-light-green);
+            overflow-x: auto;
+            margin-bottom: 24px;
         }
 
-        .chat-header-bar {
-            background: rgba(255,255,255,0.01);
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-line);
+        .formula-note {
             font-size: 0.9rem;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
         }
 
-        .chat-messages-scroll-area {
-            flex-grow: 1;
-            padding: 20px;
-            overflow-y: auto;
+        /* 5-Tier stress scale design */
+        .tier-scale-card {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            color: #0b1f2b;
+        }
+
+        .tier-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--color-deep-teal);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tier-list {
             display: flex;
             flex-direction: column;
             gap: 14px;
         }
 
-        .msg-bubble-node {
-            padding: 10px 14px;
+        .tier-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.03);
             border-radius: 10px;
+            border-left: 5px solid;
+            transition: var(--transition-smooth);
+        }
+
+        .tier-item:hover {
+            transform: translateX(4px);
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .tier-range {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            min-width: 80px;
+        }
+
+        .tier-label {
+            font-weight: 600;
+            margin-right: 12px;
+            min-width: 140px;
+        }
+
+        .tier-desc {
             font-size: 0.85rem;
-            max-width: 85%;
-            line-height: 1.45;
+            color: #555555;
         }
 
-        .msg-bubble-node.bot {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border-line);
-            align-self: flex-start;
-            color: var(--text-primary);
+        /* Tier Colors matching palette */
+        .tier-1 { border-color: var(--color-very-light-green); color: #0d2f17; }
+        .tier-2 { border-color: var(--color-light-green); color: #0c2b18; }
+        .tier-3 { border-color: var(--color-mint); color: #092e21; }
+        .tier-4 { border-color: var(--color-teal); color: #0b2f30; }
+        .tier-5 { border-color: var(--color-deep-teal); color: var(--color-deep-teal); }
+
+        /* ---------------------------------------------------- */
+        /* INTERACTIVE PREVIEW & STRESS SIMULATOR               */
+        /* ---------------------------------------------------- */
+        .sim-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            color: #0b1f2b;
         }
 
-        .msg-bubble-node.user {
-            background: var(--neon-cyan);
-            color: #ffffff;
-            align-self: flex-end;
+        .sim-slider-group {
+            margin-bottom: 24px;
         }
 
-        /* Typing & Loading Animation Component */
-        .typing-indicator-dot-box {
+        .slider-header {
             display: flex;
-            gap: 4px;
-            padding: 6px 10px;
-            align-self: flex-start;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
-        .typing-dot {
-            width: 6px; height: 6px;
-            background: var(--text-secondary);
-            border-radius: 50%;
-            animation: pulseDots 1.4s infinite ease-in-out both;
-        }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        .chat-input-delivery-row {
-            padding: 16px;
-            border-top: 1px solid var(--border-line);
-            display: flex;
-            gap: 10px;
-            background: rgba(0,0,0,0.05);
+        .slider-header label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #444;
         }
 
-        .chat-input-delivery-row input {
-            flex-grow: 1;
-            background: rgba(255,255,255,0.02);
-            [data-theme="light"] & { background: rgba(0,0,0,0.02); }
-            border: 1px solid var(--border-line);
-            border-radius: 8px;
-            padding: 10px 14px;
-            color: var(--text-primary);
-            font-size: 0.85rem;
+        .slider-header span {
+            font-family: var(--font-mono);
+            color: var(--color-teal);
+        }
+
+        .sim-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
             outline: none;
+            background: #e0e0e0;
+            -webkit-appearance: none;
         }
 
-        .chat-input-delivery-row input:focus {
-            border-color: var(--neon-cyan);
+        .sim-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--color-teal);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(56, 163, 165, 0.5);
+            transition: transform 0.1s ease;
         }
 
-        /* Modern Form Framework Architecture styling */
-        .modern-form-row {
+        .sim-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .stress-gauge-wrapper {
+            text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            margin-bottom: 18px;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
 
-        .modern-form-row label {
+        .circular-gauge {
+            position: relative;
+            width: 220px;
+            height: 220px;
+        }
+
+        .gauge-svg {
+            width: 220px; height: 220px;
+            transform: rotate(-90deg);
+        }
+
+        .gauge-track {
+            fill: none;
+            stroke: #e2e8f0;
+            stroke-width: 16;
+        }
+
+        .gauge-fill {
+            fill: none;
+            stroke: var(--color-teal);
+            stroke-width: 16;
+            stroke-linecap: round;
+            stroke-dasharray: 628;
+            stroke-dashoffset: 628;
+            transition: stroke-dashoffset 0.3s ease, stroke 0.3s ease;
+        }
+
+        .gauge-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gauge-value {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: var(--font-headings);
+            line-height: 1;
+            color: #0b1f2b;
+        }
+
+        .gauge-label {
             font-size: 0.8rem;
-            font-weight: 600;
             text-transform: uppercase;
-            color: var(--text-secondary);
-            letter-spacing: 0.5px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: #777;
+            margin-top: 4px;
         }
 
-        .modern-form-row input, .modern-form-row select {
-            background: rgba(255,255,255,0.015);
-            [data-theme="light"] & { background: rgba(0,0,0,0.015); }
-            border: 1px solid var(--border-line);
-            color: var(--text-primary);
-            padding: 10px 12px;
-            border-radius: 8px;
-            outline: none;
+        .stress-tier-badge {
+            margin-top: 24px;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        /* ---------------------------------------------------- */
+        /* HARDWARE INTEGRATION SECTION                         */
+        /* ---------------------------------------------------- */
+        .hardware-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        @media (max-width: 768px) {
+            .hardware-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hw-card {
+            background: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: var(--transition-smooth);
+        }
+
+        .hw-card:hover {
+            transform: translateY(-5px);
+            background: #ffffff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .hw-icon-box {
+            font-size: 2.2rem;
+            color: var(--color-teal);
+            margin-bottom: 16px;
+        }
+
+        .hw-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hw-desc {
             font-size: 0.9rem;
+            color: #4a5568;
         }
 
-        .modern-form-row input:focus, .modern-form-row select:focus {
-            border-color: var(--neon-cyan);
+        /* ---------------------------------------------------- */
+        /* FOOTER & NEWSLETTER                                  */
+        /* ---------------------------------------------------- */
+        .footer-newsletter {
+            max-width: 600px;
+            margin: 0 auto 60px auto;
+            text-align: center;
         }
 
-        /* Animation Matrices Keyframe Loops Configuration */
-        @keyframes spinningSystem { to { transform: rotate(360deg); } }
-        @keyframes entranceAnimation { to { opacity: 1; transform: translateY(0); } }
-        @keyframes nodeInsertion { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        @keyframes pulseDots { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        .footer-newsletter h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .footer-newsletter p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 480px) {
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 14px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.08);
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition-hover);
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--color-light-green);
+            background: rgba(255,255,255,0.12);
+        }
+
+        .btn-submit {
+            background: var(--color-mint);
+            color: #0b1f2b;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-submit:hover {
+            background: var(--color-light-green);
+            transform: scale(1.03);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 40px;
+        }
+
+        @media (max-width: 580px) {
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            transition: var(--transition-hover);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-light-green);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.45);
+        }
     </style>
 </head>
 <body>
 
-    <canvas id="neuralParticlesCanvas" class="neural-background-canvas"></canvas>
-
-    <div id="global-loader-screen">
-        <div class="loader-ring-system"></div>
-        <div style="font-size:0.85rem; font-weight:800; letter-spacing:3px; color:var(--neon-cyan); margin-top:24px; text-transform:uppercase;">Nirvana OS</div>
-    </div>
-
-    <div id="app-dashboard-frame">
-        <header>
-            <div class="brand-title-box">
-                <h1>Nirvana <span>OS</span></h1>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; font-weight: 500;">AI-Powered Autonomic Health & Biometrics Dashboard</p>
+    <!-- Premium Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="brand-logo">
+                <i class="fa-solid fa-square-heart floating-accent" style="color: var(--color-mint);"></i>
+                Bio-Sync<span>.</span>
+            </a>
+            <div class="nav-links">
+                <a href="#metrics-section">Sensors</a>
+                <a href="#stress-section">Stress Index</a>
+                <a href="#simulator-section">Interactive Demo</a>
+                <a href="#hardware-section">Hardware</a>
+                <a href="/dashboard" class="btn-primary">
+                    View Live Dashboard
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </div>
-            <div class="control-actions-hub">
-                <button class="premium-sys-btn" onclick="openSystemModalWindow('settings-config-modal')">⚙️ Settings</button>
-                <button class="premium-sys-btn" onclick="togglePlatformColorPaletteTheme()">🌓 Toggle Theme</button>
-                <div style="font-size:0.8rem; font-weight:600; border:1px solid var(--border-line); padding:10px 18px; border-radius:8px; background:var(--bg-surface); color:var(--text-secondary);" id="live-runtime-timestamp">SYNCING TIME...</div>
-            </div>
-        </header>
+        </div>
+    </nav>
 
-        <section class="metrics-multichannel-grid">
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 1: HERO                                      -->
+    <!-- ---------------------------------------------------- */ -->
+    <section id="hero-section">
+        <div class="parallax-bg">
+            <div class="parallax-shape shape-1" data-speed="0.2"></div>
+            <div class="parallax-shape shape-2" data-speed="0.4"></div>
+        </div>
+        <div class="container grid-2">
+            <div class="hero-left scroll-fade">
+                <h1>
+                    Monitor Your Biology.<br>
+                    <span>Optimize Your Performance.</span>
+                </h1>
+                <p class="hero-subheading">
+                    Real-time AI-powered biometric stress monitoring built specifically for engineering students, medical students, athletes, and wellness-conscious professionals.
+                </p>
+                <p class="hero-body">
+                    Bio-Sync captures three critical biometric metrics in real-time: your heart rate variability, body movement patterns, and environmental light exposure. An AI regression model running on our backend calculates your physiological stress index every 2 seconds—giving you instant, actionable insights into your stress state.
+                </p>
+                <div class="hero-ctas">
+                    <a href="/dashboard" class="btn-primary hover-scale">Start Monitoring Now</a>
+                    <a href="#simulator-section" class="gradient-link">View Live Dashboard</a>
+                </div>
+            </div>
             
-            <div class="interactive-metric-card" onclick="triggerMetricInsightsInspection('heart_rate')">
-                <div class="card-header-label">Cardio Rhythm</div>
-                <div class="live-value-display"><div id="metric-txt-hr">--</div> <span>BPM</span></div>
-                <div class="biometric-pulse-line-wrapper">
-                    <canvas id="sparklineHR" class="sparkline-placeholder"></canvas>
-                </div>
-            </div>
-
-            <div class="interactive-metric-card card-purple" onclick="triggerMetricInsightsInspection('movement')">
-                <div class="card-header-label">Somatic Movement</div>
-                <div class="live-value-display"><div id="metric-txt-mv">--</div> <span>Hz</span></div>
-                <div class="biometric-pulse-line-wrapper">
-                    <canvas id="sparklineMV" class="sparkline-placeholder"></canvas>
-                </div>
-            </div>
-
-            <div class="interactive-metric-card card-rose" onclick="triggerMetricInsightsInspection('light')">
-                <div class="card-header-label">Ambient Light</div>
-                <div class="live-value-display"><div id="metric-txt-lt">--</div> <span>Lux</span></div>
-                <div class="biometric-pulse-line-wrapper">
-                    <canvas id="sparklineLT" class="sparkline-placeholder"></canvas>
-                </div>
-            </div>
-
-            <div class="interactive-metric-card card-amber" onclick="triggerMetricInsightsInspection('stress')">
-                <div class="card-header-label">Stress Index</div>
-                <div class="live-value-display"><div id="metric-txt-st">--</div> <span>Points</span></div>
-                <div class="biometric-pulse-line-wrapper">
-                    <canvas id="sparklineST" class="sparkline-placeholder"></canvas>
-                </div>
-            </div>
-
-        </section>
-
-        <div class="dashboard-body-architecture">
-            
-            <div class="analytical-panel-box">
-                <div class="panel-headline-row">
-                    <h3>📊 Live Biometric Waveforms</h3>
-                    <button class="premium-sys-btn" style="padding: 6px 12px; font-size: 0.75rem;" onclick="resetAnalyticalViewportScale()">RESET CHART ZOOM</button>
-                </div>
-                <div class="primary-viewport-container">
-                    <canvas id="nirvanMainChartCanvas"></canvas>
-                </div>
-            </div>
-
-            <div class="right-hand-column-stack">
-                
-                <div class="analytical-panel-box">
-                    <div class="panel-headline-row">
-                        <h3>🌙 Sleep Score</h3>
-                    </div>
-                    <div class="circular-gauge-container">
-                        <div style="position:relative; width:180px; height:180px;">
-                            <svg class="radial-score-svg" viewBox="0 0 160 160">
-                                <circle class="radial-track" cx="80" cy="80" r="70"></circle>
-                                <circle class="radial-progress-bar" id="radialGaugeIndicatorBar" cx="80" cy="80" r="70"></circle>
-                            </svg>
-                            <div style="position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                                <span style="font-size:2.2rem; font-weight:800; letter-spacing:-1px;" id="radial-gauge-score-txt">--%</span>
-                                <span style="font-size:0.65rem; text-transform:uppercase; color:var(--text-secondary); letter-spacing:1px; font-weight:700;" id="user-profile-name-badge">PATIENT CORE</span>
-                            </div>
+            <div class="center-graphic scroll-fade stagger-2">
+                <div class="orbital-wrapper">
+                    <div class="radar-sweep"></div>
+                    <div class="orbital-ring">
+                        <!-- Sensor node icons rotating around -->
+                        <div class="orbital-node node-1" title="MAX30102 Heart Rate Sensor">
+                            <i class="fa-solid fa-heart-pulse"></i>
                         </div>
-                        <div style="margin-top:20px; font-size:0.85rem; font-weight:700; color:var(--neon-cyan); text-transform:uppercase; letter-spacing:0.5px;" id="metric-txt-stage">STAGE: SYNCHRONIZING</div>
+                        <div class="orbital-node node-2" title="MPU6050 Accelerometer">
+                            <i class="fa-solid fa-wave-square"></i>
+                        </div>
+                        <div class="orbital-node node-3" title="LDR Photoresistor Light Sensor">
+                            <i class="fa-solid fa-sun"></i>
+                        </div>
+                    </div>
+                    <!-- Core centerpiece representing Bio-Sync Intelligence -->
+                    <div style="position: absolute; inset: 40px; border-radius: 50%; background: radial-gradient(circle, rgba(87,204,153,0.12) 0%, rgba(0,0,0,0) 80%); display: flex; align-items: center; justify-content: center;">
+                        <div style="width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.02); border: 2px solid var(--color-mint); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(87, 204, 153, 0.3);">
+                            <span style="font-family: var(--font-headings); font-weight: 800; font-size: 1.1rem; color: #ffffff; letter-spacing: 1px;">AI CORE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 2: THREE CORE METRICS                        -->
+    <!-- ---------------------------------------------------- -->
+    <section id="metrics-section">
+        <div class="container">
+            <div class="section-header scroll-fade">
+                <h2>Three Sensors. Infinite Insights.</h2>
+                <p>Bio-Sync integrates three clinical-grade sensors that transmit biometric data every 2 seconds. This real-time fusion creates a comprehensive picture of your physiological state.</p>
+            </div>
+            
+            <div class="grid-3">
+                <!-- CARD 1: Cardio Rhythm -->
+                <div class="metric-card card-cardio slide-in-left">
+                    <div>
+                        <div class="metric-icon-box">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <h3 class="metric-title">Cardio Rhythm</h3>
+                        <span class="metric-hw-badge">MAX30102 Optical Sensor</span>
+                        <p class="metric-desc">
+                            Measures real-time heart rate variability using an optical pulse sensor placed on the wrist or chest. Heart rate reflects your sympathetic nervous system activation (stress) and parasympathetic dominance (recovery). Baseline ranges 60–100 BPM.
+                        </p>
+                    </div>
+                    <div class="metric-live-feed">
+                        <div class="live-feed-header">
+                            <i class="fa-solid fa-circle"></i> Live Stream Feed
+                        </div>
+                        <div>Current: <span class="live-feed-value" id="live-cardio-current">78 BPM</span></div>
+                        <div style="color: rgba(255,255,255,0.5);">Baseline: 62 BPM | Status: Elevated</div>
                     </div>
                 </div>
 
-                <div class="analytical-panel-box">
-                    <div class="panel-headline-row">
-                        <h3>🧠 AI Diagnostics & Insights</h3>
+                <!-- CARD 2: Actigraphy Kinetics -->
+                <div class="metric-card card-kinetics scroll-fade stagger-1">
+                    <div>
+                        <div class="metric-icon-box">
+                            <i class="fa-solid fa-wave-square"></i>
+                        </div>
+                        <h3 class="metric-title">Actigraphy Kinetics</h3>
+                        <span class="metric-hw-badge">MPU6050 Accelerometer</span>
+                        <p class="metric-desc">
+                            Detects subtle body movements and postural changes using a tri-axial accelerometer. Movement frequency increases during stress episodes and decreases during deep sleep. Measures activity in the 0–5 Hz range.
+                        </p>
                     </div>
-                    <div class="diagnostic-alerts-feed-wrapper" id="ui-alerts-injector-node">
-                        <div class="insight-node-banner">Awaiting connection. Calibrating real-time physiological algorithms...</div>
+                    <div class="metric-live-feed">
+                        <div class="live-feed-header">
+                            <i class="fa-solid fa-circle"></i> Live Stream Feed
+                        </div>
+                        <div>Current: <span class="live-feed-value" id="live-kinetics-current">1.4 Hz</span></div>
+                        <div style="color: rgba(255,255,255,0.5);">Movement: Moderate | Disruption: Low</div>
                     </div>
-                    <div class="diagnostic-alerts-feed-wrapper" id="ui-insights-injector-node" style="margin-top:10px; border-top:1px dashed var(--border-line); padding-top:10px;"></div>
                 </div>
 
+                <!-- CARD 3: Environmental Lux -->
+                <div class="metric-card card-lux slide-in-right">
+                    <div>
+                        <div class="metric-icon-box">
+                            <i class="fa-solid fa-sun-bright"></i>
+                        </div>
+                        <h3 class="metric-title">Environmental Lux</h3>
+                        <span class="metric-hw-badge">LDR Photoresistor</span>
+                        <p class="metric-desc">
+                            Monitors ambient light levels in your environment. Blue light exposure after 11 PM suppresses melatonin production and delays sleep onset. Lux measurement (0–1000+) helps optimize your circadian rhythm and sleep hygiene.
+                        </p>
+                    </div>
+                    <div class="metric-live-feed">
+                        <div class="live-feed-header">
+                            <i class="fa-solid fa-circle"></i> Live Stream Feed
+                        </div>
+                        <div>Current: <span class="live-feed-value" id="live-lux-current">320 Lux</span></div>
+                        <div style="color: rgba(255,255,255,0.5);">Photic Threat (>11 PM): Minimal</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <button class="floating-chat-trigger-icon" onclick="toggleNirvanNeuralAssistantPanel()">💬</button>
-    <div class="assistant-chat-panel-frame" id="nirvanChatbotDrawerBox">
-        <div class="chat-header-bar">
-            <span>Nirvana Assistant</span>
-            <span style="cursor:pointer;" onclick="toggleNirvanNeuralAssistantPanel()">✕</span>
-        </div>
-        <div class="chat-messages-scroll-area" id="chatLogsScrollerBox">
-            <div class="msg-bubble-node bot">Platform initialization complete. I can analyze biological patterns, environmental factors, or the status of your machine learning models. How can I assist you today?</div>
-        </div>
-        <div class="chat-input-delivery-row">
-            <input type="text" id="chatTextInputField" placeholder="Ask about sleep stages, stress levels, etc..." onkeydown="if(event.key==='Enter') transmitUserChatPayload()">
-            <button class="premium-sys-btn" style="padding: 10px 16px; background: var(--neon-cyan); color: #ffffff; border-color: var(--neon-cyan);" onclick="transmitUserChatPayload()">Send</button>
-        </div>
-    </div>
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 3: PHYSIOLOGICAL STRESS INDEX                -->
+    <!-- ---------------------------------------------------- -->
+    <section id="stress-section">
+        <div class="container">
+            <div class="section-header scroll-fade" style="color: #0b1f2b;">
+                <h2>Physiological Stress Index</h2>
+                <p>Your three biometric inputs feed into a real-time linear regression model running on our Flask backend. The model calculates your Physiological Stress Index (0–100 scale) every 2 seconds using a trained AI algorithm.</p>
+            </div>
+            
+            <div class="grid-2" style="margin-bottom: 60px;">
+                <!-- Formula code box -->
+                <div class="formula-card scroll-fade">
+                    <div class="formula-title">
+                        <i class="fa-solid fa-calculator-simple"></i>
+                        Real-Time Regression Model
+                    </div>
+                    <div class="monospace-box">
+Stress Index = β₀ + β₁(BPM) + β₂(Movement_Hz) + β₃(Lux)
 
-    <div class="sliding-overlay-modal" id="metric-inspection-overlay-panel">
-        <div class="premium-modal-window">
-            <div class="modal-headline-block">
-                <h2 id="modal-metric-title">Metric Insights</h2>
-                <span class="modal-close-trigger" onclick="closeSystemModalWindow('metric-inspection-overlay-panel')">✕</span>
-            </div>
-            <div class="metric-details-grid-content" id="modal-metric-body-grid">
-            </div>
-        </div>
-    </div>
+Current Model Coefficients:
+β₀ (Baseline Stress) = 12.4
+β₁ (Heart Rate Weight) = +0.38 (higher BPM → higher stress)
+β₂ (Movement Weight) = +2.1 (more movement → higher stress)
+β₃ (Light Weight) = -0.08 (more light → lower stress)
 
-    <div class="sliding-overlay-modal" id="settings-config-modal">
-        <div class="premium-modal-window">
-            <div class="modal-headline-block">
-                <h2>⚙️ Profile & System Settings</h2>
-                <span class="modal-close-trigger" onclick="closeSystemModalWindow('settings-config-modal')">✕</span>
+Model Performance:
+R² Score = 0.84 (84% variance explained)
+Mean Absolute Error = 4.2 points
+Training Data = 200+ labeled sessions
+                    </div>
+                    <p class="formula-note">
+                        *Coefficients dynamically optimize in real-time as your training data increases, adjusting automatically for personalized biological baselines.
+                    </p>
+                </div>
+
+                <!-- 5-Tier stress scale card -->
+                <div class="tier-scale-card scroll-fade stagger-2">
+                    <div class="tier-title">
+                        <i class="fa-solid fa-circle-nodes"></i>
+                        Your Stress Response Scale
+                    </div>
+                    
+                    <div class="tier-list">
+                        <div class="tier-item tier-1">
+                            <span class="tier-range">00 – 20</span>
+                            <span class="tier-label">Deep Recovery</span>
+                            <span class="tier-desc">Parasympathetic dominance. Cellular rest, active deep sleep Stage N3 restoration.</span>
+                        </div>
+                        <div class="tier-item tier-2">
+                            <span class="tier-range">21 – 40</span>
+                            <span class="tier-label">Focused Alertness</span>
+                            <span class="tier-desc">Optimal neural pathways. Peak concentration and academic productivity.</span>
+                        </div>
+                        <div class="tier-item tier-3">
+                            <span class="tier-range">41 – 60</span>
+                            <span class="tier-label">Active Engagement</span>
+                            <span class="tier-desc">Normal cognitive workload. General daily operations under normal alerts.</span>
+                        </div>
+                        <div class="tier-item tier-4">
+                            <span class="tier-range">61 – 80</span>
+                            <span class="tier-label">Physiological Strain</span>
+                            <span class="tier-desc">Elevated somatic kinetics, photic disruption, or heart rate pacing anomalies.</span>
+                        </div>
+                        <div class="tier-item tier-5">
+                            <span class="tier-range">81 – 100</span>
+                            <span class="tier-label">Somatic Overload</span>
+                            <span class="tier-desc">Autonomic nervous strain. Elevated Tachycardic threats. Action required.</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-                <div class="modern-form-row">
-                    <label>Full Name</label>
-                    <input type="text" id="cfg-user-name" value="Alex Mercer">
+
+            <!-- Stats Dynamic Counter Row -->
+            <div class="grid-3" style="margin-top: 40px;">
+                <div class="stat-card scroll-fade">
+                    <div class="stat-value" id="stat-polling">0</div>
+                    <div class="stat-label">Telemetry Polling Rate (s)</div>
                 </div>
-                <div class="modern-form-row">
-                    <label>Age (Years)</label>
-                    <input type="number" id="cfg-user-age" value="23">
+                <div class="stat-card scroll-fade stagger-1">
+                    <div class="stat-value" id="stat-r2">0</div>
+                    <div class="stat-label">Model Variance R² Score</div>
                 </div>
-            </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-                <div class="modern-form-row">
-                    <label>Daily Sleep Goal</label>
-                    <select id="cfg-sleep-goal">
-                        <option value="6">6 Hours</option>
-                        <option value="7">7 Hours</option>
-                        <option value="8" selected>8 Hours</option>
-                        <option value="9">9 Hours</option>
-                    </select>
+                <div class="stat-card scroll-fade stagger-2">
+                    <div class="stat-value" id="stat-sessions">0</div>
+                    <div class="stat-label">Trained Academic Sessions</div>
                 </div>
-                <div class="modern-form-row">
-                    <label>Data Polling Rate</label>
-                    <select id="cfg-refresh-interval">
-                        <option value="2000" selected>2 Seconds (Real-Time)</option>
-                        <option value="5000">5 Seconds (Balanced)</option>
-                        <option value="10000">10 Seconds (Power Save)</option>
-                    </select>
-                </div>
-            </div>
-            <div style="display:flex; justify-content:flex-end; gap:14px; margin-top:20px; border-top:1px solid var(--border-line); padding-top:20px;">
-                <button class="premium-sys-btn" style="background:transparent; border:none;" onclick="closeSystemModalWindow('settings-config-modal')">Cancel</button>
-                <button class="premium-sys-btn" style="background:var(--neon-cyan); color:#ffffff; font-weight:600; border-color:var(--neon-cyan);" onclick="commitPlatformConfigurationSettings()">Save Changes</button>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 4: INTERACTIVE PREVIEW & STRESS SIMULATOR   -->
+    <!-- ---------------------------------------------------- -->
+    <section id="simulator-section">
+        <div class="container">
+            <div class="section-header scroll-fade" style="color: #0c2b18;">
+                <h2>Interactive ML Stress Simulator</h2>
+                <p>Drag the sliders below to adjust your biometric parameters in real-time. Witness how the multivariate AI regression backend models and evaluates stress metrics instantaneously.</p>
+            </div>
+
+            <div class="grid-2">
+                <!-- Sliders Controls -->
+                <div class="sim-card scroll-fade">
+                    <div class="sim-slider-group">
+                        <div class="slider-header">
+                            <label for="slider-hr">Cardio Rhythm (Heart Rate)</label>
+                            <span><span id="val-hr">75</span> BPM</span>
+                        </div>
+                        <input type="range" id="slider-hr" class="sim-slider" min="50" max="130" value="75">
+                    </div>
+
+                    <div class="sim-slider-group">
+                        <div class="slider-header">
+                            <label for="slider-mv">Actigraphy Kinetics (Body Motion)</label>
+                            <span><span id="val-mv">1.5</span> Hz</span>
+                        </div>
+                        <input type="range" id="slider-mv" class="sim-slider" min="0" max="10" step="0.1" value="1.5">
+                    </div>
+
+                    <div class="sim-slider-group">
+                        <div class="slider-header">
+                            <label for="slider-lt">Environmental Lux (Ambient Light)</label>
+                            <span><span id="val-lt">150</span> Lux</span>
+                        </div>
+                        <input type="range" id="slider-lt" class="sim-slider" min="0" max="800" value="150">
+                    </div>
+                    
+                    <div style="margin-top: 32px; border-top: 1px solid rgba(0, 0, 0, 0.08); padding-top: 24px;">
+                        <h4 style="font-size: 1rem; margin-bottom: 8px; font-weight: 700; color: var(--color-deep-teal);">Mathematical Regression Execution:</h4>
+                        <div style="font-family: var(--font-mono); font-size: 0.78rem; background: #eaeaea; padding: 12px; border-radius: 8px; color: #333;" id="formula-math-print">
+                            Stress = 12.4 + 0.38*(75) + 2.1*(1.5) - 0.08*(150)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Circular Gauge Readout -->
+                <div class="scroll-fade stagger-2" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <div class="sim-card" style="width: 100%; max-width: 380px; padding: 40px; display: flex; flex-direction: column; align-items: center;">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 24px; color: var(--color-deep-teal);">Live Model Output</h3>
+                        <div class="stress-gauge-wrapper">
+                            <div class="circular-gauge">
+                                <svg class="gauge-svg" viewBox="0 0 220 220">
+                                    <circle class="gauge-track" cx="110" cy="110" r="100"></circle>
+                                    <circle class="gauge-fill" id="gauge-indicator" cx="110" cy="110" r="100"></circle>
+                                </svg>
+                                <div class="gauge-content">
+                                    <span class="gauge-value" id="stress-index-value">32.1</span>
+                                    <span class="gauge-label">Stress Index</span>
+                                </div>
+                            </div>
+                            <div class="stress-tier-badge" id="stress-tier-display">Focused Alertness</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 5: HARDWARE SPEC SHEET                       -->
+    <!-- ---------------------------------------------------- -->
+    <section id="hardware-section">
+        <div class="container">
+            <div class="section-header scroll-fade" style="color: #0d2f17;">
+                <h2>Open Source Hardware Integration</h2>
+                <p>Bio-Sync is engineered entirely on medical-grade open hardware modules, giving students and researchers full architectural control to audit and build physiological systems.</p>
+            </div>
+
+            <div class="hardware-grid">
+                <div class="hw-card scroll-fade">
+                    <div class="hw-icon-box">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h3 class="hw-title">ESP32 Dev Module</h3>
+                    <p class="hw-desc">Integrates dynamic 240MHz dual-core processing speed with low-power Wi-Fi pathways to transmit telemetry biometrics every 2 seconds without high energy draw.</p>
+                </div>
+                <div class="hw-card scroll-fade stagger-1">
+                    <div class="hw-icon-box">
+                        <i class="fa-solid fa-sensor-on"></i>
+                    </div>
+                    <h3 class="hw-title">Clinical Biometrics</h3>
+                    <p class="hw-desc">Uses MAX30102 multi-wavelength photoplethysmography (PPG) arrays to measure red and infrared reflection, tracking Cardio Rhythm and HRV trends.</p>
+                </div>
+                <div class="hw-card scroll-fade stagger-2">
+                    <div class="hw-icon-box">
+                        <i class="fa-solid fa-chart-network"></i>
+                    </div>
+                    <h3 class="hw-title">Multi-channel Data</h3>
+                    <p class="hw-desc">Fused actigraphy via MPU6050 accelerometer and ambient light arrays using LDR sensors maps comprehensive physiological reactions directly on the Flask AI engine.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 6: FOOTER                                    -->
+    <!-- ---------------------------------------------------- -->
+    <footer>
+        <div class="container">
+            <div class="footer-newsletter scroll-fade">
+                <h3>Subscribe to Bio-Sync Research</h3>
+                <p>Stay up to date with new developments in physiological monitoring, machine learning models, and cognitive focus optimizations.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+                    <input type="email" placeholder="Enter your academic email" required>
+                    <button type="submit" class="btn-submit">Subscribe</button>
+                </form>
+            </div>
+
+            <div class="footer-links">
+                <a href="#metrics-section">Sensor Metrics</a>
+                <a href="#stress-section">Stress Regression Algorithm</a>
+                <a href="#simulator-section">Interactive Demo</a>
+                <a href="/dashboard">Telemetry Dashboard</a>
+                <a href="https://github.com" target="_blank">GitHub Repository</a>
+            </div>
+
+            <p class="footer-copyright">&copy; 2026 Bio-Sync Project. Open Source Medical-grade Biometrics for Academic Research.</p>
+        </div>
+    </footer>
 
     <script>
-        /* State Variables Storage Hub */
-        let primaryLineChartInstance = null;
-        let pollingIntervalTimerRef = null;
-        const sparklineInstancesDictionary = {};
+        // ----------------------------------------------------
+        // 1. SCROLL TRIGGER ANIMATIONS ENGINE
+        // ----------------------------------------------------
+        document.addEventListener("DOMContentLoaded", () => {
+            // Scroll Fade & Slide-In card observer
+            const scrollElements = document.querySelectorAll(".scroll-fade, .slide-in-left, .slide-in-right");
 
-        const metricExplainsDatabase = {
-            heart_rate: {
-                title: "Cardio Rhythm Telemetry (BPM)",
-                meaning: "Measures cardiac cycles per minute to reflect autonomic nervous system balance.",
-                logic: "Calculated directly using multi-wavelength photoplethysmography (PPG) infrared sensor matrices.",
-                formula: "BPM = (Total Pulse Peaks Captured / Tracking Frame Duration in Seconds) * 60",
-                ranges: "Optimal Rest Baseline: 55 - 75 BPM. Tachycardia Zone: Above 100 BPM.",
-                impacts: "Directly affected by somatic motion transitions, psychological stressors, and ambient temperature deviations.",
-                medical: "Key for mapping heart rate variability (HRV) and confirming transition into restorative stage N3 sleep.",
-                advice: "Avoid caffeine consumption 6 hours before your rest target to keep nocturnal cardiovascular patterns stable."
-            },
-            movement: {
-                title: "Actigraphy Kinetics Monitoring",
-                meaning: "Tracks physical displacement during rest cycles to detect micro-arousals and body position shifts.",
-                logic: "Monitors positional deviations using micro-electromechanical (MEMS) tri-axial accelerometer systems.",
-                formula: "Hz Frequency = sqrt(Delta_X^2 + Delta_Y^2 + Delta_Z^2) integrated over time.",
-                ranges: "Quiescent Baseline: 0 - 2 Hz. Elevated Activity Flux: Above 6 Hz.",
-                impacts: "Driven by physical discomfort, restless legs syndrome vectors, sleep transitions, or external disruptions.",
-                medical: "Essential for marking borders between wakefulness, REM phases, and deep non-REM structures.",
-                advice: "Ensure your sleep environment uses adaptive memory foam materials to help lower body alignment adjustments."
-            },
-            light: {
-                title: "Ambient Environmental Luminescence",
-                meaning: "Monitors light pollution levels affecting your sleep environment.",
-                logic: "Captured using a high-sensitivity silicon photodiode sensor array with custom lux tracking ranges.",
-                formula: "Lux Output = Captured Photonic Volumetric Current * Calibration Variable Factor",
-                ranges: "Optimal Environment: Below 10 Lux. Sleep Disturbance Threshold: Above 100 Lux.",
-                impacts: "Affected by electronic screens, unshielded windows, smart device indicators, or morning transitions.",
-                medical: "Directly regulates circadian pacing by managing melatonin suppression pathways in the brain.",
-                advice: "Install black-out window panels to keep light interference at 0 Lux throughout your rest cycle."
-            },
-            stress: {
-                title: "Predictive ML Stress Analytics",
-                meaning: "Real-time mathematical estimation of physiological stress markers across all telemetry layers.",
-                logic: "Calculated continuously by applying a multivariate linear regression model across our live biometric parameters.",
-                formula: "$Stress Score = (HR * 0.26) + (Kinetics * 4.6) + (Lux * 0.015)$",
-                ranges: "Optimal Adaptation: 0 - 35 Index Points. Systemic Overload: Above 75 Index Points.",
-                impacts: "Calculated automatically based on sudden spikes in heart rate occurring during high kinetic activity windows.",
-                medical: "Evaluates autonomic strain to predict overall recovery efficiency and prevent sleep fragmentation.",
-                advice: "Try 5 minutes of guided box breathing if your index consistently runs high during your pre-rest cycles."
-            }
-        };
-
-        /* Background Particle System Canvas Animation Loops Configuration */
-        function initializeNeuralBackgroundGenerator() {
-            // Particle generator disabled to optimize CPU and de-vibecode UI.
-        }
-
-        /* Chart.js Dynamic Initializations Logic Block */
-        function buildHighTierCoreVisualizerChart() {
-            const ctx = document.getElementById('nirvanMainChartCanvas').getContext('2d');
-            
-            // Clean Modern Gradient Fills
-            const cyanGrad = ctx.createLinearGradient(0, 0, 0, 350);
-            cyanGrad.addColorStop(0, 'rgba(59, 130, 246, 0.25)');
-            cyanGrad.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
-
-            const purpleGrad = ctx.createLinearGradient(0, 0, 0, 350);
-            purpleGrad.addColorStop(0, 'rgba(99, 102, 241, 0.25)');
-            purpleGrad.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
-
-            primaryLineChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [
-                        {
-                            label: 'Cardio Rhythm (BPM)',
-                            data: [],
-                            borderColor: '#3b82f6',
-                            borderWidth: 3,
-                            fill: true,
-                            backgroundColor: cyanGrad,
-                            tension: 0.4,
-                            pointRadius: 2,
-                            pointHoverRadius: 7,
-                            pointHoverBackgroundColor: '#3b82f6',
-                            yAxisID: 'y-axis-cardio'
-                        },
-                        {
-                            label: 'Actigraphy Movement (Hz)',
-                            data: [],
-                            borderColor: '#6366f1',
-                            borderWidth: 3,
-                            fill: true,
-                            backgroundColor: purpleGrad,
-                            tension: 0.4,
-                            pointRadius: 2,
-                            pointHoverRadius: 7,
-                            pointHoverBackgroundColor: '#6366f1',
-                            yAxisID: 'y-axis-motion'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animations: {
-                        tension: { duration: 600, easing: 'linear' }
-                    },
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    plugins: {
-                        legend: {
-                            labels: { color: 'rgba(148, 163, 184, 0.8)', font: { family: 'Inter', size: 12, weight: 600 } }
-                        },
-                        tooltip: {
-                            enabled: true,
-                            backgroundColor: 'rgba(17, 24, 39, 0.95)',
-                            titleFont: { family: 'Inter', size: 12, weight: 700 },
-                            bodyFont: { family: 'Inter', size: 12 },
-                            borderColor: '#3b82f6',
-                            borderWidth: 1,
-                            padding: 14,
-                            cornerRadius: 8,
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.parsed.y;
-                                    const datasetName = context.dataset.label;
-                                    let summary = "";
-                                    
-                                    if(datasetName.includes("Cardio")) {
-                                        const status = value > 90 ? "Elevated Strain Pattern" : "Normal Resting Rhythm";
-                                        summary = `\nVal: ${value} BPM\nStatus: ${status}\nInsight: Tracks cellular recovery stability.`;
-                                    } else {
-                                        const status = value > 5 ? "Somatic Disruption" : "Stable Deep Atrophy";
-                                        summary = `\nVal: ${value} Hz\nStatus: ${status}\nInsight: Tracks physical body position adjustments.`;
-                                    }
-                                    return summary;
-                                }
-                            }
-                        },
-                        zoom: {
-                            pan: { enabled: true, mode: 'x' },
-                            zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#64748b', font: { family: 'Inter', size: 10 } }
-                        },
-                        'y-axis-cardio': {
-                            type: 'linear',
-                            position: 'left',
-                            min: 40, max: 140,
-                            grid: { color: 'rgba(255,255,255,0.03)' },
-                            ticks: { color: '#3b82f6' }
-                        },
-                        'y-axis-motion': {
-                            type: 'linear',
-                            position: 'right',
-                            min: 0, max: 12,
-                            grid: { display: false },
-                            ticks: { color: '#6366f1' }
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        // Trigger stats counter animations specifically if it's the stress section in view
+                        if (entry.target.id === "stress-section" || entry.target.contains(document.getElementById("stat-polling"))) {
+                            triggerStatsCounters();
                         }
                     }
-                }
-            });
-        }
-
-        function buildMiniatureSparklineElementNode(elementId, colorHex) {
-            const ctx = document.getElementById(elementId).getContext('2d');
-            return new Chart(ctx, {
-                type: 'line',
-                data: { labels: Array(10).fill(''), datasets: [{ data: [], borderColor: colorHex, borderWidth: 2, pointRadius: 0, fill: false, tension: 0.4 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { enabled: false } }, scales: { x: { display: false }, y: { display: false } } }
-            });
-        }
-
-        function resetAnalyticalViewportScale() {
-            if (primaryLineChartInstance) primaryLineChartInstance.resetZoom();
-        }
-
-        /* Metric Detail Modals Construction Logic Engine */
-        function triggerMetricInsightsInspection(metricId) {
-            const targetData = metricExplainsDatabase[metricId];
-            if (!targetData) return;
-
-            document.getElementById('modal-metric-title').innerText = targetData.title;
-            
-            const gridHTML = `
-                <div class="content-subnode-item">
-                    <h4>Definition</h4>
-                    <p>${targetData.meaning}</p>
-                </div>
-                <div class="content-subnode-item">
-                    <h4>Calculation Strategy</h4>
-                    <p>${targetData.logic}</p>
-                </div>
-                <div class="content-subnode-item">
-                    <h4>Algorithmic Expression</h4>
-                    <p style="font-family:'Orbitron', monospace; font-size:0.75rem; color:var(--neon-cyan);">${targetData.formula}</p>
-                </div>
-                <div class="content-subnode-item">
-                    <h4>Physiological Index Thresholds</h4>
-                    <p>${targetData.ranges}</p>
-                </div>
-                <div class="content-subnode-item">
-                    <h4>External Variables Affected</h4>
-                    <p>${targetData.impacts}</p>
-                </div>
-                <div class="content-subnode-item">
-                    <h4>Clinical Importance</h4>
-                    <p>${targetData.medical}</p>
-                </div>
-                <div class="content-subnode-item" style="grid-column: span 2;">
-                    <h4>AI Healthcare Guidance Recommendation</h4>
-                    <p style="color:var(--neon-amber); font-weight:600;">✨ ${targetData.advice}</p>
-                </div>
-            `;
-            
-            document.getElementById('modal-metric-body-grid').innerHTML = gridHTML;
-            openSystemModalWindow('metric-inspection-overlay-panel');
-        }
-
-        function openSystemModalWindow(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-
-        function closeSystemModalWindow(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        /* Modern Settings Operations Managers System */
-        function commitPlatformConfigurationSettings() {
-            const userName = document.getElementById('cfg-user-name').value;
-            const age = document.getElementById('cfg-user-age').value;
-            const sleepGoal = document.getElementById('cfg-sleep-goal').value;
-            const pollingSpeed = document.getElementById('cfg-refresh-interval').value;
-
-            localStorage.setItem('nirvan_name', userName);
-            localStorage.setItem('nirvan_age', age);
-            localStorage.setItem('nirvan_goal', sleepGoal);
-            localStorage.setItem('nirvan_speed', pollingSpeed);
-
-            document.getElementById('user-profile-name-badge').innerText = userName.toUpperCase();
-            
-            closeSystemModalWindow('settings-config-modal');
-            reinitializeDataPollingSchedule();
-        }
-
-        function hydrationProfileSettingsFromStorage() {
-            if(localStorage.getItem('nirvan_name')) {
-                document.getElementById('cfg-user-name').value = localStorage.getItem('nirvan_name');
-                document.getElementById('cfg-user-age').value = localStorage.getItem('nirvan_age');
-                document.getElementById('cfg-sleep-goal').value = localStorage.getItem('nirvan_goal');
-                document.getElementById('cfg-refresh-interval').value = localStorage.getItem('nirvan_speed');
-                document.getElementById('user-profile-name-badge').innerText = localStorage.getItem('nirvan_name').toUpperCase();
-            }
-        }
-
-        /* Color Management System Configurations */
-        function togglePlatformColorPaletteTheme() {
-            const activeTheme = document.documentElement.getAttribute('data-theme');
-            const targetTheme = activeTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', targetTheme);
-            localStorage.setItem('nirvan_theme', targetTheme);
-        }
-
-        function hydrateThemePreferences() {
-            const cachedTheme = localStorage.getItem('nirvan_theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', cachedTheme);
-        }
-
-        /* AI Assistant Engine Interface Panels Implementation */
-        function toggleNirvanNeuralAssistantPanel() {
-            document.getElementById('nirvanChatbotDrawerBox').classList.toggle('open');
-        }
-
-        async function transmitUserChatPayload() {
-            const inputField = document.getElementById('chatTextInputField');
-            const logsArea = document.getElementById('chatLogsScrollerBox');
-            const text = inputField.value.trim();
-            if(!text) return;
-
-            // Render User Bubble
-            logsArea.innerHTML += `<div class="msg-bubble-node user">${text}</div>`;
-            inputField.value = "";
-            logsArea.scrollTop = logsArea.scrollHeight;
-
-            // Render Animated Loader Dots
-            const loaderId = 'loader_' + Date.now();
-            logsArea.innerHTML += `
-                <div class="typing-indicator-dot-box" id="${loaderId}">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
-            `;
-            logsArea.scrollTop = logsArea.scrollHeight;
-
-            try {
-                const res = await fetch("/chat", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({message: text})
                 });
-                const data = await res.json();
-                
-                document.getElementById(loaderId).remove();
-                logsArea.innerHTML += `<div class="msg-bubble-node bot">${data.reply}</div>`;
-            } catch {
-                document.getElementById(loaderId).remove();
-                logsArea.innerHTML += `<div class="msg-bubble-node bot">Transmission failure inside local routing node arrays.</div>`;
+            }, {
+                threshold: 0.15 // Trigger when 15% is visible
+            });
+
+            scrollElements.forEach(el => scrollObserver.observe(el));
+
+            // Parallax Scroll Effect
+            window.addEventListener("scroll", () => {
+                const scrolled = window.pageYOffset;
+                const parallaxShapes = document.querySelectorAll(".parallax-shape");
+                parallaxShapes.forEach(shape => {
+                    const speed = shape.getAttribute("data-speed") || 0.3;
+                    shape.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+
+            // ----------------------------------------------------
+            // 2. STATISTICS COUNTERS ANIMATION ENGINE
+            // ----------------------------------------------------
+            let statsCounted = false;
+            function triggerStatsCounters() {
+                if (statsCounted) return;
+                statsCounted = true;
+
+                animateCounter("stat-polling", 0, 2.0, 2000, 1);
+                animateCounter("stat-r2", 0, 84, 2000, 0, "%");
+                animateCounter("stat-sessions", 0, 240, 2000, 0, "+");
             }
-            logsArea.scrollTop = logsArea.scrollHeight;
-        }
 
-        /* High-Performance Analytics Dynamic Engine Polling Pipeline */
-        async function runPlatformDataSyncCycle() {
-            try {
-                const dataRes = await fetch("/data");
-                const historicalRecords = await dataRes.json();
+            function animateCounter(id, start, end, duration, decimals = 0, suffix = "") {
+                const obj = document.getElementById(id);
+                if (!obj) return;
+                const range = end - start;
+                const minTimer = 50;
+                let stepTime = Math.abs(Math.floor(duration / range));
+                stepTime = Math.max(stepTime, minTimer);
+                const startTime = new Date().getTime();
+                const endTime = startTime + duration;
+                let timer;
 
-                if(historicalRecords && historicalRecords.length > 0) {
-                    const activeFrame = historicalRecords[historicalRecords.length - 1];
-
-                    // Hydrate Text Interfaces
-                    document.getElementById('metric-txt-hr').innerText = activeFrame.heart_rate;
-                    document.getElementById('metric-txt-mv').innerText = activeFrame.movement;
-                    document.getElementById('metric-txt-lt').innerText = activeFrame.light;
-                    document.getElementById('metric-txt-st').innerText = activeFrame.stress;
-
-                    // Hydrate Main Complex Visualization Plotting Arrays
-                    primaryLineChartInstance.data.labels = historicalRecords.map(r => r.timestamp);
-                    primaryLineChartInstance.data.datasets[0].data = historicalRecords.map(r => r.heart_rate);
-                    primaryLineChartInstance.data.datasets[1].data = historicalRecords.map(r => r.movement);
-                    primaryLineChartInstance.update('none'); // Update without full layout recalculations
-
-                    // Hydrate Sparklines Components Arrays
-                    updateSparklineDataset(sparklineInstancesDictionary.hr, historicalRecords.map(r => r.heart_rate));
-                    updateSparklineDataset(sparklineInstancesDictionary.mv, historicalRecords.map(r => r.movement));
-                    updateSparklineDataset(sparklineInstancesDictionary.lt, historicalRecords.map(r => r.light));
-                    updateSparklineDictionaryStress(sparklineInstancesDictionary.st, historicalRecords.map(r => r.stress));
-                }
-            } catch (err) { console.log("Connecting with live biometric data stream..."); }
-
-            try {
-                const predictRes = await fetch("/predict");
-                if(predictRes.ok) {
-                    const payload = await predictRes.json();
-
-                    const score = payload.sleep_score;
-                    document.getElementById('radial-gauge-score-txt').innerText = score + "%";
-                    document.getElementById('metric-txt-stage').innerText = `✨ ${payload.sleep_stage}`;
-
-                    // Evaluate SVG Dash Circles offsets
-                    const circle = document.getElementById('radialGaugeIndicatorBar');
-                    const circumference = 2 * Math.PI * 70;
-                    circle.style.strokeDasharray = circumference;
-                    circle.style.strokeDashoffset = circumference - (score / 100) * circumference;
-
-                    // Hydrate Warning Alerts Boards Text Fields
-                    const alertContainer = document.getElementById('ui-alerts-injector-node');
-                    if(payload.alerts.length > 0) {
-                        alertContainer.innerHTML = payload.alerts.map(a => `<div class="alert-node-banner">${a}</div>`).join('');
-                    } else {
-                        alertContainer.innerHTML = `<div class="insight-node-banner" style="color:var(--neon-cyan);">✓ All biological channels verified clear.</div>`;
+                function run() {
+                    const now = new Date().getTime();
+                    const remaining = Math.max((endTime - now) / duration, 0);
+                    const value = end - (remaining * range);
+                    obj.innerText = value.toFixed(decimals) + suffix;
+                    if (value === end) {
+                        clearInterval(timer);
                     }
-
-                    const insightContainer = document.getElementById('ui-insights-injector-node');
-                    insightContainer.innerHTML = payload.insights.map(i => `<div class="insight-node-banner">💡 AI Analysis: ${i}</div>`).join('');
-
-                    document.getElementById('live-runtime-timestamp').innerText = `SYS_TIME: ${payload.last_updated}`;
                 }
-            } catch (err) { console.log("Awaiting predictive pipeline resolution channels..."); }
-        }
 
-        function updateSparklineDataset(instance, fullDataArray) {
-            const chopped = fullDataArray.slice(-10);
-            instance.data.labels = Array(chopped.length).fill('');
-            instance.data.datasets[0].data = chopped;
-            instance.update('none');
-        }
+                timer = setInterval(run, stepTime);
+                run();
+            }
 
-        function updateSparklineDictionaryStress(instance, fullDataArray) {
-            const chopped = fullDataArray.slice(-10);
-            instance.data.labels = Array(chopped.length).fill('');
-            instance.data.datasets[0].data = chopped.map(v => parseFloat(v));
-            instance.update('none');
-        }
+            // ----------------------------------------------------
+            // 3. INTERACTIVE PREVIEW & STRESS SIMULATOR LOGIC
+            // ----------------------------------------------------
+            const hrSlider = document.getElementById("slider-hr");
+            const mvSlider = document.getElementById("slider-mv");
+            const ltSlider = document.getElementById("slider-lt");
 
-        function reinitializeDataPollingSchedule() {
-            if(pollingIntervalTimerRef) clearInterval(pollingIntervalTimerRef);
-            const userSpeedSetting = parseInt(localStorage.getItem('nirvan_speed') || "2000");
-            pollingIntervalTimerRef = setInterval(runPlatformDataSyncCycle, userSpeedSetting);
-        }
+            const hrVal = document.getElementById("val-hr");
+            const mvVal = document.getElementById("val-mv");
+            const ltVal = document.getElementById("val-lt");
 
-        /* Initializations Hooks Execution Core */
-        window.addEventListener('DOMContentLoaded', () => {
-            hydrateThemePreferences();
-            initializeNeuralBackgroundGenerator();
-            buildHighTierCoreVisualizerChart();
-            hydrationProfileSettingsFromStorage();
+            const mathPrint = document.getElementById("formula-math-print");
+            const stressValue = document.getElementById("stress-index-value");
+            const stressBadge = document.getElementById("stress-tier-display");
+            const gaugeFill = document.getElementById("gauge-indicator");
 
-            // Build miniature data trends graphics lines
-            sparklineInstancesDictionary.hr = buildMiniatureSparklineElementNode('sparklineHR', '#3b82f6');
-            sparklineInstancesDictionary.mv = buildMiniatureSparklineElementNode('sparklineMV', '#6366f1');
-            sparklineInstancesDictionary.lt = buildMiniatureSparklineElementNode('sparklineLT', '#ef4444');
-            sparklineInstancesDictionary.st = buildMiniatureSparklineElementNode('sparklineST', '#f59e0b');
+            const circumference = 2 * Math.PI * 100; // 628.3
+            gaugeFill.style.strokeDasharray = circumference;
 
-            // Hide cinematic cover block and initialize loops mapping pipelines
-            setTimeout(() => {
-                document.getElementById('global-loader-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('global-loader-screen').style.display = 'none';
-                }, 600);
+            function updateSimulator() {
+                const hr = parseFloat(hrSlider.value);
+                const mv = parseFloat(mvSlider.value);
+                const lt = parseFloat(ltSlider.value);
+
+                // Update text indicators
+                hrVal.innerText = hr;
+                mvVal.innerText = mv.toFixed(1);
+                ltVal.innerText = lt;
+
+                // Regression Equation logic
+                // Stress = 12.4 + 0.38*(HR) + 2.1*(Movement) - 0.08*(Light)
+                let stress = 12.4 + (0.38 * hr) + (2.1 * mv) - (0.08 * lt);
+                // Constrain between 0 and 100
+                stress = Math.max(0, Math.min(100, stress));
+
+                // Update math representation
+                mathPrint.innerText = `Stress = 12.4 + 0.38*(${hr}) + 2.1*(${mv.toFixed(1)}) - 0.08*(${lt})`;
                 
-                runPlatformDataSyncCycle();
-                reinitializeDataPollingSchedule();
-            }, 2000);
+                // Update stress value visualizer
+                stressValue.innerText = stress.toFixed(1);
+
+                // Update circular gauge dashoffset
+                const offset = circumference - (stress / 100) * circumference;
+                gaugeFill.style.strokeDashoffset = offset;
+
+                // Update badge and colors based on scientific 5-Tier Stress Scale
+                let tier = "";
+                let colorClass = "";
+                let colorHex = "";
+
+                if (stress <= 20) {
+                    tier = "Deep Recovery";
+                    colorHex = "#C7F9CC";
+                } else if (stress <= 40) {
+                    tier = "Focused Alertness";
+                    colorHex = "#80ED99";
+                } else if (stress <= 60) {
+                    tier = "Active Engagement";
+                    colorHex = "#57CC99";
+                } else if (stress <= 80) {
+                    tier = "Physiological Strain";
+                    colorHex = "#38A3A5";
+                } else {
+                    tier = "Somatic Overload";
+                    colorHex = "#22577A";
+                }
+
+                stressBadge.innerText = tier;
+                
+                // Adjust colors dynamically based on Stress Index
+                if (stress <= 40) {
+                    stressBadge.style.background = "rgba(128, 237, 153, 0.15)";
+                    stressBadge.style.color = "#0c2b18";
+                    gaugeFill.style.stroke = "var(--color-light-green)";
+                } else if (stress <= 70) {
+                    stressBadge.style.background = "rgba(87, 204, 153, 0.2)";
+                    stressBadge.style.color = "#092e21";
+                    gaugeFill.style.stroke = "var(--color-mint)";
+                } else {
+                    stressBadge.style.background = "rgba(34, 87, 122, 0.15)";
+                    stressBadge.style.color = "var(--color-deep-teal)";
+                    gaugeFill.style.stroke = "var(--color-deep-teal)";
+                }
+            }
+
+            // Bind update events to sliders
+            [hrSlider, mvSlider, ltSlider].forEach(slider => {
+                slider.addEventListener("input", updateSimulator);
+            });
+
+            // Initial trigger
+            updateSimulator();
+
+            // ----------------------------------------------------
+            // 4. LIVE CARD METRICS SIMULATOR STREAM
+            // ----------------------------------------------------
+            const liveCardio = document.getElementById("live-cardio-current");
+            const liveKinetics = document.getElementById("live-kinetics-current");
+            const liveLux = document.getElementById("live-lux-current");
+
+            setInterval(() => {
+                // Random subtle variation for landing page realistic streams
+                const currentHR = Math.floor(65 + Math.random() * 25);
+                const currentKinetics = (0.5 + Math.random() * 2).toFixed(1);
+                const currentLux = Math.floor(100 + Math.random() * 400);
+
+                if (liveCardio) liveCardio.innerText = `${currentHR} BPM`;
+                if (liveKinetics) liveKinetics.innerText = `${currentKinetics} Hz`;
+                if (liveLux) liveLux.innerText = `${currentLux} Lux`;
+            }, 3000);
         });
     </script>
 </body>
