@@ -419,9 +419,8 @@
         .scatter-letter {
             display: inline-block;
             opacity: 0;
-            transform: translate3d(var(--rx), var(--ry), var(--rz)) rotate(var(--rr)) scale(0.1);
-            filter: blur(25px);
-            will-change: transform, opacity, filter;
+            transform: translateY(40px) scale(0.7);
+            will-change: transform, opacity;
             color: var(--text-primary);
             cursor: default;
         }
@@ -1422,85 +1421,67 @@ Training Data = 200+ labeled sessions
         // 1. SCROLL TRIGGER ANIMATIONS ENGINE
         // ----------------------------------------------------
         document.addEventListener("DOMContentLoaded", () => {
-            // Scattering letters dynamic compiler with cinematic 3D depth and scroll-linked assembly
-            const scatterTitles = document.querySelectorAll(".scatter-text");
-            scatterTitles.forEach(title => {
+            // Letters dynamic compiler for clean staggered vertical scroll pop-up
+            const popTitles = document.querySelectorAll(".scatter-text");
+            popTitles.forEach(title => {
                 const text = title.innerText.trim();
                 title.innerHTML = "";
-                [...text].forEach((char, idx) => {
+                [...text].forEach((char) => {
                     const span = document.createElement("span");
                     span.innerText = char === " " ? "\u00A0" : char;
                     span.className = "scatter-letter";
-                    
-                    // Generate cinematic random bounds so letters disperse widely and are invisible at scroll=0
-                    const rx = (Math.random() - 0.5) * 600; // Wide X scatter: -300px to 300px
-                    const ry = (Math.random() - 0.5) * 450; // Wide Y scatter: -225px to 225px
-                    const rz = (Math.random() - 0.5) * 900 - 300; // Wide Z scatter: -750px to 150px
-                    const rr = (Math.random() - 0.5) * 360; // Rotation: -180deg to 180deg
-                    
-                    span.dataset.rx = rx;
-                    span.dataset.ry = ry;
-                    span.dataset.rz = rz;
-                    span.dataset.rr = rr;
-                    
                     title.appendChild(span);
                 });
             });
 
-            // High-performance scroll assembly function
-            function animateScatterScroll() {
+            // High-performance scroll animation function
+            function animateLettersScroll() {
                 const scrollY = window.scrollY;
                 
-                // --- PHASE 1: "NIRVANA" Title Scatter Convergence (0px to 450px) ---
-                const titleMaxScroll = 400;
-                const titleProgress = Math.min(scrollY / titleMaxScroll, 1);
-                
+                // --- PHASE 1: Staggered pop-up of the "NIRVANA" letters (0px to 380px) ---
+                const titleMaxScroll = 380;
                 const letters = document.querySelectorAll(".scatter-letter");
-                letters.forEach(span => {
-                    const rx = parseFloat(span.dataset.rx);
-                    const ry = parseFloat(span.dataset.ry);
-                    const rz = parseFloat(span.dataset.rz);
-                    const rr = parseFloat(span.dataset.rr);
+                const numLetters = letters.length;
+                
+                letters.forEach((span, idx) => {
+                    // Stagger start for each letter across the scroll range
+                    const startFraction = (idx / numLetters) * 0.45; // stagger start times up to 45% of titleMaxScroll
+                    const endFraction = startFraction + 0.5;         // transition takes 50% duration of the scroll range
                     
-                    // Linear interpolation to the perfectly converged state (progress = 1)
-                    const curX = rx * (1 - titleProgress);
-                    const curY = ry * (1 - titleProgress);
-                    const curZ = rz * (1 - titleProgress);
-                    const curR = rr * (1 - titleProgress);
+                    const progress = Math.min(Math.max((scrollY / titleMaxScroll - startFraction) / (endFraction - startFraction), 0), 1);
                     
-                    // Letters start 100% transparent and scale up/sharpen as you scroll
-                    const curScale = 0.1 + (0.9 * titleProgress);
-                    const curOpacity = titleProgress;
-                    const curBlur = 25 * (1 - titleProgress);
+                    // Simple, ultra-clean pop-up values (Y offset, scale, and opacity)
+                    const curY = 40 * (1 - progress);
+                    const curScale = 0.7 + (0.3 * progress);
+                    const curOpacity = progress;
                     
-                    span.style.transform = `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curR}deg) scale(${curScale})`;
+                    span.style.transform = `translate3d(0, ${curY}px, 0) scale(${curScale})`;
                     span.style.opacity = curOpacity;
-                    span.style.filter = `blur(${curBlur}px)`;
                 });
                 
-                // --- PHASE 2: Title Shift & Details Slide-Up (400px to 850px) ---
-                const detailsStart = 380;
-                const detailsDuration = 350; // Transition over 350px of scroll
+                // --- PHASE 2: Title Shift & Details Slide-Up (350px to 750px) ---
+                const detailsStart = 330;
+                const detailsDuration = 380; // Transition over 380px of scroll
                 const detailsProgress = Math.min(Math.max((scrollY - detailsStart) / detailsDuration, 0), 1);
                 
                 // Shift title wrapper upwards slightly to make room
                 const titleWrap = document.getElementById("hero-title-wrap");
                 if (titleWrap) {
-                    titleWrap.style.transform = `translateY(${-70 * detailsProgress}px)`;
+                    titleWrap.style.transform = `translateY(${-60 * detailsProgress}px)`;
                 }
                 
                 // Fade and translate details block
                 const details = document.getElementById("hero-details");
                 if (details) {
                     details.style.opacity = detailsProgress;
-                    details.style.transform = `translateY(${45 * (1 - detailsProgress)}px)`;
+                    details.style.transform = `translateY(${40 * (1 - detailsProgress)}px)`;
                 }
             }
 
             // Sync with page scroll and touch events
-            window.addEventListener("scroll", animateScatterScroll, { passive: true });
+            window.addEventListener("scroll", animateLettersScroll, { passive: true });
             // Initial call to set positions immediately on load
-            animateScatterScroll();
+            animateLettersScroll();
 
             // Terminal Init dynamic typing pipeline
             const terminalBody = document.getElementById("init-terminal");
