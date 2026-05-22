@@ -3,39 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio-Sync | Adaptive Biometric Stress Monitoring for High Performance</title>
+    <title>Nirvana | Real-Time Somatic Analysis & Stress Monitoring</title>
     
     <!-- Premium Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome for clean minimal line icons -->
+    <!-- FontAwesome Vector Icons (Zero Emojis Policy) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
-        /* Custom Premium Variable Design Tokens (Non-Negotiable Color Palette) */
+        /* Custom Premium Variable Design Tokens (Nirvana Ice-Cyan Light Palette) */
         :root {
             /* Palette Colors */
-            --color-deep-teal: #22577A;
-            --color-teal: #38A3A5;
-            --color-mint: #57CC99;
-            --color-light-green: #80ED99;
-            --color-very-light-green: #C7F9CC;
+            --color-1: #E0F7FA;
+            --color-2: #B2EBF2;
+            --color-3: #80DEEA;
+            --color-4: #4DD0E1;
+            --color-5: #26C6DA;
 
+            /* Neutral Theme Colors for Light Background */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-light: rgba(38, 198, 218, 0.15);
+            
             /* Utility Design Tokens */
             --font-headings: 'Space Grotesk', sans-serif;
             --font-body: 'Outfit', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
             
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            --glow-teal: rgba(56, 163, 165, 0.4);
-            --glow-mint: rgba(87, 204, 153, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(38, 198, 218, 0.2);
+            --card-shadow: 0 4px 20px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(38, 198, 218, 0.05);
+            --card-shadow-hover: 0 10px 30px rgba(15, 23, 42, 0.08), 0 1px 8px rgba(38, 198, 218, 0.1);
             
             --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            --transition-hover: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-hover: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* Basic Resets & Aesthetics */
@@ -48,8 +56,8 @@
 
         body {
             font-family: var(--font-body);
-            background-color: var(--color-deep-teal);
-            color: #ffffff;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
         }
@@ -57,60 +65,62 @@
         h1, h2, h3, h4 {
             font-family: var(--font-headings);
             letter-spacing: -0.02em;
+            color: var(--text-primary);
         }
 
         /* ---------------------------------------------------- */
-        /* STYLISH GRADIENT SECTIONS SCROLL PATTERN             */
-        /* Rule: Sections transition gradually into next color. */
+        /* CLEAN SPACIOUS SECTIONS DESIGN SYSTEM                */
         /* ---------------------------------------------------- */
         
-        /* Section 1: Hero (Deep Teal) */
+        /* Section 1: Hero */
         #hero-section {
-            background: linear-gradient(180deg, var(--color-deep-teal) 0%, rgba(34, 87, 122, 0.95) 70%, rgba(56, 163, 165, 0.15) 100%);
+            background: radial-gradient(circle at 80% 20%, rgba(38, 198, 218, 0.05), transparent 45%), var(--bg-primary);
             position: relative;
-            padding: 120px 0 100px 0;
-            min-height: 95vh;
+            padding: 160px 0 120px 0;
+            min-height: 90vh;
             display: flex;
             align-items: center;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        /* Section 2: Three Core Metrics (Deep Teal to Teal) */
+        /* Section 2: Three Core Metrics */
         #metrics-section {
-            background: linear-gradient(180deg, rgba(34, 87, 122, 0.95) 0%, var(--color-teal) 50%, rgba(87, 204, 153, 0.2) 100%);
-            padding: 100px 0;
+            background-color: var(--bg-secondary);
+            padding: 120px 0;
             position: relative;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        /* Section 3: Physiological Stress Index (Teal to Mint Green) */
+        /* Section 3: Physiological Stress Index */
         #stress-section {
-            background: linear-gradient(180deg, var(--color-teal) 0%, rgba(87, 204, 153, 0.9) 60%, rgba(128, 237, 153, 0.15) 100%);
-            padding: 100px 0;
+            background-color: var(--bg-primary);
+            padding: 120px 0;
             position: relative;
-            color: #0b1f2b; /* Dark text for contrast on lighter background */
+            border-bottom: 1px solid var(--border-light);
         }
 
-        /* Section 4: Interactive Stress Simulator (Mint to Light Green) */
+        /* Section 4: Interactive Stress Simulator */
         #simulator-section {
-            background: linear-gradient(180deg, rgba(87, 204, 153, 0.95) 0%, var(--color-light-green) 60%, rgba(199, 249, 204, 0.2) 100%);
-            padding: 100px 0;
+            background-color: var(--bg-secondary);
+            padding: 120px 0;
             position: relative;
-            color: #0c2b18; /* Contrast adjustment */
+            border-bottom: 1px solid var(--border-light);
         }
 
-        /* Section 5: Hardware & Specs (Light Green to Very Light Green) */
+        /* Section 5: Hardware & Specs */
         #hardware-section {
-            background: linear-gradient(180deg, var(--color-light-green) 0%, var(--color-very-light-green) 55%, rgba(34, 87, 122, 0.15) 100%);
-            padding: 100px 0;
+            background-color: var(--bg-primary);
+            padding: 120px 0;
             position: relative;
-            color: #0d2f17;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        /* Section 6: Footer (Very Light Green back to Deep Teal) */
+        /* Section 6: Footer */
         footer {
-            background: linear-gradient(180deg, var(--color-very-light-green) 0%, rgba(34, 87, 122, 0.95) 80%, var(--color-deep-teal) 100%);
+            background-color: var(--bg-secondary);
             padding: 80px 0 40px 0;
             position: relative;
-            color: #ffffff;
+            border-top: 1px solid var(--border-light);
         }
 
         /* ---------------------------------------------------- */
@@ -126,8 +136,8 @@
 
         .grid-2 {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 48px;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 64px;
             align-items: center;
         }
 
@@ -140,44 +150,30 @@
         @media (max-width: 968px) {
             .grid-2, .grid-3 {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                gap: 48px;
+            }
+            #hero-section {
+                padding: 120px 0 80px 0;
             }
         }
 
         /* ---------------------------------------------------- */
-        /* 7 SCROLL & INTERACTIVE ANIMATIONS REQUIREMENTS        */
+        /* SCROLL & INTERACTIVE ANIMATIONS                      */
         /* ---------------------------------------------------- */
 
-        /* 1. Parallax Depth background accents */
-        .parallax-bg {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .parallax-shape {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 70%);
-            will-change: transform;
-        }
-
-        .shape-1 { width: 400px; height: 400px; top: 10%; left: -10%; }
-        .shape-2 { width: 500px; height: 500px; bottom: 10%; right: -15%; }
-        .shape-3 { width: 300px; height: 300px; top: 35%; left: 80%; }
-
-        /* 2. Fade-in on Scroll Framework */
+        /* Fade-in on Scroll Framework with Blur */
         .scroll-fade {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(25px);
+            filter: blur(4px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity, filter;
         }
 
         .scroll-fade.active {
             opacity: 1;
             transform: translateY(0);
+            filter: blur(0);
         }
 
         /* Stagger helper */
@@ -185,72 +181,306 @@
         .stagger-2 { transition-delay: 200ms; }
         .stagger-3 { transition-delay: 300ms; }
 
-        /* 3. Alternate Left/Right Slide-In for cards */
+        /* Alternate Left/Right Slide-In with Rotation & Blur */
         .slide-in-left {
             opacity: 0;
-            transform: translateX(-60px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-40px);
+            filter: blur(4px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity, filter;
         }
 
         .slide-in-right {
             opacity: 0;
-            transform: translateX(60px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(40px);
+            filter: blur(4px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity, filter;
         }
 
         .slide-in-left.active, .slide-in-right.active {
             opacity: 1;
             transform: translateX(0);
+            filter: blur(0);
         }
 
-        /* 4. Hover Scale */
-        .hover-scale {
+        /* ---------------------------------------------------- */
+        /* PREMIUM CORE STYLES & INTERFACES                     */
+        /* ---------------------------------------------------- */
+
+        /* Header Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 76px;
+        }
+
+        .brand-logo {
+            font-family: var(--font-headings);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo span {
+            color: var(--color-5);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
             transition: var(--transition-hover);
         }
 
-        .hover-scale:hover {
-            transform: scale(1.02);
+        .nav-links a:hover {
+            color: var(--color-5);
         }
 
-        /* 5. Stats Counter section styled grids */
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            box-shadow: var(--glass-shadow);
-        }
-
-        .stat-value {
-            font-size: 2.8rem;
-            font-weight: 800;
-            font-family: var(--font-headings);
-            background: linear-gradient(135deg, #ffffff 0%, var(--color-mint) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(255, 255, 255, 0.75);
+        /* Buttons styling */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--color-5);
+            color: #ffffff !important;
+            padding: 12px 24px;
+            border-radius: 8px;
             font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 14px rgba(38, 198, 218, 0.2);
+            border: none;
+            cursor: pointer;
         }
 
-        /* 6. Expanding Gradient Underline on Hover */
+        .btn-primary:hover {
+            background-color: #1ec1d6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(38, 198, 218, 0.3);
+        }
+
+        /* Secondary Outline Button */
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: transparent;
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid var(--text-primary);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-tertiary);
+            transform: translateY(-2px);
+        }
+
+        /* ---------------------------------------------------- */
+        /* TERMINAL COMPONENT (LIGHT-TECH THEME)               */
+        /* ---------------------------------------------------- */
+        .terminal-init {
+            background: rgba(38, 198, 218, 0.03);
+            border: 1px solid rgba(38, 198, 218, 0.25);
+            border-radius: 12px;
+            padding: 18px 22px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            box-shadow: 0 4px 20px rgba(38, 198, 218, 0.05);
+            text-align: left;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(38, 198, 218, 0.15);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .terminal-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .terminal-dot:nth-child(1) { background: #4dd0e1; }
+        .terminal-dot:nth-child(2) { background: #80deea; }
+        .terminal-dot:nth-child(3) { background: #b2ebf2; }
+
+        .terminal-title {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            margin-left: 8px;
+        }
+
+        .terminal-body {
+            color: var(--text-primary);
+            min-height: 120px;
+            line-height: 1.6;
+        }
+
+        .terminal-line {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .terminal-prompt {
+            color: var(--color-5);
+            margin-right: 8px;
+            user-select: none;
+            font-weight: bold;
+        }
+
+        /* ---------------------------------------------------- */
+        /* SCATTERING LETTER ANIMATION                          */
+        /* ---------------------------------------------------- */
+        #hero-section {
+            position: relative;
+            height: 180vh; /* Luxurious scroll room for cinematic assembly */
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+        }
+
+        .hero-sticky-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            overflow: hidden;
+            width: 100%;
+            padding: 0 40px;
+        }
+
+        .hero-title-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
+            overflow: visible;
+            will-change: transform;
+        }
+
+        .scatter-text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(3.8rem, 9.5vw, 8.5rem);
+            font-weight: 800;
+            margin-bottom: 0;
+            line-height: 1.1;
+            letter-spacing: 0.2em;
+            text-align: center;
+            width: 100%;
+            overflow: visible;
+            transform-style: preserve-3d;
+            padding-left: 0.2em; /* Compensate perfectly for letter-spacing centering */
+        }
+
+        .scatter-letter {
+            display: inline-block;
+            opacity: 0;
+            transform: translate3d(var(--rx), var(--ry), var(--rz)) rotate(var(--rr)) scale(0.1);
+            filter: blur(25px);
+            will-change: transform, opacity, filter;
+            color: var(--text-primary);
+            cursor: default;
+        }
+
+        .scatter-letter:hover {
+            color: var(--color-5);
+            transition: color 0.2s ease;
+        }
+
+        .hero-details-container {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 48px;
+            opacity: 0;
+            transform: translateY(45px);
+            will-change: transform, opacity;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Hero Left Content */
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-subheading {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-weight: 400;
+            max-width: 580px;
+        }
+
+        .hero-body {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            max-width: 580px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Link Underline Hover Effect */
         .gradient-link {
             position: relative;
             text-decoration: none;
-            color: var(--color-light-green);
+            color: var(--text-secondary);
             font-weight: 600;
-            font-size: 1rem;
-            display: inline-block;
-            padding-bottom: 4px;
-            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding-bottom: 2px;
+            transition: color 0.2s ease;
         }
 
         .gradient-link::after {
@@ -258,7 +488,7 @@
             position: absolute;
             bottom: 0; left: 0;
             width: 0; height: 2px;
-            background: linear-gradient(90deg, var(--color-teal) 0%, var(--color-mint) 50%, var(--color-light-green) 100%);
+            background: var(--color-5);
             transition: width 0.3s ease;
         }
 
@@ -267,642 +497,477 @@
         }
 
         .gradient-link:hover {
-            color: #ffffff;
-        }
-
-        /* 7. Keyframe-driven loops for Floating Accents */
-        .floating-accent {
-            animation: float-continuous 2s ease-in-out infinite;
-        }
-
-        @keyframes float-continuous {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .orbital-wrapper {
-            position: relative;
-            width: 320px;
-            height: 320px;
-            margin: 0 auto;
-        }
-
-        /* Orbital animation system rotation 360deg every 8s */
-        .orbital-ring {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            border: 2px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            animation: rotate-orbit 8s linear infinite;
-        }
-
-        @keyframes rotate-orbit {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Rotating node icons */
-        .orbital-node {
-            position: absolute;
-            width: 50px; height: 50px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-light-green);
-            box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(8px);
-            animation: pulse-node 2s ease-in-out infinite alternate;
-        }
-
-        .node-1 { top: -25px; left: calc(50% - 25px); }
-        .node-2 { bottom: 20px; left: -10px; }
-        .node-3 { bottom: 20px; right: -10px; }
-
-        @keyframes pulse-node {
-            0% { opacity: 0.85; transform: scale(0.95); box-shadow: 0 0 10px rgba(87, 204, 153, 0.2); }
-            100% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 20px rgba(87, 204, 153, 0.5); }
+            color: var(--color-5);
         }
 
         /* ---------------------------------------------------- */
-        /* PREMIUM NAVBAR                                       */
-        /* ---------------------------------------------------- */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 80px;
-            background: rgba(34, 87, 122, 0.65);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            transition: var(--transition-smooth);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .brand-logo {
-            font-family: var(--font-headings);
-            font-size: 1.6rem;
-            font-weight: 700;
-            text-decoration: none;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .brand-logo span {
-            color: var(--color-light-green);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: var(--transition-hover);
-        }
-
-        .nav-links a:hover {
-            color: var(--color-light-green);
-        }
-
-        /* Primary Button */
-        .btn-primary {
-            background: var(--color-teal);
-            color: #ffffff;
-            border: none;
-            padding: 12px 24px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 4px 14px rgba(56, 163, 165, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: var(--transition-smooth);
-        }
-
-        .btn-primary:hover {
-            background: var(--color-light-green);
-            color: #0b1f2b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(128, 237, 153, 0.4);
-        }
-
-        /* ---------------------------------------------------- */
-        /* HERO COPY & STYLES                                   */
-        /* ---------------------------------------------------- */
-        .hero-left h1 {
-            font-size: 3.25rem;
-            line-height: 1.15;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .hero-left h1 span {
-            color: var(--color-light-green);
-        }
-
-        .hero-subheading {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.85);
-            margin-bottom: 16px;
-            font-weight: 500;
-        }
-
-        .hero-body {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 36px;
-            line-height: 1.6;
-        }
-
-        .hero-ctas {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .center-graphic {
-            position: relative;
-            z-index: 2;
-        }
-
-        .radar-sweep {
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 280px; height: 280px;
-            border-radius: 50%;
-            border: 2px solid rgba(128, 237, 153, 0.1);
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 50px rgba(56, 163, 165, 0.1) inset;
-        }
-
-        /* ---------------------------------------------------- */
-        /* THREE CORE METRICS SECTIONS                          */
+        /* CLEAN SPATIAL SECTIONS DEFINITIONS                  */
         /* ---------------------------------------------------- */
         .section-header {
             text-align: center;
-            max-width: 700px;
-            margin: 0 auto 60px auto;
+            max-width: 680px;
+            margin: 0 auto 72px auto;
         }
 
         .section-header h2 {
-            font-size: 2.5rem;
+            font-size: 2.25rem;
             font-weight: 700;
             margin-bottom: 16px;
-            color: #ffffff;
+            color: var(--text-primary);
         }
 
         .section-header p {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
+            font-size: 1.05rem;
         }
 
-        /* 3 feature cards premium glassmorphism styling */
+        /* Metric Cards - Ultra-Clean Spacious Grid */
         .metric-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 36px 30px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(20px);
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 40px 32px;
+            box-shadow: var(--card-shadow);
             transition: var(--transition-smooth);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 480px;
+            min-height: 420px;
         }
-
-        .metric-card::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 6px;
-        }
-
-        /* Left Borders Custom Design (Strict colors) */
-        .card-cardio { border-color: var(--color-mint); }
-        .card-cardio::before { background-color: var(--color-teal); }
-        
-        .card-kinetics { border-color: var(--color-light-green); }
-        .card-kinetics::before { background-color: var(--color-mint); }
-        
-        .card-lux { border-color: var(--color-very-light-green); }
-        .card-lux::before { background-color: var(--color-light-green); }
 
         .metric-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--color-4);
         }
 
         .metric-icon-box {
-            width: 64px; height: 64px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.05);
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            background-color: var(--color-1);
+            color: var(--color-5);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             margin-bottom: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .card-cardio .metric-icon-box { color: var(--color-mint); }
-        .card-kinetics .metric-icon-box { color: var(--color-light-green); }
-        .card-lux .metric-icon-box { color: var(--color-very-light-green); }
-
         .metric-title {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.35rem;
+            font-weight: 600;
             margin-bottom: 8px;
         }
 
         .metric-hw-badge {
             display: inline-block;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            text-transform: uppercase;
+            font-size: 0.72rem;
+            font-weight: 600;
+            background-color: var(--bg-secondary);
+            color: var(--color-5);
             padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 6px;
+            border-radius: 4px;
             margin-bottom: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(38, 198, 218, 0.1);
         }
 
         .metric-desc {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
             margin-bottom: 24px;
-            line-height: 1.6;
         }
 
         .metric-live-feed {
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 10px;
-            padding: 12px 16px;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid var(--bg-tertiary);
+            padding-top: 20px;
+            margin-top: auto;
+            font-size: 0.82rem;
         }
 
         .live-feed-header {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: rgba(255,255,255,0.4);
-            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 6px;
+            color: var(--color-5);
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .live-feed-header i {
-            color: #ef4444;
-            animation: pulse-dot 1.2s ease-in-out infinite alternate;
+            font-size: 0.5rem;
+            animation: pulse-live 1.8s infinite;
         }
 
-        @keyframes pulse-dot {
-            0% { transform: scale(0.8); opacity: 0.5; }
-            100% { transform: scale(1.2); opacity: 1; }
+        @keyframes pulse-live {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
         }
 
         .live-feed-value {
-            color: var(--color-light-green);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .live-feed-status {
+            color: var(--text-muted);
+            margin-top: 2px;
         }
 
         /* ---------------------------------------------------- */
-        /* PHYSIOLOGICAL STRESS INDEX SECTION                   */
+        /* STRESS INDEX SECTION ELEMENTS                       */
         /* ---------------------------------------------------- */
         .formula-card {
-            background: rgba(34, 87, 122, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: var(--glass-shadow);
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 36px;
+            box-shadow: var(--card-shadow);
         }
 
         .formula-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--color-light-green);
-            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            color: var(--text-primary);
         }
 
-        /* Monospace monospace formula box code-style background #22577A */
+        .formula-title i {
+            color: var(--color-5);
+        }
+
         .monospace-box {
-            background: var(--color-deep-teal);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 24px;
             font-family: var(--font-mono);
-            font-size: 0.85rem;
-            line-height: 1.6;
-            color: var(--color-light-green);
-            overflow-x: auto;
-            margin-bottom: 24px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+            line-height: 1.7;
+            margin-bottom: 16px;
         }
 
         .formula-note {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.78rem;
+            color: var(--text-muted);
         }
 
-        /* 5-Tier stress scale design */
+        /* Stress Level Tier Scale */
         .tier-scale-card {
-            background: rgba(255, 255, 255, 0.96);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            color: #0b1f2b;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 36px;
+            box-shadow: var(--card-shadow);
         }
 
         .tier-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--color-deep-teal);
-            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            color: var(--text-primary);
+        }
+
+        .tier-title i {
+            color: var(--color-5);
         }
 
         .tier-list {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
         }
 
         .tier-item {
-            display: flex;
+            display: grid;
+            grid-template-columns: 80px 140px 1fr;
+            gap: 16px;
             align-items: center;
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.03);
-            border-radius: 10px;
-            border-left: 5px solid;
-            transition: var(--transition-smooth);
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--bg-secondary);
         }
 
-        .tier-item:hover {
-            transform: translateX(4px);
-            background: rgba(0, 0, 0, 0.05);
+        .tier-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
 
         .tier-range {
             font-family: var(--font-mono);
-            font-weight: 700;
-            min-width: 80px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-5);
+            background-color: var(--color-1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-align: center;
         }
 
         .tier-label {
             font-weight: 600;
-            margin-right: 12px;
-            min-width: 140px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
         }
 
         .tier-desc {
             font-size: 0.85rem;
-            color: #555555;
+            color: var(--text-secondary);
         }
 
-        /* Tier Colors matching palette */
-        .tier-1 { border-color: var(--color-very-light-green); color: #0d2f17; }
-        .tier-2 { border-color: var(--color-light-green); color: #0c2b18; }
-        .tier-3 { border-color: var(--color-mint); color: #092e21; }
-        .tier-4 { border-color: var(--color-teal); color: #0b2f30; }
-        .tier-5 { border-color: var(--color-deep-teal); color: var(--color-deep-teal); }
+        /* Counter dynamic row stats */
+        .stat-card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition-hover);
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: var(--font-headings);
+            color: var(--color-5);
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
 
         /* ---------------------------------------------------- */
-        /* INTERACTIVE PREVIEW & STRESS SIMULATOR               */
+        /* INTERACTIVE SIMULATOR DESIGNS                        */
         /* ---------------------------------------------------- */
         .sim-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
             padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            color: #0b1f2b;
+            box-shadow: var(--card-shadow);
+            width: 100%;
         }
 
         .sim-slider-group {
             margin-bottom: 24px;
         }
 
+        .sim-slider-group:last-child {
+            margin-bottom: 0;
+        }
+
         .slider-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .slider-header label {
+            margin-bottom: 10px;
             font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #444;
+            font-weight: 500;
+            color: var(--text-primary);
         }
 
         .slider-header span {
             font-family: var(--font-mono);
-            color: var(--color-teal);
+            font-weight: 600;
+            color: var(--color-5);
         }
 
         .sim-slider {
             width: 100%;
-            height: 8px;
-            border-radius: 4px;
+            height: 6px;
+            border-radius: 3px;
             outline: none;
-            background: #e0e0e0;
+            background: var(--bg-tertiary);
             -webkit-appearance: none;
+            appearance: none;
         }
 
         .sim-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px; height: 20px;
+            appearance: none;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
-            background: var(--color-teal);
+            background: var(--color-5);
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(56, 163, 165, 0.5);
-            transition: transform 0.1s ease;
+            transition: transform 0.15s ease;
+            box-shadow: 0 2px 6px rgba(38, 198, 218, 0.3);
         }
 
         .sim-slider::-webkit-slider-thumb:hover {
             transform: scale(1.2);
         }
 
+        /* Circular stress gauge widget */
         .stress-gauge-wrapper {
-            text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            height: 100%;
         }
 
         .circular-gauge {
             position: relative;
-            width: 220px;
-            height: 220px;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
         }
 
         .gauge-svg {
-            width: 220px; height: 220px;
             transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
         }
 
         .gauge-track {
             fill: none;
-            stroke: #e2e8f0;
-            stroke-width: 16;
+            stroke: var(--bg-tertiary);
+            stroke-width: 10px;
         }
 
         .gauge-fill {
             fill: none;
-            stroke: var(--color-teal);
-            stroke-width: 16;
+            stroke: var(--color-5);
+            stroke-width: 10px;
             stroke-linecap: round;
-            stroke-dasharray: 628;
-            stroke-dashoffset: 628;
+            stroke-dashoffset: 0;
             transition: stroke-dashoffset 0.3s ease, stroke 0.3s ease;
         }
 
         .gauge-content {
             position: absolute;
-            inset: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
 
         .gauge-value {
-            font-size: 3rem;
-            font-weight: 800;
-            font-family: var(--font-headings);
-            line-height: 1;
-            color: #0b1f2b;
+            font-family: var(--font-mono);
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
         .gauge-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            color: #777;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 600;
             margin-top: 4px;
         }
 
         .stress-tier-badge {
-            margin-top: 24px;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-weight: 700;
-            text-transform: uppercase;
             font-size: 0.85rem;
-            letter-spacing: 0.05em;
-            display: inline-block;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         /* ---------------------------------------------------- */
-        /* HARDWARE INTEGRATION SECTION                         */
+        /* OPEN SOURCE HARDWARE GRID                           */
         /* ---------------------------------------------------- */
         .hardware-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 48px;
+            gap: 32px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .hardware-grid {
                 grid-template-columns: 1fr;
             }
         }
 
         .hw-card {
-            background: rgba(255,255,255,0.7);
-            border: 1px solid rgba(255,255,255,0.5);
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-light);
             border-radius: 16px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 36px 28px;
+            box-shadow: var(--card-shadow);
             transition: var(--transition-smooth);
         }
 
         .hw-card:hover {
-            transform: translateY(-5px);
-            background: #ffffff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--color-4);
         }
 
         .hw-icon-box {
-            font-size: 2.2rem;
-            color: var(--color-teal);
-            margin-bottom: 16px;
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background-color: var(--color-1);
+            color: var(--color-5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
         }
 
         .hw-title {
             font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-weight: 600;
+            margin-bottom: 12px;
         }
 
         .hw-desc {
             font-size: 0.9rem;
-            color: #4a5568;
+            color: var(--text-secondary);
         }
 
         /* ---------------------------------------------------- */
-        /* FOOTER & NEWSLETTER                                  */
+        /* CLEAN SPACIOUS FOOTER & NEWSLETTER                   */
         /* ---------------------------------------------------- */
         .footer-newsletter {
             max-width: 600px;
-            margin: 0 auto 60px auto;
+            margin: 0 auto 52px auto;
             text-align: center;
         }
 
         .footer-newsletter h3 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 12px;
         }
 
         .footer-newsletter p {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
             margin-bottom: 24px;
         }
 
         .newsletter-form {
             display: flex;
             gap: 12px;
-            max-width: 480px;
+            max-width: 460px;
             margin: 0 auto;
         }
 
@@ -914,84 +979,84 @@
 
         .newsletter-form input {
             flex-grow: 1;
-            padding: 14px 20px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255,255,255,0.08);
-            color: #ffffff;
-            font-size: 0.95rem;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
             outline: none;
             transition: var(--transition-hover);
         }
 
         .newsletter-form input::placeholder {
-            color: rgba(255,255,255,0.4);
+            color: var(--text-muted);
         }
 
         .newsletter-form input:focus {
-            border-color: var(--color-light-green);
-            background: rgba(255,255,255,0.12);
+            border-color: var(--color-5);
         }
 
         .btn-submit {
-            background: var(--color-mint);
-            color: #0b1f2b;
+            background-color: var(--color-5);
+            color: #ffffff;
             border: none;
-            padding: 14px 24px;
-            border-radius: 10px;
+            padding: 12px 22px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: var(--transition-hover);
+            box-shadow: 0 4px 12px rgba(38, 198, 218, 0.15);
         }
 
         .btn-submit:hover {
-            background: var(--color-light-green);
-            transform: scale(1.03);
+            background-color: #1ec1d6;
+            transform: scale(1.02);
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 40px;
-            margin-bottom: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 40px;
+            margin-bottom: 36px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 36px;
         }
 
         @media (max-width: 580px) {
             .footer-links {
                 flex-direction: column;
                 align-items: center;
-                gap: 16px;
+                gap: 14px;
             }
         }
 
         .footer-links a {
             text-decoration: none;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
             transition: var(--transition-hover);
         }
 
         .footer-links a:hover {
-            color: var(--color-light-green);
+            color: var(--color-5);
         }
 
         .footer-copyright {
             text-align: center;
             font-size: 0.8rem;
-            color: rgba(255,255,255,0.45);
+            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
 
-    <!-- Premium Navigation -->
+    <!-- Header Navigation -->
     <nav>
         <div class="container nav-container">
             <a href="#" class="brand-logo">
-                <i class="fa-solid fa-square-heart floating-accent" style="color: var(--color-mint);"></i>
-                Bio-Sync<span>.</span>
+                <i class="fa-solid fa-circle-nodes" style="color: var(--color-5);"></i>
+                Nirvana<span>.</span>
             </a>
             <div class="nav-links">
                 <a href="#metrics-section">Sensors</a>
@@ -1007,50 +1072,46 @@
     </nav>
 
     <!-- ---------------------------------------------------- -->
-    <!-- SECTION 1: HERO                                      -->
-    <!-- ---------------------------------------------------- */ -->
+    <!-- SECTION 1: HERO (LIGHT AIRY MINIMAL DESIGN)         -->
+    <!-- ---------------------------------------------------- -->
     <section id="hero-section">
-        <div class="parallax-bg">
-            <div class="parallax-shape shape-1" data-speed="0.2"></div>
-            <div class="parallax-shape shape-2" data-speed="0.4"></div>
-        </div>
-        <div class="container grid-2">
-            <div class="hero-left scroll-fade">
-                <h1>
-                    Monitor Your Biology.<br>
-                    <span>Optimize Your Performance.</span>
-                </h1>
-                <p class="hero-subheading">
-                    Real-time AI-powered biometric stress monitoring built specifically for engineering students, medical students, athletes, and wellness-conscious professionals.
-                </p>
-                <p class="hero-body">
-                    Bio-Sync captures three critical biometric metrics in real-time: your heart rate variability, body movement patterns, and environmental light exposure. An AI regression model running on our backend calculates your physiological stress index every 2 seconds—giving you instant, actionable insights into your stress state.
-                </p>
-                <div class="hero-ctas">
-                    <a href="/dashboard" class="btn-primary hover-scale">Start Monitoring Now</a>
-                    <a href="#simulator-section" class="gradient-link">View Live Dashboard</a>
-                </div>
+        <div class="hero-sticky-container">
+            <!-- Massive Centered Scattered/Assembling Title Block -->
+            <div class="hero-title-wrapper" id="hero-title-wrap">
+                <h1 class="scatter-text" id="hero-title">NIRVANA</h1>
             </div>
             
-            <div class="center-graphic scroll-fade stagger-2">
-                <div class="orbital-wrapper">
-                    <div class="radar-sweep"></div>
-                    <div class="orbital-ring">
-                        <!-- Sensor node icons rotating around -->
-                        <div class="orbital-node node-1" title="MAX30102 Heart Rate Sensor">
-                            <i class="fa-solid fa-heart-pulse"></i>
-                        </div>
-                        <div class="orbital-node node-2" title="MPU6050 Accelerometer">
-                            <i class="fa-solid fa-wave-square"></i>
-                        </div>
-                        <div class="orbital-node node-3" title="LDR Photoresistor Light Sensor">
-                            <i class="fa-solid fa-sun"></i>
+            <!-- Details block initially hidden, fades/slides in under title on scroll -->
+            <div class="hero-details-container" id="hero-details">
+                <div class="grid-2">
+                    <div class="hero-left">
+                        <p class="hero-subheading">
+                            Physiological alignment engine providing real-time multi-dimensional somatic analysis and stress profiling.
+                        </p>
+                        
+                        <p class="hero-body">
+                            Nirvana maps physiological states by synthesizing critical bio-telemetry pathways: Cardio rhythms, movement actigraphy patterns, and photic light exposure. Running a custom multivariate regression model on port 5000, Nirvana quantifies somatic strain every 2 seconds, delivering clean, actionable feedback.
+                        </p>
+                        
+                        <div class="hero-ctas">
+                            <a href="/dashboard" class="btn-primary">Start Monitoring Now</a>
+                            <a href="#simulator-section" class="gradient-link">
+                                Try Interactive Simulator
+                                <i class="fa-solid fa-angle-right"></i>
+                            </a>
                         </div>
                     </div>
-                    <!-- Core centerpiece representing Bio-Sync Intelligence -->
-                    <div style="position: absolute; inset: 40px; border-radius: 50%; background: radial-gradient(circle, rgba(87,204,153,0.12) 0%, rgba(0,0,0,0) 80%); display: flex; align-items: center; justify-content: center;">
-                        <div style="width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.02); border: 2px solid var(--color-mint); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(87, 204, 153, 0.3);">
-                            <span style="font-family: var(--font-headings); font-weight: 800; font-size: 1.1rem; color: #ffffff; letter-spacing: 1px;">AI CORE</span>
+                    
+                    <div class="hero-right" style="display: flex; justify-content: center; align-items: center;">
+                        <!-- Project Initialization Clean Typing Console -->
+                        <div class="terminal-init">
+                            <div class="terminal-header">
+                                <span class="terminal-dot"></span>
+                                <span class="terminal-dot"></span>
+                                <span class="terminal-dot"></span>
+                                <span class="terminal-title">nirvana_system_initialize.sh</span>
+                            </div>
+                            <div class="terminal-body" id="init-terminal"></div>
                         </div>
                     </div>
                 </div>
@@ -1064,8 +1125,8 @@
     <section id="metrics-section">
         <div class="container">
             <div class="section-header scroll-fade">
-                <h2>Three Sensors. Infinite Insights.</h2>
-                <p>Bio-Sync integrates three clinical-grade sensors that transmit biometric data every 2 seconds. This real-time fusion creates a comprehensive picture of your physiological state.</p>
+                <h2>Three Channels. Somatic Balance.</h2>
+                <p>Nirvana integrates three biometric tracking channels that stream data continuously every 2 seconds to profile physiological equilibrium.</p>
             </div>
             
             <div class="grid-3">
@@ -1078,57 +1139,57 @@
                         <h3 class="metric-title">Cardio Rhythm</h3>
                         <span class="metric-hw-badge">MAX30102 Optical Sensor</span>
                         <p class="metric-desc">
-                            Measures real-time heart rate variability using an optical pulse sensor placed on the wrist or chest. Heart rate reflects your sympathetic nervous system activation (stress) and parasympathetic dominance (recovery). Baseline ranges 60–100 BPM.
+                            Tracks real-time beats per minute and heart rate variations, mapping sympathetic flight-or-fight nervous activation, cardio pacing shifts, and somatic recovery baselines. Normal heart rate limits are 60 to 100 BPM.
                         </p>
                     </div>
                     <div class="metric-live-feed">
                         <div class="live-feed-header">
                             <i class="fa-solid fa-circle"></i> Live Stream Feed
                         </div>
-                        <div>Current: <span class="live-feed-value" id="live-cardio-current">78 BPM</span></div>
-                        <div style="color: rgba(255,255,255,0.5);">Baseline: 62 BPM | Status: Elevated</div>
+                        <div>Current: <span class="live-feed-value" id="live-cardio-current">-- BPM</span></div>
+                        <div class="live-feed-status">Baseline: 62 BPM | Status: Loading</div>
                     </div>
                 </div>
 
-                <!-- CARD 2: Actigraphy Kinetics -->
+                <!-- CARD 2: Moment Actigraphy -->
                 <div class="metric-card card-kinetics scroll-fade stagger-1">
                     <div>
                         <div class="metric-icon-box">
                             <i class="fa-solid fa-wave-square"></i>
                         </div>
-                        <h3 class="metric-title">Actigraphy Kinetics</h3>
+                        <h3 class="metric-title">Moment Actigraphy</h3>
                         <span class="metric-hw-badge">MPU6050 Accelerometer</span>
                         <p class="metric-desc">
-                            Detects subtle body movements and postural changes using a tri-axial accelerometer. Movement frequency increases during stress episodes and decreases during deep sleep. Measures activity in the 0–5 Hz range.
+                            Measures tri-axial actigraphy frequency and body kinetics in the 0 to 10 Hz range. Body motion telemetry detects postural changes, physical restlessness, micro-movement events, and muscular strain spikes.
                         </p>
                     </div>
                     <div class="metric-live-feed">
                         <div class="live-feed-header">
                             <i class="fa-solid fa-circle"></i> Live Stream Feed
                         </div>
-                        <div>Current: <span class="live-feed-value" id="live-kinetics-current">1.4 Hz</span></div>
-                        <div style="color: rgba(255,255,255,0.5);">Movement: Moderate | Disruption: Low</div>
+                        <div>Current: <span class="live-feed-value" id="live-kinetics-current">-- Hz</span></div>
+                        <div class="live-feed-status">Movement: Loading | Disruption: Loading</div>
                     </div>
                 </div>
 
-                <!-- CARD 3: Environmental Lux -->
+                <!-- CARD 3: Blue Light Exposure -->
                 <div class="metric-card card-lux slide-in-right">
                     <div>
                         <div class="metric-icon-box">
-                            <i class="fa-solid fa-sun-bright"></i>
+                            <i class="fa-solid fa-sun"></i>
                         </div>
-                        <h3 class="metric-title">Environmental Lux</h3>
+                        <h3 class="metric-title">Blue Light Exposure</h3>
                         <span class="metric-hw-badge">LDR Photoresistor</span>
                         <p class="metric-desc">
-                            Monitors ambient light levels in your environment. Blue light exposure after 11 PM suppresses melatonin production and delays sleep onset. Lux measurement (0–1000+) helps optimize your circadian rhythm and sleep hygiene.
+                            Monitors ambient light intensity (Lux) and screen exposures. Telemetry maps photic melatonin suppression risks, circadian clock delays, sleep onset timing disruption, and study lighting environments.
                         </p>
                     </div>
                     <div class="metric-live-feed">
                         <div class="live-feed-header">
                             <i class="fa-solid fa-circle"></i> Live Stream Feed
                         </div>
-                        <div>Current: <span class="live-feed-value" id="live-lux-current">320 Lux</span></div>
-                        <div style="color: rgba(255,255,255,0.5);">Photic Threat (>11 PM): Minimal</div>
+                        <div>Current: <span class="live-feed-value" id="live-lux-current">-- Lux</span></div>
+                        <div class="live-feed-status">Photic Threat: Loading</div>
                     </div>
                 </div>
             </div>
@@ -1140,7 +1201,7 @@
     <!-- ---------------------------------------------------- -->
     <section id="stress-section">
         <div class="container">
-            <div class="section-header scroll-fade" style="color: #0b1f2b;">
+            <div class="section-header scroll-fade">
                 <h2>Physiological Stress Index</h2>
                 <p>Your three biometric inputs feed into a real-time linear regression model running on our Flask backend. The model calculates your Physiological Stress Index (0–100 scale) every 2 seconds using a trained AI algorithm.</p>
             </div>
@@ -1149,7 +1210,7 @@
                 <!-- Formula code box -->
                 <div class="formula-card scroll-fade">
                     <div class="formula-title">
-                        <i class="fa-solid fa-calculator-simple"></i>
+                        <i class="fa-solid fa-square-root-variable"></i>
                         Real-Time Regression Model
                     </div>
                     <div class="monospace-box">
@@ -1174,7 +1235,7 @@ Training Data = 200+ labeled sessions
                 <!-- 5-Tier stress scale card -->
                 <div class="tier-scale-card scroll-fade stagger-2">
                     <div class="tier-title">
-                        <i class="fa-solid fa-circle-nodes"></i>
+                        <i class="fa-solid fa-network-wired"></i>
                         Your Stress Response Scale
                     </div>
                     
@@ -1231,7 +1292,7 @@ Training Data = 200+ labeled sessions
     <!-- ---------------------------------------------------- -->
     <section id="simulator-section">
         <div class="container">
-            <div class="section-header scroll-fade" style="color: #0c2b18;">
+            <div class="section-header scroll-fade">
                 <h2>Interactive ML Stress Simulator</h2>
                 <p>Drag the sliders below to adjust your biometric parameters in real-time. Witness how the multivariate AI regression backend models and evaluates stress metrics instantaneously.</p>
             </div>
@@ -1263,9 +1324,9 @@ Training Data = 200+ labeled sessions
                         <input type="range" id="slider-lt" class="sim-slider" min="0" max="800" value="150">
                     </div>
                     
-                    <div style="margin-top: 32px; border-top: 1px solid rgba(0, 0, 0, 0.08); padding-top: 24px;">
-                        <h4 style="font-size: 1rem; margin-bottom: 8px; font-weight: 700; color: var(--color-deep-teal);">Mathematical Regression Execution:</h4>
-                        <div style="font-family: var(--font-mono); font-size: 0.78rem; background: #eaeaea; padding: 12px; border-radius: 8px; color: #333;" id="formula-math-print">
+                    <div style="margin-top: 32px; border-top: 1px solid var(--bg-tertiary); padding-top: 24px;">
+                        <h4 style="font-size: 0.95rem; margin-bottom: 12px; font-weight: 700; color: var(--text-primary);">Regression Equation Logic:</h4>
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; background: var(--bg-secondary); border: 1px solid var(--border-light); padding: 14px; border-radius: 8px; color: var(--color-5); font-weight: 600;" id="formula-math-print">
                             Stress = 12.4 + 0.38*(75) + 2.1*(1.5) - 0.08*(150)
                         </div>
                     </div>
@@ -1273,8 +1334,8 @@ Training Data = 200+ labeled sessions
 
                 <!-- Circular Gauge Readout -->
                 <div class="scroll-fade stagger-2" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                    <div class="sim-card" style="width: 100%; max-width: 380px; padding: 40px; display: flex; flex-direction: column; align-items: center;">
-                        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 24px; color: var(--color-deep-teal);">Live Model Output</h3>
+                    <div class="sim-card" style="max-width: 380px; padding: 40px; display: flex; flex-direction: column; align-items: center;">
+                        <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 24px; color: var(--text-primary);">Live Model Output</h3>
                         <div class="stress-gauge-wrapper">
                             <div class="circular-gauge">
                                 <svg class="gauge-svg" viewBox="0 0 220 220">
@@ -1299,9 +1360,9 @@ Training Data = 200+ labeled sessions
     <!-- ---------------------------------------------------- -->
     <section id="hardware-section">
         <div class="container">
-            <div class="section-header scroll-fade" style="color: #0d2f17;">
+            <div class="section-header scroll-fade">
                 <h2>Open Source Hardware Integration</h2>
-                <p>Bio-Sync is engineered entirely on medical-grade open hardware modules, giving students and researchers full architectural control to audit and build physiological systems.</p>
+                <p>Nirvana is engineered entirely on open-source hardware modules, giving students and researchers full architectural control to audit and build physiological systems.</p>
             </div>
 
             <div class="hardware-grid">
@@ -1314,14 +1375,14 @@ Training Data = 200+ labeled sessions
                 </div>
                 <div class="hw-card scroll-fade stagger-1">
                     <div class="hw-icon-box">
-                        <i class="fa-solid fa-sensor-on"></i>
+                        <i class="fa-solid fa-heart-pulse"></i>
                     </div>
                     <h3 class="hw-title">Clinical Biometrics</h3>
                     <p class="hw-desc">Uses MAX30102 multi-wavelength photoplethysmography (PPG) arrays to measure red and infrared reflection, tracking Cardio Rhythm and HRV trends.</p>
                 </div>
                 <div class="hw-card scroll-fade stagger-2">
                     <div class="hw-icon-box">
-                        <i class="fa-solid fa-chart-network"></i>
+                        <i class="fa-solid fa-network-wired"></i>
                     </div>
                     <h3 class="hw-title">Multi-channel Data</h3>
                     <p class="hw-desc">Fused actigraphy via MPU6050 accelerometer and ambient light arrays using LDR sensors maps comprehensive physiological reactions directly on the Flask AI engine.</p>
@@ -1336,7 +1397,7 @@ Training Data = 200+ labeled sessions
     <footer>
         <div class="container">
             <div class="footer-newsletter scroll-fade">
-                <h3>Subscribe to Bio-Sync Research</h3>
+                <h3>Subscribe to Nirvana Research</h3>
                 <p>Stay up to date with new developments in physiological monitoring, machine learning models, and cognitive focus optimizations.</p>
                 <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
                     <input type="email" placeholder="Enter your academic email" required>
@@ -1352,7 +1413,7 @@ Training Data = 200+ labeled sessions
                 <a href="https://github.com" target="_blank">GitHub Repository</a>
             </div>
 
-            <p class="footer-copyright">&copy; 2026 Bio-Sync Project. Open Source Medical-grade Biometrics for Academic Research.</p>
+            <p class="footer-copyright">&copy; 2026 Nirvana Project. Open Source Biometrics for Academic Research.</p>
         </div>
     </footer>
 
@@ -1361,6 +1422,131 @@ Training Data = 200+ labeled sessions
         // 1. SCROLL TRIGGER ANIMATIONS ENGINE
         // ----------------------------------------------------
         document.addEventListener("DOMContentLoaded", () => {
+            // Scattering letters dynamic compiler with cinematic 3D depth and scroll-linked assembly
+            const scatterTitles = document.querySelectorAll(".scatter-text");
+            scatterTitles.forEach(title => {
+                const text = title.innerText.trim();
+                title.innerHTML = "";
+                [...text].forEach((char, idx) => {
+                    const span = document.createElement("span");
+                    span.innerText = char === " " ? "\u00A0" : char;
+                    span.className = "scatter-letter";
+                    
+                    // Generate cinematic random bounds so letters disperse widely and are invisible at scroll=0
+                    const rx = (Math.random() - 0.5) * 600; // Wide X scatter: -300px to 300px
+                    const ry = (Math.random() - 0.5) * 450; // Wide Y scatter: -225px to 225px
+                    const rz = (Math.random() - 0.5) * 900 - 300; // Wide Z scatter: -750px to 150px
+                    const rr = (Math.random() - 0.5) * 360; // Rotation: -180deg to 180deg
+                    
+                    span.dataset.rx = rx;
+                    span.dataset.ry = ry;
+                    span.dataset.rz = rz;
+                    span.dataset.rr = rr;
+                    
+                    title.appendChild(span);
+                });
+            });
+
+            // High-performance scroll assembly function
+            function animateScatterScroll() {
+                const scrollY = window.scrollY;
+                
+                // --- PHASE 1: "NIRVANA" Title Scatter Convergence (0px to 450px) ---
+                const titleMaxScroll = 400;
+                const titleProgress = Math.min(scrollY / titleMaxScroll, 1);
+                
+                const letters = document.querySelectorAll(".scatter-letter");
+                letters.forEach(span => {
+                    const rx = parseFloat(span.dataset.rx);
+                    const ry = parseFloat(span.dataset.ry);
+                    const rz = parseFloat(span.dataset.rz);
+                    const rr = parseFloat(span.dataset.rr);
+                    
+                    // Linear interpolation to the perfectly converged state (progress = 1)
+                    const curX = rx * (1 - titleProgress);
+                    const curY = ry * (1 - titleProgress);
+                    const curZ = rz * (1 - titleProgress);
+                    const curR = rr * (1 - titleProgress);
+                    
+                    // Letters start 100% transparent and scale up/sharpen as you scroll
+                    const curScale = 0.1 + (0.9 * titleProgress);
+                    const curOpacity = titleProgress;
+                    const curBlur = 25 * (1 - titleProgress);
+                    
+                    span.style.transform = `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curR}deg) scale(${curScale})`;
+                    span.style.opacity = curOpacity;
+                    span.style.filter = `blur(${curBlur}px)`;
+                });
+                
+                // --- PHASE 2: Title Shift & Details Slide-Up (400px to 850px) ---
+                const detailsStart = 380;
+                const detailsDuration = 350; // Transition over 350px of scroll
+                const detailsProgress = Math.min(Math.max((scrollY - detailsStart) / detailsDuration, 0), 1);
+                
+                // Shift title wrapper upwards slightly to make room
+                const titleWrap = document.getElementById("hero-title-wrap");
+                if (titleWrap) {
+                    titleWrap.style.transform = `translateY(${-70 * detailsProgress}px)`;
+                }
+                
+                // Fade and translate details block
+                const details = document.getElementById("hero-details");
+                if (details) {
+                    details.style.opacity = detailsProgress;
+                    details.style.transform = `translateY(${45 * (1 - detailsProgress)}px)`;
+                }
+            }
+
+            // Sync with page scroll and touch events
+            window.addEventListener("scroll", animateScatterScroll, { passive: true });
+            // Initial call to set positions immediately on load
+            animateScatterScroll();
+
+            // Terminal Init dynamic typing pipeline
+            const terminalBody = document.getElementById("init-terminal");
+            if (terminalBody) {
+                const terminalLines = [
+                    "Initializing Nirvana Telemetry Engine...",
+                    "Cardio Pulse plethysmography pipeline: [CONNECTED]",
+                    "Actigraphy 3D Kinetics acceleration array: [ACTIVE]",
+                    "Photic Spectral Light sensors online: [100% OK]",
+                    "Multivariate Regression Core initialized on Port 5000.",
+                    "Nirvana somatic analysis stream established."
+                ];
+                
+                let lineIdx = 0;
+                function typeTerminalLine() {
+                    if (lineIdx < terminalLines.length) {
+                        const line = document.createElement("div");
+                        line.className = "terminal-line";
+                        
+                        const prompt = document.createElement("span");
+                        prompt.className = "terminal-prompt";
+                        prompt.innerText = ">";
+                        
+                        const content = document.createElement("span");
+                        line.appendChild(prompt);
+                        line.appendChild(content);
+                        terminalBody.appendChild(line);
+                        
+                        let charIdx = 0;
+                        const lineText = terminalLines[lineIdx];
+                        function typeChar() {
+                            if (charIdx < lineText.length) {
+                                content.innerText += lineText[charIdx];
+                                charIdx++;
+                                setTimeout(typeChar, 15);
+                            } else {
+                                lineIdx++;
+                                setTimeout(typeTerminalLine, 120);
+                            }
+                        }
+                        typeChar();
+                    }
+                }
+                setTimeout(typeTerminalLine, 400); // Cinematic trigger delay
+            }
+
             // Scroll Fade & Slide-In card observer
             const scrollElements = document.querySelectorAll(".scroll-fade, .slide-in-left, .slide-in-right");
 
@@ -1375,20 +1561,10 @@ Training Data = 200+ labeled sessions
                     }
                 });
             }, {
-                threshold: 0.15 // Trigger when 15% is visible
+                threshold: 0.08 // Trigger when 8% is visible for fluid responsive entry
             });
 
             scrollElements.forEach(el => scrollObserver.observe(el));
-
-            // Parallax Scroll Effect
-            window.addEventListener("scroll", () => {
-                const scrolled = window.pageYOffset;
-                const parallaxShapes = document.querySelectorAll(".parallax-shape");
-                parallaxShapes.forEach(shape => {
-                    const speed = shape.getAttribute("data-speed") || 0.3;
-                    shape.style.transform = `translateY(${scrolled * speed}px)`;
-                });
-            });
 
             // ----------------------------------------------------
             // 2. STATISTICS COUNTERS ANIMATION ENGINE
@@ -1398,9 +1574,9 @@ Training Data = 200+ labeled sessions
                 if (statsCounted) return;
                 statsCounted = true;
 
-                animateCounter("stat-polling", 0, 2.0, 2000, 1);
-                animateCounter("stat-r2", 0, 84, 2000, 0, "%");
-                animateCounter("stat-sessions", 0, 240, 2000, 0, "+");
+                animateCounter("stat-polling", 0, 2.0, 1500, 1);
+                animateCounter("stat-r2", 0, 84, 1500, 0, "%");
+                animateCounter("stat-sessions", 0, 240, 1500, 0, "+");
             }
 
             function animateCounter(id, start, end, duration, decimals = 0, suffix = "") {
@@ -1475,42 +1651,41 @@ Training Data = 200+ labeled sessions
 
                 // Update badge and colors based on scientific 5-Tier Stress Scale
                 let tier = "";
-                let colorClass = "";
-                let colorHex = "";
+                let bgHex = "";
+                let textHex = "";
+                let strokeHex = "";
 
                 if (stress <= 20) {
                     tier = "Deep Recovery";
-                    colorHex = "#C7F9CC";
+                    bgHex = "rgba(224, 247, 250, 0.5)";
+                    textHex = "var(--color-5)";
+                    strokeHex = "var(--color-5)";
                 } else if (stress <= 40) {
                     tier = "Focused Alertness";
-                    colorHex = "#80ED99";
+                    bgHex = "rgba(178, 235, 242, 0.4)";
+                    textHex = "var(--color-5)";
+                    strokeHex = "var(--color-5)";
                 } else if (stress <= 60) {
                     tier = "Active Engagement";
-                    colorHex = "#57CC99";
+                    bgHex = "rgba(128, 222, 234, 0.3)";
+                    textHex = "var(--color-5)";
+                    strokeHex = "var(--color-5)";
                 } else if (stress <= 80) {
                     tier = "Physiological Strain";
-                    colorHex = "#38A3A5";
+                    bgHex = "rgba(77, 208, 225, 0.25)";
+                    textHex = "var(--color-5)";
+                    strokeHex = "var(--color-5)";
                 } else {
                     tier = "Somatic Overload";
-                    colorHex = "#22577A";
+                    bgHex = "rgba(38, 198, 218, 0.3)";
+                    textHex = "var(--color-5)";
+                    strokeHex = "var(--color-5)";
                 }
 
                 stressBadge.innerText = tier;
-                
-                // Adjust colors dynamically based on Stress Index
-                if (stress <= 40) {
-                    stressBadge.style.background = "rgba(128, 237, 153, 0.15)";
-                    stressBadge.style.color = "#0c2b18";
-                    gaugeFill.style.stroke = "var(--color-light-green)";
-                } else if (stress <= 70) {
-                    stressBadge.style.background = "rgba(87, 204, 153, 0.2)";
-                    stressBadge.style.color = "#092e21";
-                    gaugeFill.style.stroke = "var(--color-mint)";
-                } else {
-                    stressBadge.style.background = "rgba(34, 87, 122, 0.15)";
-                    stressBadge.style.color = "var(--color-deep-teal)";
-                    gaugeFill.style.stroke = "var(--color-deep-teal)";
-                }
+                stressBadge.style.backgroundColor = bgHex;
+                stressBadge.style.color = "var(--text-primary)";
+                gaugeFill.style.stroke = strokeHex;
             }
 
             // Bind update events to sliders
@@ -1522,22 +1697,54 @@ Training Data = 200+ labeled sessions
             updateSimulator();
 
             // ----------------------------------------------------
-            // 4. LIVE CARD METRICS SIMULATOR STREAM
+            // 4. LIVE CARD METRICS REAL TELEMETRY STREAM
             // ----------------------------------------------------
             const liveCardio = document.getElementById("live-cardio-current");
             const liveKinetics = document.getElementById("live-kinetics-current");
             const liveLux = document.getElementById("live-lux-current");
 
-            setInterval(() => {
-                // Random subtle variation for landing page realistic streams
-                const currentHR = Math.floor(65 + Math.random() * 25);
-                const currentKinetics = (0.5 + Math.random() * 2).toFixed(1);
-                const currentLux = Math.floor(100 + Math.random() * 400);
+            async function fetchRealTelemetryStreams() {
+                try {
+                    const res = await fetch("/data");
+                    const data = await res.json();
+                    if (data && data.length > 0) {
+                        const frame = data[data.length - 1];
+                        
+                        if (liveCardio) {
+                            liveCardio.innerText = `${frame.heart_rate} BPM`;
+                            const card = liveCardio.closest(".metric-card");
+                            const subtitle = card.querySelector(".live-feed-status");
+                            if (subtitle) {
+                                subtitle.innerText = `Baseline: 62 BPM | Status: ${frame.heart_rate > 98 ? 'Elevated' : 'Normal'}`;
+                            }
+                        }
+                        
+                        if (liveKinetics) {
+                            liveKinetics.innerText = `${frame.movement.toFixed(1)} Hz`;
+                            const card = liveKinetics.closest(".metric-card");
+                            const subtitle = card.querySelector(".live-feed-status");
+                            if (subtitle) {
+                                subtitle.innerText = `Movement: ${frame.movement > 6 ? 'High' : frame.movement > 2 ? 'Moderate' : 'Low'} | Disruption: ${frame.movement > 5 ? 'High' : 'Low'}`;
+                            }
+                        }
+                        
+                        if (liveLux) {
+                            liveLux.innerText = `${frame.light} Lux`;
+                            const card = liveLux.closest(".metric-card");
+                            const subtitle = card.querySelector(".live-feed-status");
+                            if (subtitle) {
+                                subtitle.innerText = `Photic Threat (>11 PM): ${frame.light > 150 ? 'High' : 'Minimal'}`;
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.log("Telemetry connection stream offline:", e);
+                }
+            }
 
-                if (liveCardio) liveCardio.innerText = `${currentHR} BPM`;
-                if (liveKinetics) liveKinetics.innerText = `${currentKinetics} Hz`;
-                if (liveLux) liveLux.innerText = `${currentLux} Lux`;
-            }, 3000);
+            // Sync metrics every 2 seconds matching backend simulator rates
+            setInterval(fetchRealTelemetryStreams, 2000);
+            fetchRealTelemetryStreams();
         });
     </script>
 </body>

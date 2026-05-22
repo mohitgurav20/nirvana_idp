@@ -5,7 +5,7 @@ import os
 CSV_FILE = "data.csv"
 
 if not os.path.exists(CSV_FILE) or os.path.getsize(CSV_FILE) == 0:
-    print("❌ Error: 'data.csv' is empty or missing. Run your simulator script first!")
+    print("[ERROR] Error: 'data.csv' is empty or missing. Run your simulator script first!")
     exit()
 
 data = pd.read_csv(CSV_FILE)
@@ -22,5 +22,5 @@ plt.grid(True, linestyle=":", alpha=0.5)
 plt.legend()
 plt.tight_layout()
 
-print("📊 Displaying your analytical tracking graph...")
+print("[INFO] Displaying your analytical tracking graph...")
 plt.show()

@@ -92,9 +92,9 @@ def run_predictive_pipeline():
 
         alerts = []
         insights = []
-        if hr > 98: alerts.append("⚠️ Elevated nocturnal tachycardia vectors detected.")
-        if mv > 8: alerts.append("⚠️ Somatosensory disruption: High movement frequency.")
-        if lt > 350: alerts.append("⚠️ Circadian photoreceptor threat due to high lux levels.")
+        if hr > 98: alerts.append("[ALERT] Elevated nocturnal tachycardia vectors detected.")
+        if mv > 8: alerts.append("[ALERT] Somatosensory disruption: High movement frequency.")
+        if lt > 350: alerts.append("[ALERT] Circadian photoreceptor threat due to high lux levels.")
 
         if mv >= 6: insights.append("Somatic spikes observed between localized intervals.")
         if lt > 150 and hr > 80: insights.append("Stress index rising under unoptimized ambient luminescence conditions.")

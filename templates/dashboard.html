@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio-Sync | Real-Time Physiological Telemetry Dashboard</title>
+    <title>Nirvana | Real-Time Physiological Telemetry Dashboard</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
@@ -14,15 +17,15 @@
     <style>
         /* Modern Clean CSS Variable Design Tokens */
         :root {
-            --bg-base: #090d16;
-            --bg-surface: #111827;
-            --bg-surface-solid: #1f2937;
-            --border-glow: rgba(59, 130, 246, 0.2);
-            --border-line: rgba(255, 255, 255, 0.08);
-            --text-primary: #f9fafb;
+            --bg-base: #080c14;
+            --bg-surface: rgba(38, 198, 218, 0.02);
+            --bg-surface-solid: #0f172a;
+            --border-glow: rgba(38, 198, 218, 0.18);
+            --border-line: rgba(255, 255, 255, 0.06);
+            --text-primary: #e0f7fa; /* Ice light cyan primary text */
             --text-secondary: #9ca3af;
-            --neon-cyan: #38A3A5; /* Match Bio-Sync Primary Teal */
-            --neon-purple: #6366f1; /* Indigo */
+            --neon-cyan: #26C6DA; /* Deep Sky Cyan Core */
+            --neon-purple: #80DEEA; /* Ice blue medium accent */
             --neon-rose: #ef4444; /* Alert Red */
             --neon-amber: #f59e0b; /* Warning Amber */
             --glass-blur: none;
@@ -33,12 +36,12 @@
             --bg-base: #f8fafc;
             --bg-surface: #ffffff;
             --bg-surface-solid: #f1f5f9;
-            --border-glow: rgba(37, 99, 235, 0.15);
+            --border-glow: rgba(38, 198, 218, 0.15);
             --border-line: rgba(15, 23, 42, 0.06);
             --text-primary: #0f172a;
             --text-secondary: #64748b;
-            --neon-cyan: #38A3A5;
-            --neon-purple: #4f46e5;
+            --neon-cyan: #26C6DA;
+            --neon-purple: #00acc1;
             --neon-rose: #dc2626;
             --neon-amber: #d97706;
         }
@@ -47,8 +50,12 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), border 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, .stat-value, .brand-title-box h1 {
+            font-family: 'Space Grotesk', sans-serif !important;
         }
 
         body {
@@ -599,19 +606,19 @@
 
     <div id="global-loader-screen">
         <div class="loader-ring-system"></div>
-        <div style="font-size:0.85rem; font-weight:800; letter-spacing:3px; color:var(--neon-cyan); margin-top:24px; text-transform:uppercase;">Bio-Sync Telemetry</div>
+        <div style="font-size:0.85rem; font-weight:800; letter-spacing:3px; color:var(--neon-cyan); margin-top:24px; text-transform:uppercase;">Nirvana Telemetry</div>
     </div>
 
     <div id="app-dashboard-frame">
         <header>
             <div class="brand-title-box">
-                <h1>Bio-Sync <span>Telemetry</span></h1>
+                <h1>Nirvana <span>Telemetry</span></h1>
                 <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; font-weight: 500;">Adaptive Physiological Monitoring & ML Insights</p>
             </div>
             <div class="control-actions-hub">
-                <a href="/" class="premium-sys-btn">← Home</a>
-                <button class="premium-sys-btn" onclick="openSystemModalWindow('settings-config-modal')">⚙️ Settings</button>
-                <button class="premium-sys-btn" onclick="togglePlatformColorPaletteTheme()">🌓 Toggle Theme</button>
+                <a href="/" class="premium-sys-btn"><i class="fa-solid fa-arrow-left"></i> Home</a>
+                <button class="premium-sys-btn" onclick="openSystemModalWindow('settings-config-modal')"><i class="fa-solid fa-sliders"></i> Settings</button>
+                <button class="premium-sys-btn" onclick="togglePlatformColorPaletteTheme()"><i class="fa-solid fa-circle-half-stroke"></i> Theme</button>
                 <div style="font-size:0.8rem; font-weight:600; border:1px solid var(--border-line); padding:10px 18px; border-radius:8px; background:var(--bg-surface); color:var(--text-secondary);" id="live-runtime-timestamp">SYNCING TIME...</div>
             </div>
         </header>
@@ -656,7 +663,7 @@
             
             <div class="analytical-panel-box">
                 <div class="panel-headline-row">
-                    <h3>📊 Live Biometric Waveforms</h3>
+                    <h3><i class="fa-solid fa-chart-line" style="color:var(--neon-cyan); margin-right:8px;"></i> Live Biometric Waveforms</h3>
                     <button class="premium-sys-btn" style="padding: 6px 12px; font-size: 0.75rem;" onclick="resetAnalyticalViewportScale()">RESET CHART ZOOM</button>
                 </div>
                 <div class="primary-viewport-container">
@@ -668,7 +675,7 @@
                 
                 <div class="analytical-panel-box">
                     <div class="panel-headline-row">
-                        <h3>🌙 Sleep Score</h3>
+                        <h3><i class="fa-solid fa-moon" style="color:var(--neon-cyan); margin-right:8px;"></i> Sleep Score</h3>
                     </div>
                     <div class="circular-gauge-container">
                         <div style="position:relative; width:180px; height:180px;">
@@ -687,7 +694,7 @@
 
                 <div class="analytical-panel-box">
                     <div class="panel-headline-row">
-                        <h3>🧠 AI Diagnostics & Insights</h3>
+                        <h3><i class="fa-solid fa-brain" style="color:var(--neon-cyan); margin-right:8px;"></i> AI Diagnostics & Insights</h3>
                     </div>
                     <div class="diagnostic-alerts-feed-wrapper" id="ui-alerts-injector-node">
                         <div class="insight-node-banner">Awaiting connection. Calibrating real-time physiological algorithms...</div>
@@ -699,10 +706,10 @@
         </div>
     </div>
 
-    <button class="floating-chat-trigger-icon" onclick="toggleNirvanNeuralAssistantPanel()">💬</button>
+    <button class="floating-chat-trigger-icon" onclick="toggleNirvanNeuralAssistantPanel()"><i class="fa-solid fa-comment-dots"></i></button>
     <div class="assistant-chat-panel-frame" id="nirvanChatbotDrawerBox">
         <div class="chat-header-bar">
-            <span>Bio-Sync AI Assistant</span>
+            <span>Nirvana AI Assistant</span>
             <span style="cursor:pointer;" onclick="toggleNirvanNeuralAssistantPanel()">✕</span>
         </div>
         <div class="chat-messages-scroll-area" id="chatLogsScrollerBox">
@@ -728,7 +735,7 @@
     <div class="sliding-overlay-modal" id="settings-config-modal">
         <div class="premium-modal-window">
             <div class="modal-headline-block">
-                <h2>⚙️ Profile & System Settings</h2>
+                <h2><i class="fa-solid fa-sliders" style="color:var(--neon-cyan); margin-right:8px;"></i> Profile & System Settings</h2>
                 <span class="modal-close-trigger" onclick="closeSystemModalWindow('settings-config-modal')">✕</span>
             </div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
@@ -837,27 +844,27 @@
                         {
                             label: 'Cardio Rhythm (BPM)',
                             data: [],
-                            borderColor: '#38A3A5',
+                            borderColor: '#26C6DA',
                             borderWidth: 3,
                             fill: true,
                             backgroundColor: cyanGrad,
                             tension: 0.4,
                             pointRadius: 2,
                             pointHoverRadius: 7,
-                            pointHoverBackgroundColor: '#38A3A5',
+                            pointHoverBackgroundColor: '#26C6DA',
                             yAxisID: 'y-axis-cardio'
                         },
                         {
                             label: 'Actigraphy Movement (Hz)',
                             data: [],
-                            borderColor: '#6366f1',
+                            borderColor: '#80DEEA',
                             borderWidth: 3,
                             fill: true,
                             backgroundColor: purpleGrad,
                             tension: 0.4,
                             pointRadius: 2,
                             pointHoverRadius: 7,
-                            pointHoverBackgroundColor: '#6366f1',
+                            pointHoverBackgroundColor: '#80DEEA',
                             yAxisID: 'y-axis-motion'
                         }
                     ]
@@ -881,7 +888,7 @@
                             backgroundColor: 'rgba(17, 24, 39, 0.95)',
                             titleFont: { family: 'Inter', size: 12, weight: 700 },
                             bodyFont: { family: 'Inter', size: 12 },
-                            borderColor: '#38A3A5',
+                            borderColor: '#26C6DA',
                             borderWidth: 1,
                             padding: 14,
                             cornerRadius: 8,
@@ -910,21 +917,21 @@
                     scales: {
                         x: {
                             grid: { display: false },
-                            ticks: { color: '#64748b', font: { family: 'Inter', size: 10 } }
+                            ticks: { color: '#64748b', font: { family: 'Outfit', size: 10 } }
                         },
                         'y-axis-cardio': {
                             type: 'linear',
                             position: 'left',
                             min: 40, max: 140,
                             grid: { color: 'rgba(255,255,255,0.03)' },
-                            ticks: { color: '#38A3A5' }
+                            ticks: { color: '#26C6DA' }
                         },
                         'y-axis-motion': {
                             type: 'linear',
                             position: 'right',
                             min: 0, max: 12,
                             grid: { display: false },
-                            ticks: { color: '#6366f1' }
+                            ticks: { color: '#80DEEA' }
                         }
                     }
                 }
@@ -978,7 +985,7 @@
                 </div>
                 <div class="content-subnode-item" style="grid-column: span 2;">
                     <h4>AI Healthcare Guidance Recommendation</h4>
-                    <p style="color:var(--neon-amber); font-weight:600;">✨ ${targetData.advice}</p>
+                    <p style="color:var(--neon-amber); font-weight:600;"><i class="fa-solid fa-arrow-trend-up" style="margin-right: 6px;"></i> ${targetData.advice}</p>
                 </div>
             `;
             
@@ -1115,7 +1122,7 @@
 
                     const score = payload.sleep_score;
                     document.getElementById('radial-gauge-score-txt').innerText = score + "%";
-                    document.getElementById('metric-txt-stage').innerText = `✨ ${payload.sleep_stage}`;
+                    document.getElementById('metric-txt-stage').innerText = payload.sleep_stage;
 
                     // Evaluate SVG Dash Circles offsets
                     const circle = document.getElementById('radialGaugeIndicatorBar');
@@ -1126,13 +1133,13 @@
                     // Hydrate Warning Alerts Boards Text Fields
                     const alertContainer = document.getElementById('ui-alerts-injector-node');
                     if(payload.alerts.length > 0) {
-                        alertContainer.innerHTML = payload.alerts.map(a => `<div class="alert-node-banner">${a}</div>`).join('');
+                        alertContainer.innerHTML = payload.alerts.map(a => `<div class="alert-node-banner"><i class="fa-solid fa-triangle-exclamation" style="margin-right: 6px;"></i> ${a}</div>`).join('');
                     } else {
-                        alertContainer.innerHTML = `<div class="insight-node-banner" style="color:var(--neon-cyan);">✓ All biological channels verified clear.</div>`;
+                        alertContainer.innerHTML = `<div class="insight-node-banner" style="color:var(--neon-cyan);"><i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> All biological channels verified clear.</div>`;
                     }
 
                     const insightContainer = document.getElementById('ui-insights-injector-node');
-                    insightContainer.innerHTML = payload.insights.map(i => `<div class="insight-node-banner">💡 AI Analysis: ${i}</div>`).join('');
+                    insightContainer.innerHTML = payload.insights.map(i => `<div class="insight-node-banner"><i class="fa-solid fa-microchip" style="margin-right: 6px;"></i> AI Analysis: ${i}</div>`).join('');
 
                     document.getElementById('live-runtime-timestamp').innerText = `SYS_TIME: ${payload.last_updated}`;
                 }
@@ -1166,8 +1173,8 @@
             hydrationProfileSettingsFromStorage();
 
             // Build miniature data trends graphics lines
-            sparklineInstancesDictionary.hr = buildMiniatureSparklineElementNode('sparklineHR', '#38A3A5');
-            sparklineInstancesDictionary.mv = buildMiniatureSparklineElementNode('sparklineMV', '#6366f1');
+            sparklineInstancesDictionary.hr = buildMiniatureSparklineElementNode('sparklineHR', '#26C6DA');
+            sparklineInstancesDictionary.mv = buildMiniatureSparklineElementNode('sparklineMV', '#80DEEA');
             sparklineInstancesDictionary.lt = buildMiniatureSparklineElementNode('sparklineLT', '#ef4444');
             sparklineInstancesDictionary.st = buildMiniatureSparklineElementNode('sparklineST', '#f59e0b');
 
