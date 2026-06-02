@@ -717,7 +717,7 @@
             <div class="sys-status-badge"><i class="fa-solid fa-circle"></i> ONLINE</div>
         </a>
         <div class="control-actions-hub">
-            <div id="live-runtime-timestamp" style="font-size:0.8rem; font-weight:600; font-family:'JetBrains Mono', monospace; border:1px solid var(--border-line); padding:10px 18px; border-radius:8px; background:var(--bg-surface); color:var(--text-secondary); margin-right: 8px;">SYNCING TIME...</div>
+            <div id="live-runtime-timestamp" style="font-size:0.8rem; font-weight:600; font-family:'JetBrains Mono', monospace; border:1px solid var(--border-line); padding:10px 18px; border-radius:8px; background:var(--bg-surface); color:var(--text-secondary); margin-right: 8px; min-width: 180px; text-align:center;"><i class="fa-solid fa-clock" style="color:var(--neon-cyan); margin-right:6px;"></i><span id="live-clock-value">--:--:--</span></div>
             <button class="premium-sys-btn" onclick="togglePlatformColorPaletteTheme()" title="Toggle Theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
             <button class="premium-sys-btn" onclick="openSystemModalWindow('settings-config-modal')" title="Settings"><i class="fa-solid fa-sliders"></i></button>
         </div>
@@ -1161,7 +1161,7 @@
                         }, 500);
                     }
                     
-                    document.getElementById('live-runtime-timestamp').innerText = `SYS_TIME: ${payload.last_updated}`;
+                    // Timestamp is now handled by the live JS clock — no overwrite needed
                 }
             } catch (err) {}
         }
@@ -1201,7 +1201,18 @@
                 setTimeout(() => document.getElementById('global-loader-screen').style.display = 'none', 600);
                 runPlatformDataSyncCycle();
                 reinitializeDataPollingSchedule();
-            }, 1000); // Shorter loading screen for speed
+            }, 1000);
+
+            // Live real-time clock — updates every second, pure JS, no backend dependency
+            function tickLiveClock() {
+                const now = new Date();
+                const h = String(now.getHours()).padStart(2, '0');
+                const m = String(now.getMinutes()).padStart(2, '0');
+                const s = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('live-clock-value').textContent = `${h}:${m}:${s}`;
+            }
+            tickLiveClock();
+            setInterval(tickLiveClock, 1000);
         });
     </script>
 </body>

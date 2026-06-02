@@ -57,48 +57,40 @@ def load_and_clean_data():
 
 
 def seed_data_file():
-    """Seed data.csv with 6 hours of historical sleep data in 5-minute increments if empty."""
-    # Force delete existing csv if it contains non-5-minute formatted entries or is empty/corrupt
+    """Seed data.csv with recent historical data using REAL timestamps going back from now."""
     needs_seeding = True
     if os.path.exists(CSV_FILE) and os.path.getsize(CSV_FILE) > 0:
         try:
             df = pd.read_csv(CSV_FILE)
-            if len(df) >= 20 and ":" in str(df.iloc[0]["timestamp"]) and len(str(df.iloc[0]["timestamp"]).split(":")) == 2:
-                # Correct format (HH:MM) exists and has enough rows, no need to overwrite
+            if len(df) >= 10:
                 needs_seeding = False
-                print(f"[NIRVANA] data.csv already contains {len(df)} 5-minute epoch records. Skipping seeding.")
+                print(f"[NIRVANA] data.csv already contains {len(df)} records. Skipping seeding.")
         except Exception:
             pass
 
     if needs_seeding:
-        print("[NIRVANA] Seeding data.csv with 6 hours of historical sleep data (5-minute epochs)...")
+        print("[NIRVANA] Seeding data.csv with 1 hour of real-time historical data...")
         with open(CSV_FILE, "w", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(["timestamp", "heart_rate", "movement", "light", "stress"])
             
-            # Start at 22:00 (10 PM)
-            current_time = datetime.strptime("22:00", "%H:%M")
-            
-            # Seed 72 intervals of 5 minutes (6 hours -> 22:00 to 04:00)
-            for i in range(72):
-                # Calculate cyclic patterns for 3 sleep cycles (2 hours / 24 intervals per cycle)
-                cycle_progress = (i % 24) / 24.0
+            now = datetime.now()
+            # Seed 12 intervals of 5 minutes going back 1 hour from now
+            for i in range(12, 0, -1):
+                past_time = now - timedelta(minutes=i * 5)
+                cycle_progress = (i % 6) / 6.0
                 
-                if cycle_progress < 0.15:      # Awake / Falling asleep
-                    hr = random.randint(78, 88)
-                    mv = random.randint(4, 7)
-                    lt = random.randint(20, 50)
-                elif cycle_progress < 0.45:    # Light sleep (N1/N2)
-                    hr = random.randint(64, 74)
-                    mv = random.randint(1, 3)
-                    lt = 0
-                elif cycle_progress < 0.75:    # Deep sleep (N3)
-                    hr = random.randint(55, 62)
-                    mv = 0
-                    lt = 0
-                else:                          # REM sleep
-                    hr = random.randint(63, 70)
-                    mv = random.randint(1, 2)
+                if cycle_progress < 0.3:
+                    hr = random.randint(68, 78)
+                    mv = random.randint(2, 5)
+                    lt = random.randint(5, 30)
+                elif cycle_progress < 0.6:
+                    hr = random.randint(60, 70)
+                    mv = random.randint(0, 2)
+                    lt = random.randint(0, 10)
+                else:
+                    hr = random.randint(55, 65)
+                    mv = random.randint(0, 1)
                     lt = 0
                     
                 if model_instance:
@@ -106,10 +98,8 @@ def seed_data_file():
                 else:
                     stress = (hr * 0.26) + (mv * 4.6) + (lt * 0.015)
                     
-                timestamp_str = current_time.strftime("%H:%M")
+                timestamp_str = past_time.strftime("%H:%M:%S")
                 writer.writerow([timestamp_str, hr, mv, lt, f"{stress:.2f}"])
-                
-                current_time += timedelta(minutes=5)
 
 
 # --- ESP32 Hardware Ingestion Route ---
@@ -132,68 +122,47 @@ def ingest_esp32_data():
             
         clean_stress = "{:.2f}".format(predicted_stress)
         
-        # Calculate next 5-minute epoch timestamp
-        data = load_and_clean_data()
-        if not data.empty:
-            last_time_str = str(data.iloc[-1]["timestamp"])
-            try:
-                last_time = datetime.strptime(last_time_str, "%H:%M")
-            except ValueError:
-                last_time = datetime.strptime("04:00", "%H:%M")
-        else:
-            last_time = datetime.strptime("22:00", "%H:%M")
-            
-        next_time = last_time + timedelta(minutes=5)
-        next_time_str = next_time.strftime("%H:%M")
+        # Use REAL current timestamp
+        real_timestamp = datetime.now().strftime("%H:%M:%S")
         
         # Save to CSV
         with open(CSV_FILE, "a", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow([next_time_str, heart_rate, movement, light, clean_stress])
+            writer.writerow([real_timestamp, heart_rate, movement, light, clean_stress])
             
-        return jsonify({"status": "success", "message": "Telemetry securely saved."}), 200
+        return jsonify({"status": "success", "timestamp": real_timestamp, "message": "Telemetry saved."}), 200
         
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
 # --- Background Simulator (Fallback/Presentation Mode) ---
-SIMULATION_MODE = True # Set to False once ESP32 is fully wired & writing via serial_reader.py
+# Generates realistic sensor data with REAL timestamps every 5 seconds
+SIMULATION_MODE = True  # Set to False once ESP32 is connected via serial_reader.py
+
 def background_simulator():
     # Make sure database is seeded first
     seed_data_file()
     
     while SIMULATION_MODE:
         data = load_and_clean_data()
-        if not data.empty:
-            last_time_str = str(data.iloc[-1]["timestamp"])
-            try:
-                last_time = datetime.strptime(last_time_str, "%H:%M")
-            except ValueError:
-                last_time = datetime.strptime("04:00", "%H:%M")
-        else:
-            last_time = datetime.strptime("22:00", "%H:%M")
-            
-        next_time = last_time + timedelta(minutes=5)
-        next_time_str = next_time.strftime("%H:%M")
-        
         total_rows = len(data)
         cycle_progress = (total_rows % 24) / 24.0
         
         if cycle_progress < 0.15:
-            hr = random.randint(78, 88)
-            mv = random.randint(4, 7)
-            lt = random.randint(20, 50)
+            hr = random.randint(72, 85)
+            mv = random.randint(3, 6)
+            lt = random.randint(10, 40)
         elif cycle_progress < 0.45:
-            hr = random.randint(64, 74)
+            hr = random.randint(62, 72)
             mv = random.randint(1, 3)
-            lt = 0
+            lt = random.randint(0, 5)
         elif cycle_progress < 0.75:
-            hr = random.randint(55, 62)
-            mv = 0
+            hr = random.randint(55, 63)
+            mv = random.randint(0, 1)
             lt = 0
         else:
-            hr = random.randint(63, 70)
+            hr = random.randint(60, 68)
             mv = random.randint(1, 2)
             lt = 0
             
@@ -201,11 +170,14 @@ def background_simulator():
             calc_stress = model_instance.predict([[hr, mv, lt]])[0]
         else:
             calc_stress = (hr * 0.26) + (mv * 4.6) + (lt * 0.015)
+        
+        # Use REAL current timestamp
+        real_timestamp = datetime.now().strftime("%H:%M:%S")
             
         with open(CSV_FILE, "a", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow([next_time_str, hr, mv, lt, "{:.2f}".format(calc_stress)])
-        time.sleep(3)
+            writer.writerow([real_timestamp, hr, mv, lt, "{:.2f}".format(calc_stress)])
+        time.sleep(5)  # New data every 5 seconds
 
 # Start Simulator Daemon
 sim_thread = threading.Thread(target=background_simulator, daemon=True)
