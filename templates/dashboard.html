@@ -347,11 +347,25 @@
             box-shadow: var(--card-shadow);
             display: flex;
             flex-direction: column;
+            flex-shrink: 0; /* Prevent compression from siblings */
+        }
+
+        /* Fixed-height sleep score so it never changes size */
+        .sidebar-section.sleep-score-section {
+            height: 300px;
+            min-height: 300px;
+        }
+
+        /* Fixed-height diagnostics so alerts don't push the chat */
+        .sidebar-section.diagnostics-section {
+            height: 280px;
+            min-height: 280px;
+            overflow: hidden;
         }
         
         .sidebar-section.chat-section {
             padding: 0;
-            flex-grow: 1;
+            flex: 1 1 350px;
             min-height: 350px;
             display: flex;
             flex-direction: column;
@@ -404,8 +418,8 @@
         .diagnostic-alerts-feed-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            max-height: 250px;
+            gap: 8px;
+            flex: 1;
             overflow-y: auto;
             padding-right: 8px;
         }
@@ -434,6 +448,11 @@
             align-items: flex-start;
             gap: 10px;
             font-weight: 500;
+            /* Animation only plays once on first appearance via .newly-inserted */
+        }
+
+        .alert-node-banner.newly-inserted,
+        .insight-node-banner.newly-inserted {
             animation: nodeInsertion 0.4s ease-out;
         }
 
@@ -1076,7 +1095,10 @@
             logsArea.scrollTop = logsArea.scrollHeight;
         }
 
-        /* Polling Data Engine */
+        /* --- Stable Polling Data Engine (no layout thrashing) --- */
+        let _prevAlertSignature = '';
+        let _prevInsightSignature = '';
+
         async function runPlatformDataSyncCycle() {
             try {
                 const dataRes = await fetch("/data");
@@ -1113,14 +1135,31 @@
                     circle.style.strokeDasharray = circumference;
                     circle.style.strokeDashoffset = circumference - (score / 100) * circumference;
 
-                    const alertContainer = document.getElementById('ui-alerts-injector-node');
-                    if(payload.alerts.length > 0) {
-                        alertContainer.innerHTML = payload.alerts.map(a => `<div class="alert-node-banner"><i class="fa-solid fa-triangle-exclamation"></i> <span>${a}</span></div>`).join('');
-                    } else {
-                        alertContainer.innerHTML = `<div class="insight-node-banner" style="color:var(--neon-cyan); border-left-color:var(--neon-cyan);"><i class="fa-solid fa-circle-check"></i> <span>All biological channels verified clear.</span></div>`;
+                    // --- Only re-render alerts if their content actually changed ---
+                    const newAlertSig = JSON.stringify(payload.alerts);
+                    if (newAlertSig !== _prevAlertSignature) {
+                        _prevAlertSignature = newAlertSig;
+                        const alertContainer = document.getElementById('ui-alerts-injector-node');
+                        if(payload.alerts.length > 0) {
+                            alertContainer.innerHTML = payload.alerts.map(a => `<div class="alert-node-banner newly-inserted"><i class="fa-solid fa-triangle-exclamation"></i> <span>${a}</span></div>`).join('');
+                        } else {
+                            alertContainer.innerHTML = `<div class="insight-node-banner" style="color:var(--neon-cyan); border-left-color:var(--neon-cyan);"><i class="fa-solid fa-circle-check"></i> <span>All biological channels verified clear.</span></div>`;
+                        }
+                        // Remove animation class after it plays so it doesn't replay
+                        setTimeout(() => {
+                            alertContainer.querySelectorAll('.newly-inserted').forEach(el => el.classList.remove('newly-inserted'));
+                        }, 500);
                     }
-                    const insightContainer = document.getElementById('ui-insights-injector-node');
-                    insightContainer.innerHTML = payload.insights.map(i => `<div class="insight-node-banner"><i class="fa-solid fa-microchip"></i> <span>${i}</span></div>`).join('');
+
+                    const newInsightSig = JSON.stringify(payload.insights);
+                    if (newInsightSig !== _prevInsightSignature) {
+                        _prevInsightSignature = newInsightSig;
+                        const insightContainer = document.getElementById('ui-insights-injector-node');
+                        insightContainer.innerHTML = payload.insights.map(i => `<div class="insight-node-banner newly-inserted"><i class="fa-solid fa-microchip"></i> <span>${i}</span></div>`).join('');
+                        setTimeout(() => {
+                            insightContainer.querySelectorAll('.newly-inserted').forEach(el => el.classList.remove('newly-inserted'));
+                        }, 500);
+                    }
                     
                     document.getElementById('live-runtime-timestamp').innerText = `SYS_TIME: ${payload.last_updated}`;
                 }
