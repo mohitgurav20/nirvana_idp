@@ -15,35 +15,43 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
 
     <style>
-        /* Modern Clean CSS Variable Design Tokens */
+        /* Refined Premium CSS Variable Design Tokens */
         :root {
-            --bg-base: #080c14;
-            --bg-surface: rgba(38, 198, 218, 0.02);
-            --bg-surface-solid: #0f172a;
-            --border-glow: rgba(38, 198, 218, 0.18);
-            --border-line: rgba(255, 255, 255, 0.06);
-            --text-primary: #e0f7fa; /* Ice light cyan primary text */
-            --text-secondary: #9ca3af;
-            --neon-cyan: #26C6DA; /* Deep Sky Cyan Core */
-            --neon-purple: #80DEEA; /* Ice blue medium accent */
-            --neon-rose: #ef4444; /* Alert Red */
-            --neon-amber: #f59e0b; /* Warning Amber */
-            --glass-blur: none;
+            /* Softer Dark Mode aligned with Landing Page Ice-Cyan aesthetics */
+            --bg-base: #0f172a; /* Deep Slate Navy */
+            --bg-surface: rgba(30, 41, 59, 0.7); /* Translucent surface */
+            --bg-surface-solid: #1e293b;
+            --border-glow: rgba(38, 198, 218, 0.25);
+            --border-line: rgba(255, 255, 255, 0.08);
+            --text-primary: #e0f7fa; 
+            --text-secondary: #94a3b8;
+            
+            /* Ice-Cyan Palette */
+            --neon-cyan: #26C6DA; 
+            --neon-purple: #80DEEA; 
+            --neon-rose: #ef4444; 
+            --neon-amber: #f59e0b; 
+            
+            --glass-bg: rgba(30, 41, 59, 0.6);
+            --glass-blur: blur(16px);
             --card-tilt-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(38, 198, 218, 0.05);
+            --card-shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(38, 198, 218, 0.15);
         }
 
         [data-theme="light"] {
             --bg-base: #f8fafc;
-            --bg-surface: #ffffff;
-            --bg-surface-solid: #f1f5f9;
+            --bg-surface: rgba(255, 255, 255, 0.85);
+            --bg-surface-solid: #ffffff;
             --border-glow: rgba(38, 198, 218, 0.15);
-            --border-line: rgba(15, 23, 42, 0.06);
+            --border-line: rgba(15, 23, 42, 0.08);
             --text-primary: #0f172a;
             --text-secondary: #64748b;
-            --neon-cyan: #26C6DA;
+            --neon-cyan: #00acc1;
             --neon-purple: #00acc1;
-            --neon-rose: #dc2626;
-            --neon-amber: #d97706;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --card-shadow: 0 4px 20px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(38, 198, 218, 0.05);
+            --card-shadow-hover: 0 10px 30px rgba(15, 23, 42, 0.08), 0 1px 8px rgba(38, 198, 218, 0.1);
         }
 
         * {
@@ -66,7 +74,7 @@
             position: relative;
         }
 
-        /* Ambient Neural Particle System Visualization background - Hidden to de-vibecode */
+        /* Ambient Neural Particle System Visualization background */
         .neural-background-canvas {
             display: none;
         }
@@ -93,34 +101,57 @@
             animation: spinningSystem 1s linear infinite;
         }
 
-        /* Core Structure Layout Wrapper */
-        #app-dashboard-frame {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 40px 30px;
-            opacity: 0;
-            transform: translateY(15px);
-            animation: entranceAnimation 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.3s;
-        }
-
-        header {
+        /* Unified Header */
+        header.dashboard-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--border-line);
+            padding: 16px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--border-line);
-            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-title-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
         .brand-title-box h1 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             color: var(--text-primary);
+            text-decoration: none;
         }
 
         .brand-title-box h1 span {
             color: var(--neon-cyan);
+        }
+
+        .sys-status-badge {
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(38, 198, 218, 0.1);
+            color: var(--neon-cyan);
+            border: 1px solid rgba(38, 198, 218, 0.2);
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .sys-status-badge i {
+            font-size: 0.5rem;
+            animation: pulseDots 1.5s infinite;
         }
 
         .control-actions-hub {
@@ -150,38 +181,63 @@
         .premium-sys-btn:hover {
             border-color: var(--neon-cyan);
             background: var(--bg-surface-solid);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
         .premium-sys-btn:active {
             transform: translateY(0);
         }
 
+        /* Core Structure Layout Wrapper */
+        #app-dashboard-frame {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: entranceAnimation 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.3s;
+        }
+
+        /* Bento Box Layout Configuration */
+        .bento-box-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 7fr) minmax(320px, 3fr);
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        /* Left/Center Column */
+        .left-center-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
         /* Metric Grid Display Layout */
         .metrics-multichannel-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
         }
 
         .interactive-metric-card {
             background: var(--bg-surface);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--border-line);
             border-radius: 16px;
             padding: 24px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--card-shadow);
             transition: var(--card-tilt-transition);
         }
 
         .interactive-metric-card::before {
             content: '';
             position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 4px;
+            left: 0; top: 0; right: 0; height: 4px;
             background: var(--neon-cyan);
         }
 
@@ -192,7 +248,7 @@
         .interactive-metric-card:hover {
             transform: translateY(-4px);
             border-color: var(--border-glow);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 8px 16px -6px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--card-shadow-hover);
         }
 
         .card-header-label {
@@ -211,21 +267,21 @@
             display: flex;
             align-items: baseline;
             gap: 4px;
+            color: var(--text-primary);
         }
 
         .live-value-display span {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
             color: var(--text-secondary);
             letter-spacing: normal;
         }
 
-        /* Biometric Real-Time Pulse Animation Effect */
         .biometric-pulse-line-wrapper {
             width: 100%;
-            height: 35px;
+            height: 45px;
             margin-top: 15px;
-            opacity: 0.8;
+            opacity: 0.85;
             position: relative;
         }
 
@@ -233,21 +289,19 @@
             width: 100%; height: 100%;
         }
 
-        /* Grid Configuration System Architecture Details Layout */
-        .dashboard-body-architecture {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
-            align-items: start;
-        }
-
+        /* Analytical Panel / Main Chart Box */
         .analytical-panel-box {
             background: var(--bg-surface);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--border-line);
             border-radius: 16px;
             padding: 30px;
             position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--card-shadow);
+            flex-grow: 1; /* Stretch to fill */
+            display: flex;
+            flex-direction: column;
         }
 
         .panel-headline-row {
@@ -255,6 +309,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-line);
         }
 
         .panel-headline-row h3 {
@@ -267,19 +323,53 @@
         }
 
         .primary-viewport-container {
-            height: 400px;
+            flex-grow: 1;
+            min-height: 400px;
             width: 100%;
             position: relative;
         }
 
-        /* Right Hand Metrics Display Layout */
-        .right-hand-column-stack {
+        /* Right Column - Copilot Sidebar */
+        .right-copilot-sidebar {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
+            height: 100%;
         }
 
-        /* Sleep Score Premium Gauge SVG Ring layout structure */
+        .sidebar-section {
+            background: var(--bg-surface);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-line);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-section.chat-section {
+            padding: 0;
+            flex-grow: 1;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            font-size: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Sleep Score Premium Gauge SVG Ring */
         .circular-gauge-container {
             display: flex;
             flex-direction: column;
@@ -289,13 +379,14 @@
         }
 
         .radial-score-svg {
-            width: 180px; height: 180px;
+            width: 160px; height: 160px;
             transform: rotate(-90deg);
         }
 
         .radial-track {
             fill: none;
-            stroke: var(--border-line);
+            stroke: rgba(255, 255, 255, 0.05);
+            [data-theme="light"] & { stroke: rgba(0, 0, 0, 0.05); }
             stroke-width: 12;
         }
 
@@ -316,179 +407,62 @@
             gap: 12px;
             max-height: 250px;
             overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        /* Custom Scrollbar */
+        .diagnostic-alerts-feed-wrapper::-webkit-scrollbar, .chat-messages-scroll-area::-webkit-scrollbar, .metric-details-grid-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .diagnostic-alerts-feed-wrapper::-webkit-scrollbar-track, .chat-messages-scroll-area::-webkit-scrollbar-track, .metric-details-grid-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .diagnostic-alerts-feed-wrapper::-webkit-scrollbar-thumb, .chat-messages-scroll-area::-webkit-scrollbar-thumb, .metric-details-grid-content::-webkit-scrollbar-thumb {
+            background: var(--border-line);
+            border-radius: 4px;
         }
 
         .alert-node-banner {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            border-radius: 8px;
-            padding: 12px 16px;
-            font-size: 0.85rem;
-            color: var(--neon-rose);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            border-left: 3px solid var(--neon-rose);
+            border-radius: 6px;
+            padding: 12px 14px;
+            font-size: 0.8rem;
+            color: var(--text-primary);
             display: flex;
-            align-items: center;
-            gap: 12px;
+            align-items: flex-start;
+            gap: 10px;
             font-weight: 500;
             animation: nodeInsertion 0.4s ease-out;
         }
 
         .insight-node-banner {
-            background: rgba(59, 130, 246, 0.05);
-            border: 1px solid rgba(59, 130, 246, 0.12);
-            border-radius: 8px;
-            padding: 12px 16px;
-            font-size: 0.85rem;
+            background: rgba(38, 198, 218, 0.08);
+            border: 1px solid rgba(38, 198, 218, 0.15);
+            border-left: 3px solid var(--neon-cyan);
+            border-radius: 6px;
+            padding: 12px 14px;
+            font-size: 0.8rem;
             color: var(--text-primary);
             line-height: 1.45;
-        }
-
-        /* Floating Modern Interactive Panel Interface (Modal Component Base Styles) */
-        .sliding-overlay-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(8px);
-            z-index: 10000;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            align-items: flex-start;
+            gap: 10px;
         }
 
-        .sliding-overlay-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .premium-modal-window {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-line);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 600px;
-            padding: 32px;
-            transform: scale(0.95);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .sliding-overlay-modal.active .premium-modal-window {
-            transform: scale(1);
-        }
-
-        .modal-headline-block {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-line);
-            padding-bottom: 16px;
-            margin-bottom: 24px;
-        }
-
-        .modal-headline-block h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .modal-close-trigger {
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-            padding: 4px;
-        }
-
-        .modal-close-trigger:hover { color: var(--neon-rose); }
-
-        .metric-details-grid-content {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            font-size: 0.88rem;
-            line-height: 1.5;
-            max-height: 450px;
-            overflow-y: auto;
-        }
-
-        .content-subnode-item {
-            background: rgba(255,255,255,0.015);
-            [data-theme="light"] & { background: rgba(0,0,0,0.015); }
-            border: 1px solid var(--border-line);
-            padding: 16px;
-            border-radius: 10px;
-        }
-
-        .content-subnode-item h4 {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            color: var(--neon-purple);
-            margin-bottom: 6px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        /* Custom Floating AI Assistant Sidebar layout */
-        .floating-chat-trigger-icon {
-            position: fixed;
-            bottom: 35px;
-            right: 35px;
-            background: var(--neon-cyan);
-            color: #ffffff;
-            width: 60px; height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
-            z-index: 9999;
-            border: none;
-            transition: all 0.2s ease;
-        }
-
-        .floating-chat-trigger-icon:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-        }
-
-        .assistant-chat-panel-frame {
-            position: fixed;
-            bottom: 110px;
-            right: 35px;
-            width: 380px;
-            height: 520px;
-            background: var(--bg-surface);
-            border: 1px solid var(--border-line);
-            border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(15px);
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            z-index: 9998;
-        }
-
-        .assistant-chat-panel-frame.open {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
-        }
-
+        /* AI Chatbot Sidebar Section */
         .chat-header-bar {
-            background: rgba(255,255,255,0.01);
+            background: rgba(255,255,255,0.02);
+            [data-theme="light"] & { background: rgba(0,0,0,0.02); }
             padding: 16px 20px;
             border-bottom: 1px solid var(--border-line);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 700;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
         }
 
         .chat-messages-scroll-area {
@@ -502,23 +476,26 @@
 
         .msg-bubble-node {
             padding: 10px 14px;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 0.85rem;
-            max-width: 85%;
+            max-width: 90%;
             line-height: 1.45;
         }
 
         .msg-bubble-node.bot {
-            background: rgba(255,255,255,0.02);
+            background: var(--bg-surface-solid);
             border: 1px solid var(--border-line);
             align-self: flex-start;
             color: var(--text-primary);
+            border-bottom-left-radius: 4px;
         }
 
         .msg-bubble-node.user {
             background: var(--neon-cyan);
             color: #ffffff;
             align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 12px rgba(38, 198, 218, 0.2);
         }
 
         /* Typing & Loading Animation Component */
@@ -543,30 +520,120 @@
             border-top: 1px solid var(--border-line);
             display: flex;
             gap: 10px;
-            background: rgba(0,0,0,0.05);
+            background: rgba(0,0,0,0.1);
+            [data-theme="light"] & { background: rgba(255,255,255,0.5); }
         }
 
         .chat-input-delivery-row input {
             flex-grow: 1;
-            background: rgba(255,255,255,0.02);
-            [data-theme="light"] & { background: rgba(0,0,0,0.02); }
+            background: var(--bg-base);
             border: 1px solid var(--border-line);
             border-radius: 8px;
             padding: 10px 14px;
             color: var(--text-primary);
             font-size: 0.85rem;
             outline: none;
+            transition: var(--card-tilt-transition);
         }
 
         .chat-input-delivery-row input:focus {
             border-color: var(--neon-cyan);
+            box-shadow: 0 0 0 2px rgba(38, 198, 218, 0.1);
+        }
+
+        /* Floating Modern Interactive Panel Interface (Modal Component Base Styles) */
+        .sliding-overlay-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sliding-overlay-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .premium-modal-window {
+            background: var(--bg-base);
+            border: 1px solid var(--border-line);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 650px;
+            padding: 32px;
+            transform: scale(0.95) translateY(10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sliding-overlay-modal.active .premium-modal-window {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-headline-block {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        .modal-headline-block h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-close-trigger {
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .modal-close-trigger:hover { color: var(--neon-rose); }
+
+        .metric-details-grid-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .content-subnode-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-line);
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .content-subnode-item h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--neon-purple);
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         /* Modern Form Framework Architecture styling */
         .modern-form-row {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             margin-bottom: 18px;
         }
 
@@ -579,25 +646,40 @@
         }
 
         .modern-form-row input, .modern-form-row select {
-            background: rgba(255,255,255,0.015);
-            [data-theme="light"] & { background: rgba(0,0,0,0.015); }
+            background: var(--bg-surface);
             border: 1px solid var(--border-line);
             color: var(--text-primary);
-            padding: 10px 12px;
+            padding: 12px 14px;
             border-radius: 8px;
             outline: none;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            transition: var(--card-tilt-transition);
         }
 
         .modern-form-row input:focus, .modern-form-row select:focus {
             border-color: var(--neon-cyan);
+            box-shadow: 0 0 0 2px rgba(38, 198, 218, 0.1);
         }
 
         /* Animation Matrices Keyframe Loops Configuration */
         @keyframes spinningSystem { to { transform: rotate(360deg); } }
         @keyframes entranceAnimation { to { opacity: 1; transform: translateY(0); } }
-        @keyframes nodeInsertion { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        @keyframes pulseDots { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        @keyframes nodeInsertion { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulseDots { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1280px) {
+            .bento-box-layout { grid-template-columns: 1fr; }
+            .metrics-multichannel-grid { grid-template-columns: repeat(2, 1fr); }
+            .right-copilot-sidebar { display: grid; grid-template-columns: 1fr 1fr; }
+            .sidebar-section.chat-section { grid-column: 1 / -1; min-height: 400px; }
+        }
+        @media (max-width: 768px) {
+            .metrics-multichannel-grid { grid-template-columns: 1fr; }
+            .right-copilot-sidebar { grid-template-columns: 1fr; }
+            .metric-details-grid-content { grid-template-columns: 1fr; }
+            .content-subnode-item[style*="grid-column"] { grid-column: span 1 !important; }
+        }
     </style>
 </head>
 <body>
@@ -609,125 +691,137 @@
         <div style="font-size:0.85rem; font-weight:800; letter-spacing:3px; color:var(--neon-cyan); margin-top:24px; text-transform:uppercase;">Nirvana Telemetry</div>
     </div>
 
+    <!-- Unified Sticky Header -->
+    <header class="dashboard-header">
+        <a href="/" class="brand-title-box">
+            <h1>Nirvana <span>Telemetry</span></h1>
+            <div class="sys-status-badge"><i class="fa-solid fa-circle"></i> ONLINE</div>
+        </a>
+        <div class="control-actions-hub">
+            <div id="live-runtime-timestamp" style="font-size:0.8rem; font-weight:600; font-family:'JetBrains Mono', monospace; border:1px solid var(--border-line); padding:10px 18px; border-radius:8px; background:var(--bg-surface); color:var(--text-secondary); margin-right: 8px;">SYNCING TIME...</div>
+            <button class="premium-sys-btn" onclick="togglePlatformColorPaletteTheme()" title="Toggle Theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+            <button class="premium-sys-btn" onclick="openSystemModalWindow('settings-config-modal')" title="Settings"><i class="fa-solid fa-sliders"></i></button>
+        </div>
+    </header>
+
     <div id="app-dashboard-frame">
-        <header>
-            <div class="brand-title-box">
-                <h1>Nirvana <span>Telemetry</span></h1>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; font-weight: 500;">Adaptive Physiological Monitoring & ML Insights</p>
-            </div>
-            <div class="control-actions-hub">
-                <a href="/" class="premium-sys-btn"><i class="fa-solid fa-arrow-left"></i> Home</a>
-                <button class="premium-sys-btn" onclick="openSystemModalWindow('settings-config-modal')"><i class="fa-solid fa-sliders"></i> Settings</button>
-                <button class="premium-sys-btn" onclick="togglePlatformColorPaletteTheme()"><i class="fa-solid fa-circle-half-stroke"></i> Theme</button>
-                <div style="font-size:0.8rem; font-weight:600; border:1px solid var(--border-line); padding:10px 18px; border-radius:8px; background:var(--bg-surface); color:var(--text-secondary);" id="live-runtime-timestamp">SYNCING TIME...</div>
-            </div>
-        </header>
-
-        <section class="metrics-multichannel-grid">
+        
+        <!-- Bento Box Layout Core -->
+        <div class="bento-box-layout">
             
-            <div class="interactive-metric-card" onclick="triggerMetricInsightsInspection('heart_rate')">
-                <div class="card-header-label">Cardio Rhythm</div>
-                <div class="live-value-display"><div id="metric-txt-hr">--</div> <span>BPM</span></div>
-                <div class="biometric-pulse-line-wrapper">
-                    <canvas id="sparklineHR" class="sparkline-placeholder"></canvas>
-                </div>
-            </div>
-
-            <div class="interactive-metric-card card-purple" onclick="triggerMetricInsightsInspection('movement')">
-                <div class="card-header-label">Somatic Movement</div>
-                <div class="live-value-display"><div id="metric-txt-mv">--</div> <span>Hz</span></div>
-                <div class="biometric-pulse-line-wrapper">
-                    <canvas id="sparklineMV" class="sparkline-placeholder"></canvas>
-                </div>
-            </div>
-
-            <div class="interactive-metric-card card-rose" onclick="triggerMetricInsightsInspection('light')">
-                <div class="card-header-label">Ambient Light</div>
-                <div class="live-value-display"><div id="metric-txt-lt">--</div> <span>Lux</span></div>
-                <div class="biometric-pulse-line-wrapper">
-                    <canvas id="sparklineLT" class="sparkline-placeholder"></canvas>
-                </div>
-            </div>
-
-            <div class="interactive-metric-card card-amber" onclick="triggerMetricInsightsInspection('stress')">
-                <div class="card-header-label">Stress Index</div>
-                <div class="live-value-display"><div id="metric-txt-st">--</div> <span>Points</span></div>
-                <div class="biometric-pulse-line-wrapper">
-                    <canvas id="sparklineST" class="sparkline-placeholder"></canvas>
-                </div>
-            </div>
-
-        </section>
-
-        <div class="dashboard-body-architecture">
-            
-            <div class="analytical-panel-box">
-                <div class="panel-headline-row">
-                    <h3><i class="fa-solid fa-chart-line" style="color:var(--neon-cyan); margin-right:8px;"></i> Live Biometric Waveforms</h3>
-                    <button class="premium-sys-btn" style="padding: 6px 12px; font-size: 0.75rem;" onclick="resetAnalyticalViewportScale()">RESET CHART ZOOM</button>
-                </div>
-                <div class="primary-viewport-container">
-                    <canvas id="nirvanMainChartCanvas"></canvas>
-                </div>
-            </div>
-
-            <div class="right-hand-column-stack">
+            <!-- Left Column: Metrics and Charts -->
+            <div class="left-center-column">
                 
-                <div class="analytical-panel-box">
+                <!-- Strictly Ordered Top Row Metrics -->
+                <section class="metrics-multichannel-grid">
+                    <div class="interactive-metric-card" onclick="triggerMetricInsightsInspection('heart_rate')">
+                        <div class="card-header-label">Cardio Rhythm</div>
+                        <div class="live-value-display"><div id="metric-txt-hr">--</div> <span>BPM</span></div>
+                        <div class="biometric-pulse-line-wrapper">
+                            <canvas id="sparklineHR" class="sparkline-placeholder"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="interactive-metric-card card-purple" onclick="triggerMetricInsightsInspection('movement')">
+                        <div class="card-header-label">Somatic Movement</div>
+                        <div class="live-value-display"><div id="metric-txt-mv">--</div> <span>Hz</span></div>
+                        <div class="biometric-pulse-line-wrapper">
+                            <canvas id="sparklineMV" class="sparkline-placeholder"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="interactive-metric-card card-rose" onclick="triggerMetricInsightsInspection('light')">
+                        <div class="card-header-label">Ambient Light</div>
+                        <div class="live-value-display"><div id="metric-txt-lt">--</div> <span>Lux</span></div>
+                        <div class="biometric-pulse-line-wrapper">
+                            <canvas id="sparklineLT" class="sparkline-placeholder"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="interactive-metric-card card-amber" onclick="triggerMetricInsightsInspection('stress')">
+                        <div class="card-header-label">Stress Index</div>
+                        <div class="live-value-display"><div id="metric-txt-st">--</div> <span>Points</span></div>
+                        <div class="biometric-pulse-line-wrapper">
+                            <canvas id="sparklineST" class="sparkline-placeholder"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Main Waveform Viewport -->
+                <div class="analytical-panel-box main-chart-box">
                     <div class="panel-headline-row">
-                        <h3><i class="fa-solid fa-moon" style="color:var(--neon-cyan); margin-right:8px;"></i> Sleep Score</h3>
+                        <h3><i class="fa-solid fa-chart-area" style="color:var(--neon-cyan);"></i> Live Biometric Waveforms</h3>
+                        <button class="premium-sys-btn" style="padding: 6px 12px; font-size: 0.75rem;" onclick="resetAnalyticalViewportScale()">RESET CHART ZOOM</button>
+                    </div>
+                    <div class="primary-viewport-container">
+                        <canvas id="nirvanMainChartCanvas"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Copilot Sidebar -->
+            <div class="right-copilot-sidebar">
+                
+                <!-- Sleep Score Prominent Panel -->
+                <div class="sidebar-section sleep-score-section">
+                    <div class="sidebar-header">
+                        <i class="fa-solid fa-moon" style="color:var(--neon-cyan);"></i> Sleep Score Analysis
                     </div>
                     <div class="circular-gauge-container">
-                        <div style="position:relative; width:180px; height:180px;">
+                        <div style="position:relative; width:160px; height:160px;">
                             <svg class="radial-score-svg" viewBox="0 0 160 160">
                                 <circle class="radial-track" cx="80" cy="80" r="70"></circle>
                                 <circle class="radial-progress-bar" id="radialGaugeIndicatorBar" cx="80" cy="80" r="70"></circle>
                             </svg>
                             <div style="position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                                <span style="font-size:2.2rem; font-weight:800; letter-spacing:-1px;" id="radial-gauge-score-txt">--%</span>
-                                <span style="font-size:0.65rem; text-transform:uppercase; color:var(--text-secondary); letter-spacing:1px; font-weight:700;" id="user-profile-name-badge">PATIENT CORE</span>
+                                <span style="font-size:2rem; font-weight:800; letter-spacing:-1px; font-family:'Space Grotesk', sans-serif;" id="radial-gauge-score-txt">--%</span>
+                                <span style="font-size:0.6rem; text-transform:uppercase; color:var(--text-secondary); letter-spacing:1px; font-weight:700;" id="user-profile-name-badge">PATIENT CORE</span>
                             </div>
                         </div>
                         <div style="margin-top:20px; font-size:0.85rem; font-weight:700; color:var(--neon-cyan); text-transform:uppercase; letter-spacing:0.5px;" id="metric-txt-stage">STAGE: SYNCHRONIZING</div>
                     </div>
                 </div>
 
-                <div class="analytical-panel-box">
-                    <div class="panel-headline-row">
-                        <h3><i class="fa-solid fa-brain" style="color:var(--neon-cyan); margin-right:8px;"></i> AI Diagnostics & Insights</h3>
+                <!-- AI Diagnostics Feed -->
+                <div class="sidebar-section diagnostics-section">
+                    <div class="sidebar-header">
+                        <i class="fa-solid fa-microchip" style="color:var(--neon-cyan);"></i> Active Diagnostics
                     </div>
                     <div class="diagnostic-alerts-feed-wrapper" id="ui-alerts-injector-node">
-                        <div class="insight-node-banner">Awaiting connection. Calibrating real-time physiological algorithms...</div>
+                        <div class="insight-node-banner"><i class="fa-solid fa-spinner fa-spin"></i> Awaiting telemetry connection...</div>
                     </div>
-                    <div class="diagnostic-alerts-feed-wrapper" id="ui-insights-injector-node" style="margin-top:10px; border-top:1px dashed var(--border-line); padding-top:10px;"></div>
+                    <div class="diagnostic-alerts-feed-wrapper" id="ui-insights-injector-node" style="margin-top:12px; border-top:1px solid var(--border-line); padding-top:12px;"></div>
+                </div>
+
+                <!-- Always-visible AI Chatbot Interface (Replaces floating button) -->
+                <div class="sidebar-section chat-section" id="nirvanChatbotDrawerBox">
+                    <div class="chat-header-bar">
+                        <i class="fa-solid fa-comment-dots" style="color:var(--neon-cyan);"></i> Nirvana Copilot
+                    </div>
+                    <div class="chat-messages-scroll-area" id="chatLogsScrollerBox">
+                        <div class="msg-bubble-node bot">Platform initialization complete. I can analyze biological patterns, environmental factors, or your current stress baseline. How can I assist you?</div>
+                    </div>
+                    <div class="chat-input-delivery-row">
+                        <input type="text" id="chatTextInputField" placeholder="Ask about sleep stages..." onkeydown="if(event.key==='Enter') transmitUserChatPayload()">
+                        <button class="premium-sys-btn" style="padding: 10px 14px; background: var(--neon-cyan); color: #ffffff; border-color: var(--neon-cyan);" onclick="transmitUserChatPayload()"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
                 </div>
 
             </div>
         </div>
+
     </div>
 
-    <button class="floating-chat-trigger-icon" onclick="toggleNirvanNeuralAssistantPanel()"><i class="fa-solid fa-comment-dots"></i></button>
-    <div class="assistant-chat-panel-frame" id="nirvanChatbotDrawerBox">
-        <div class="chat-header-bar">
-            <span>Nirvana AI Assistant</span>
-            <span style="cursor:pointer;" onclick="toggleNirvanNeuralAssistantPanel()">✕</span>
-        </div>
-        <div class="chat-messages-scroll-area" id="chatLogsScrollerBox">
-            <div class="msg-bubble-node bot">Platform initialization complete. I can analyze biological patterns, environmental factors, or the status of your machine learning models. How can I assist you today?</div>
-        </div>
-        <div class="chat-input-delivery-row">
-            <input type="text" id="chatTextInputField" placeholder="Ask about sleep stages, stress levels, etc..." onkeydown="if(event.key==='Enter') transmitUserChatPayload()">
-            <button class="premium-sys-btn" style="padding: 10px 16px; background: var(--neon-cyan); color: #ffffff; border-color: var(--neon-cyan);" onclick="transmitUserChatPayload()">Send</button>
-        </div>
-    </div>
-
+    <!-- Modals -->
     <div class="sliding-overlay-modal" id="metric-inspection-overlay-panel">
         <div class="premium-modal-window">
             <div class="modal-headline-block">
                 <h2 id="modal-metric-title">Metric Insights</h2>
-                <span class="modal-close-trigger" onclick="closeSystemModalWindow('metric-inspection-overlay-panel')">✕</span>
+                <span class="modal-close-trigger" onclick="closeSystemModalWindow('metric-inspection-overlay-panel')"><i class="fa-solid fa-xmark"></i></span>
             </div>
             <div class="metric-details-grid-content" id="modal-metric-body-grid">
+                <!-- Injected content via JS -->
             </div>
         </div>
     </div>
@@ -736,9 +830,9 @@
         <div class="premium-modal-window">
             <div class="modal-headline-block">
                 <h2><i class="fa-solid fa-sliders" style="color:var(--neon-cyan); margin-right:8px;"></i> Profile & System Settings</h2>
-                <span class="modal-close-trigger" onclick="closeSystemModalWindow('settings-config-modal')">✕</span>
+                <span class="modal-close-trigger" onclick="closeSystemModalWindow('settings-config-modal')"><i class="fa-solid fa-xmark"></i></span>
             </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
                 <div class="modern-form-row">
                     <label>Full Name</label>
                     <input type="text" id="cfg-user-name" value="Alex Mercer">
@@ -748,7 +842,7 @@
                     <input type="number" id="cfg-user-age" value="23">
                 </div>
             </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
                 <div class="modern-form-row">
                     <label>Daily Sleep Goal</label>
                     <select id="cfg-sleep-goal">
@@ -767,13 +861,14 @@
                     </select>
                 </div>
             </div>
-            <div style="display:flex; justify-content:flex-end; gap:14px; margin-top:20px; border-top:1px solid var(--border-line); padding-top:20px;">
+            <div style="display:flex; justify-content:flex-end; gap:14px; margin-top:24px; border-top:1px solid var(--border-line); padding-top:24px;">
                 <button class="premium-sys-btn" style="background:transparent; border:none;" onclick="closeSystemModalWindow('settings-config-modal')">Cancel</button>
                 <button class="premium-sys-btn" style="background:var(--neon-cyan); color:#ffffff; font-weight:600; border-color:var(--neon-cyan);" onclick="commitPlatformConfigurationSettings()">Save Changes</button>
             </div>
         </div>
     </div>
 
+    <!-- Logic Engine -->
     <script>
         /* State Variables Storage Hub */
         let primaryLineChartInstance = null;
@@ -785,56 +880,55 @@
                 title: "Cardio Rhythm Telemetry (BPM)",
                 meaning: "Measures cardiac cycles per minute to reflect autonomic nervous system balance.",
                 logic: "Calculated directly using multi-wavelength photoplethysmography (PPG) infrared sensor matrices.",
-                formula: "BPM = (Total Pulse Peaks Captured / Tracking Frame Duration in Seconds) * 60",
-                ranges: "Optimal Rest Baseline: 55 - 75 BPM. Tachycardia Zone: Above 100 BPM.",
-                impacts: "Directly affected by somatic motion transitions, psychological stressors, and ambient temperature deviations.",
-                medical: "Key for mapping heart rate variability (HRV) and confirming transition into restorative stage N3 sleep.",
-                advice: "Avoid caffeine consumption 6 hours before your rest target to keep nocturnal cardiovascular patterns stable."
+                formula: "BPM = (Pulse Peaks / Seconds) * 60",
+                ranges: "Optimal: 55-75 BPM. Tachycardia: >100 BPM.",
+                impacts: "Directly affected by motion, stressors, and temperature.",
+                medical: "Key for HRV and confirming N3 sleep stages.",
+                advice: "Avoid caffeine 6 hours before rest."
             },
             movement: {
-                title: "Actigraphy Kinetics Monitoring",
-                meaning: "Tracks physical displacement during rest cycles to detect micro-arousals and body position shifts.",
-                logic: "Monitors positional deviations using micro-electromechanical (MEMS) tri-axial accelerometer systems.",
-                formula: "Hz Frequency = sqrt(Delta_X^2 + Delta_Y^2 + Delta_Z^2) integrated over time.",
-                ranges: "Quiescent Baseline: 0 - 2 Hz. Elevated Activity Flux: Above 6 Hz.",
-                impacts: "Driven by physical discomfort, restless legs syndrome vectors, sleep transitions, or external disruptions.",
-                medical: "Essential for marking borders between wakefulness, REM phases, and deep non-REM structures.",
-                advice: "Ensure your sleep environment uses adaptive memory foam materials to help lower body alignment adjustments."
+                title: "Actigraphy Kinetics (Hz)",
+                meaning: "Tracks physical displacement to detect micro-arousals.",
+                logic: "Monitors positional deviations using tri-axial accelerometers.",
+                formula: "Hz = sqrt(dX² + dY² + dZ²) / t",
+                ranges: "Quiescent: 0-2 Hz. Elevated: >6 Hz.",
+                impacts: "Driven by physical discomfort or external disruptions.",
+                medical: "Essential for marking borders between REM and deep non-REM.",
+                advice: "Ensure sleep environment uses adaptive materials."
             },
             light: {
-                title: "Ambient Environmental Luminescence",
-                meaning: "Monitors light pollution levels affecting your sleep environment.",
-                logic: "Captured using a high-sensitivity silicon photodiode sensor array with custom lux tracking ranges.",
-                formula: "Lux Output = Captured Photonic Volumetric Current * Calibration Variable Factor",
-                ranges: "Optimal Environment: Below 10 Lux. Sleep Disturbance Threshold: Above 100 Lux.",
-                impacts: "Affected by electronic screens, unshielded windows, smart device indicators, or morning transitions.",
-                medical: "Directly regulates circadian pacing by managing melatonin suppression pathways in the brain.",
-                advice: "Install black-out window panels to keep light interference at 0 Lux throughout your rest cycle."
+                title: "Ambient Luminescence (Lux)",
+                meaning: "Monitors light pollution affecting your environment.",
+                logic: "Captured using a silicon photodiode sensor array.",
+                formula: "Lux = Photonic Current * Calibration",
+                ranges: "Optimal: <10 Lux. Disturbance: >100 Lux.",
+                impacts: "Affected by screens, smart devices, or mornings.",
+                medical: "Regulates circadian pacing via melatonin suppression.",
+                advice: "Install black-out window panels."
             },
             stress: {
                 title: "Predictive ML Stress Analytics",
-                meaning: "Real-time mathematical estimation of physiological stress markers across all telemetry layers.",
-                logic: "Calculated continuously by applying a multivariate linear regression model across our live biometric parameters.",
-                formula: "Stress Score = (HR * 0.26) + (Kinetics * 4.6) + (Lux * 0.015)",
-                ranges: "Optimal Adaptation: 0 - 35 Index Points. Systemic Overload: Above 75 Index Points.",
-                impacts: "Calculated automatically based on sudden spikes in heart rate occurring during high kinetic activity windows.",
-                medical: "Evaluates autonomic strain to predict overall recovery efficiency and prevent sleep fragmentation.",
-                advice: "Try 5 minutes of guided box breathing if your index consistently runs high during your pre-rest cycles."
+                meaning: "Mathematical estimation of physiological stress markers.",
+                logic: "Multivariate linear regression model across live biometrics.",
+                formula: "Stress = (HR * 0.26) + (Hz * 4.6) + (Lux * 0.015)",
+                ranges: "Optimal: 0-35. Overload: >75.",
+                impacts: "Calculated based on sudden spikes in HR and kinetic activity.",
+                medical: "Evaluates autonomic strain to predict recovery efficiency.",
+                advice: "Try 5 minutes of guided box breathing."
             }
         };
 
-        /* Chart.js Dynamic Initializations Logic Block */
+        /* Chart.js Initializations */
         function buildHighTierCoreVisualizerChart() {
             const ctx = document.getElementById('nirvanMainChartCanvas').getContext('2d');
             
-            // Clean Modern Gradient Fills
             const cyanGrad = ctx.createLinearGradient(0, 0, 0, 350);
-            cyanGrad.addColorStop(0, 'rgba(56, 163, 165, 0.25)');
-            cyanGrad.addColorStop(1, 'rgba(56, 163, 165, 0.0)');
+            cyanGrad.addColorStop(0, 'rgba(38, 198, 218, 0.25)');
+            cyanGrad.addColorStop(1, 'rgba(38, 198, 218, 0.0)');
 
             const purpleGrad = ctx.createLinearGradient(0, 0, 0, 350);
-            purpleGrad.addColorStop(0, 'rgba(99, 102, 241, 0.25)');
-            purpleGrad.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
+            purpleGrad.addColorStop(0, 'rgba(128, 222, 234, 0.25)');
+            purpleGrad.addColorStop(1, 'rgba(128, 222, 234, 0.0)');
 
             primaryLineChartInstance = new Chart(ctx, {
                 type: 'line',
@@ -845,12 +939,12 @@
                             label: 'Cardio Rhythm (BPM)',
                             data: [],
                             borderColor: '#26C6DA',
-                            borderWidth: 3,
+                            borderWidth: 2,
                             fill: true,
                             backgroundColor: cyanGrad,
                             tension: 0.4,
-                            pointRadius: 2,
-                            pointHoverRadius: 7,
+                            pointRadius: 0,
+                            pointHoverRadius: 6,
                             pointHoverBackgroundColor: '#26C6DA',
                             yAxisID: 'y-axis-cardio'
                         },
@@ -858,12 +952,12 @@
                             label: 'Actigraphy Movement (Hz)',
                             data: [],
                             borderColor: '#80DEEA',
-                            borderWidth: 3,
+                            borderWidth: 2,
                             fill: true,
                             backgroundColor: purpleGrad,
                             tension: 0.4,
-                            pointRadius: 2,
-                            pointHoverRadius: 7,
+                            pointRadius: 0,
+                            pointHoverRadius: 6,
                             pointHoverBackgroundColor: '#80DEEA',
                             yAxisID: 'y-axis-motion'
                         }
@@ -872,42 +966,19 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    animations: {
-                        tension: { duration: 600, easing: 'linear' }
-                    },
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
-                    },
+                    animations: { tension: { duration: 600, easing: 'linear' } },
+                    interaction: { mode: 'index', intersect: false },
                     plugins: {
-                        legend: {
-                            labels: { color: 'rgba(148, 163, 184, 0.8)', font: { family: 'Inter', size: 12, weight: 600 } }
-                        },
+                        legend: { labels: { color: 'var(--text-secondary)', font: { family: 'Outfit', size: 12, weight: 600 } } },
                         tooltip: {
                             enabled: true,
-                            backgroundColor: 'rgba(17, 24, 39, 0.95)',
-                            titleFont: { family: 'Inter', size: 12, weight: 700 },
-                            bodyFont: { family: 'Inter', size: 12 },
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleFont: { family: 'Outfit', size: 12, weight: 700 },
+                            bodyFont: { family: 'Outfit', size: 12 },
                             borderColor: '#26C6DA',
                             borderWidth: 1,
-                            padding: 14,
-                            cornerRadius: 8,
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.parsed.y;
-                                    const datasetName = context.dataset.label;
-                                    let summary = "";
-                                    
-                                    if(datasetName.includes("Cardio")) {
-                                        const status = value > 90 ? "Elevated Strain Pattern" : "Normal Resting Rhythm";
-                                        summary = `\nVal: ${value} BPM\nStatus: ${status}\nInsight: Tracks cellular recovery stability.`;
-                                    } else {
-                                        const status = value > 5 ? "Somatic Disruption" : "Stable Deep Atrophy";
-                                        summary = `\nVal: ${value} Hz\nStatus: ${status}\nInsight: Tracks physical body position adjustments.`;
-                                    }
-                                    return summary;
-                                }
-                            }
+                            padding: 12,
+                            cornerRadius: 8
                         },
                         zoom: {
                             pan: { enabled: true, mode: 'x' },
@@ -915,21 +986,14 @@
                         }
                     },
                     scales: {
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#64748b', font: { family: 'Outfit', size: 10 } }
-                        },
+                        x: { grid: { display: false }, ticks: { color: 'var(--text-secondary)', font: { family: 'JetBrains Mono', size: 10 } } },
                         'y-axis-cardio': {
-                            type: 'linear',
-                            position: 'left',
-                            min: 40, max: 140,
-                            grid: { color: 'rgba(255,255,255,0.03)' },
+                            type: 'linear', position: 'left', min: 40, max: 140,
+                            grid: { color: 'var(--border-line)' },
                             ticks: { color: '#26C6DA' }
                         },
                         'y-axis-motion': {
-                            type: 'linear',
-                            position: 'right',
-                            min: 0, max: 12,
+                            type: 'linear', position: 'right', min: 0, max: 12,
                             grid: { display: false },
                             ticks: { color: '#80DEEA' }
                         }
@@ -951,199 +1015,116 @@
             if (primaryLineChartInstance) primaryLineChartInstance.resetZoom();
         }
 
-        /* Metric Detail Modals Construction Logic Engine */
+        /* Modals and Themes */
         function triggerMetricInsightsInspection(metricId) {
             const targetData = metricExplainsDatabase[metricId];
             if (!targetData) return;
-
             document.getElementById('modal-metric-title').innerText = targetData.title;
-            
             const gridHTML = `
-                <div class="content-subnode-item">
-                    <h4>Definition</h4>
-                    <p>${targetData.meaning}</p>
-                </div>
-                <div class="content-subnode-item">
-                    <h4>Calculation Strategy</h4>
-                    <p>${targetData.logic}</p>
-                </div>
-                <div class="content-subnode-item">
-                    <h4>Algorithmic Expression</h4>
-                    <p style="font-family:monospace; font-size:0.75rem; color:var(--neon-cyan);">${targetData.formula}</p>
-                </div>
-                <div class="content-subnode-item">
-                    <h4>Physiological Index Thresholds</h4>
-                    <p>${targetData.ranges}</p>
-                </div>
-                <div class="content-subnode-item">
-                    <h4>External Variables Affected</h4>
-                    <p>${targetData.impacts}</p>
-                </div>
-                <div class="content-subnode-item">
-                    <h4>Clinical Importance</h4>
-                    <p>${targetData.medical}</p>
-                </div>
-                <div class="content-subnode-item" style="grid-column: span 2;">
-                    <h4>AI Healthcare Guidance Recommendation</h4>
-                    <p style="color:var(--neon-amber); font-weight:600;"><i class="fa-solid fa-arrow-trend-up" style="margin-right: 6px;"></i> ${targetData.advice}</p>
-                </div>
+                <div class="content-subnode-item"><h4>Definition</h4><p>${targetData.meaning}</p></div>
+                <div class="content-subnode-item"><h4>Calculation Strategy</h4><p>${targetData.logic}</p></div>
+                <div class="content-subnode-item"><h4>Algorithmic Expression</h4><p style="font-family:'JetBrains Mono', monospace; font-size:0.75rem; color:var(--neon-cyan);">${targetData.formula}</p></div>
+                <div class="content-subnode-item"><h4>Clinical Importance</h4><p>${targetData.medical}</p></div>
+                <div class="content-subnode-item" style="grid-column: span 2;"><h4>AI Recommendation</h4><p style="color:var(--neon-amber); font-weight:600;"><i class="fa-solid fa-bolt" style="margin-right: 6px;"></i> ${targetData.advice}</p></div>
             `;
-            
             document.getElementById('modal-metric-body-grid').innerHTML = gridHTML;
             openSystemModalWindow('metric-inspection-overlay-panel');
         }
 
-        function openSystemModalWindow(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
+        function openSystemModalWindow(modalId) { document.getElementById(modalId).classList.add('active'); }
+        function closeSystemModalWindow(modalId) { document.getElementById(modalId).classList.remove('active'); }
 
-        function closeSystemModalWindow(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        /* Modern Settings Operations Managers System */
         function commitPlatformConfigurationSettings() {
             const userName = document.getElementById('cfg-user-name').value;
-            const age = document.getElementById('cfg-user-age').value;
-            const sleepGoal = document.getElementById('cfg-sleep-goal').value;
-            const pollingSpeed = document.getElementById('cfg-refresh-interval').value;
-
             localStorage.setItem('nirvan_name', userName);
-            localStorage.setItem('nirvan_age', age);
-            localStorage.setItem('nirvan_goal', sleepGoal);
-            localStorage.setItem('nirvan_speed', pollingSpeed);
-
+            localStorage.setItem('nirvan_speed', document.getElementById('cfg-refresh-interval').value);
             document.getElementById('user-profile-name-badge').innerText = userName.toUpperCase();
-            
             closeSystemModalWindow('settings-config-modal');
             reinitializeDataPollingSchedule();
         }
 
-        function hydrationProfileSettingsFromStorage() {
-            if(localStorage.getItem('nirvan_name')) {
-                document.getElementById('cfg-user-name').value = localStorage.getItem('nirvan_name');
-                document.getElementById('cfg-user-age').value = localStorage.getItem('nirvan_age');
-                document.getElementById('cfg-sleep-goal').value = localStorage.getItem('nirvan_goal');
-                document.getElementById('cfg-refresh-interval').value = localStorage.getItem('nirvan_speed');
-                document.getElementById('user-profile-name-badge').innerText = localStorage.getItem('nirvan_name').toUpperCase();
-            }
-        }
-
-        /* Color Management System Configurations */
         function togglePlatformColorPaletteTheme() {
-            const activeTheme = document.documentElement.getAttribute('data-theme');
-            const targetTheme = activeTheme === 'dark' ? 'light' : 'dark';
+            const targetTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', targetTheme);
             localStorage.setItem('nirvan_theme', targetTheme);
         }
 
-        function hydrateThemePreferences() {
-            const cachedTheme = localStorage.getItem('nirvan_theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', cachedTheme);
-        }
-
-        /* AI Assistant Engine Interface Panels Implementation */
-        function toggleNirvanNeuralAssistantPanel() {
-            document.getElementById('nirvanChatbotDrawerBox').classList.toggle('open');
-        }
-
+        /* AI Assistant */
         async function transmitUserChatPayload() {
             const inputField = document.getElementById('chatTextInputField');
             const logsArea = document.getElementById('chatLogsScrollerBox');
             const text = inputField.value.trim();
             if(!text) return;
 
-            // Render User Bubble
             logsArea.innerHTML += `<div class="msg-bubble-node user">${text}</div>`;
             inputField.value = "";
             logsArea.scrollTop = logsArea.scrollHeight;
 
-            // Render Animated Loader Dots
             const loaderId = 'loader_' + Date.now();
-            logsArea.innerHTML += `
-                <div class="typing-indicator-dot-box" id="${loaderId}">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
-            `;
+            logsArea.innerHTML += `<div class="typing-indicator-dot-box" id="${loaderId}"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
             logsArea.scrollTop = logsArea.scrollHeight;
 
             try {
-                const res = await fetch("/chat", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({message: text})
-                });
+                const res = await fetch("/chat", { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({message: text}) });
                 const data = await res.json();
-                
                 document.getElementById(loaderId).remove();
                 logsArea.innerHTML += `<div class="msg-bubble-node bot">${data.reply}</div>`;
             } catch {
                 document.getElementById(loaderId).remove();
-                logsArea.innerHTML += `<div class="msg-bubble-node bot">Transmission failure inside local routing node arrays.</div>`;
+                logsArea.innerHTML += `<div class="msg-bubble-node bot" style="color:var(--neon-rose);">Transmission failure.</div>`;
             }
             logsArea.scrollTop = logsArea.scrollHeight;
         }
 
-        /* High-Performance Analytics Dynamic Engine Polling Pipeline */
+        /* Polling Data Engine */
         async function runPlatformDataSyncCycle() {
             try {
                 const dataRes = await fetch("/data");
                 const historicalRecords = await dataRes.json();
-
                 if(historicalRecords && historicalRecords.length > 0) {
                     const activeFrame = historicalRecords[historicalRecords.length - 1];
-
-                    // Hydrate Text Interfaces
                     document.getElementById('metric-txt-hr').innerText = activeFrame.heart_rate;
                     document.getElementById('metric-txt-mv').innerText = activeFrame.movement;
                     document.getElementById('metric-txt-lt').innerText = activeFrame.light;
                     document.getElementById('metric-txt-st').innerText = activeFrame.stress;
 
-                    // Hydrate Main Complex Visualization Plotting Arrays
                     primaryLineChartInstance.data.labels = historicalRecords.map(r => r.timestamp);
                     primaryLineChartInstance.data.datasets[0].data = historicalRecords.map(r => r.heart_rate);
                     primaryLineChartInstance.data.datasets[1].data = historicalRecords.map(r => r.movement);
-                    primaryLineChartInstance.update('none'); // Update without full layout recalculations
+                    primaryLineChartInstance.update('none');
 
-                    // Hydrate Sparklines Components Arrays
                     updateSparklineDataset(sparklineInstancesDictionary.hr, historicalRecords.map(r => r.heart_rate));
                     updateSparklineDataset(sparklineInstancesDictionary.mv, historicalRecords.map(r => r.movement));
                     updateSparklineDataset(sparklineInstancesDictionary.lt, historicalRecords.map(r => r.light));
                     updateSparklineDictionaryStress(sparklineInstancesDictionary.st, historicalRecords.map(r => r.stress));
                 }
-            } catch (err) { console.log("Connecting with live biometric data stream..."); }
+            } catch (err) {}
 
             try {
                 const predictRes = await fetch("/predict");
                 if(predictRes.ok) {
                     const payload = await predictRes.json();
-
                     const score = payload.sleep_score;
                     document.getElementById('radial-gauge-score-txt').innerText = score + "%";
                     document.getElementById('metric-txt-stage').innerText = payload.sleep_stage;
 
-                    // Evaluate SVG Dash Circles offsets
                     const circle = document.getElementById('radialGaugeIndicatorBar');
                     const circumference = 2 * Math.PI * 70;
                     circle.style.strokeDasharray = circumference;
                     circle.style.strokeDashoffset = circumference - (score / 100) * circumference;
 
-                    // Hydrate Warning Alerts Boards Text Fields
                     const alertContainer = document.getElementById('ui-alerts-injector-node');
                     if(payload.alerts.length > 0) {
-                        alertContainer.innerHTML = payload.alerts.map(a => `<div class="alert-node-banner"><i class="fa-solid fa-triangle-exclamation" style="margin-right: 6px;"></i> ${a}</div>`).join('');
+                        alertContainer.innerHTML = payload.alerts.map(a => `<div class="alert-node-banner"><i class="fa-solid fa-triangle-exclamation"></i> <span>${a}</span></div>`).join('');
                     } else {
-                        alertContainer.innerHTML = `<div class="insight-node-banner" style="color:var(--neon-cyan);"><i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> All biological channels verified clear.</div>`;
+                        alertContainer.innerHTML = `<div class="insight-node-banner" style="color:var(--neon-cyan); border-left-color:var(--neon-cyan);"><i class="fa-solid fa-circle-check"></i> <span>All biological channels verified clear.</span></div>`;
                     }
-
                     const insightContainer = document.getElementById('ui-insights-injector-node');
-                    insightContainer.innerHTML = payload.insights.map(i => `<div class="insight-node-banner"><i class="fa-solid fa-microchip" style="margin-right: 6px;"></i> AI Analysis: ${i}</div>`).join('');
-
+                    insightContainer.innerHTML = payload.insights.map(i => `<div class="insight-node-banner"><i class="fa-solid fa-microchip"></i> <span>${i}</span></div>`).join('');
+                    
                     document.getElementById('live-runtime-timestamp').innerText = `SYS_TIME: ${payload.last_updated}`;
                 }
-            } catch (err) { console.log("Awaiting predictive pipeline resolution channels..."); }
+            } catch (err) {}
         }
 
         function updateSparklineDataset(instance, fullDataArray) {
@@ -1162,32 +1143,26 @@
 
         function reinitializeDataPollingSchedule() {
             if(pollingIntervalTimerRef) clearInterval(pollingIntervalTimerRef);
-            const userSpeedSetting = parseInt(localStorage.getItem('nirvan_speed') || "2000");
-            pollingIntervalTimerRef = setInterval(runPlatformDataSyncCycle, userSpeedSetting);
+            pollingIntervalTimerRef = setInterval(runPlatformDataSyncCycle, parseInt(localStorage.getItem('nirvan_speed') || "2000"));
         }
 
-        /* Initializations Hooks Execution Core */
         window.addEventListener('DOMContentLoaded', () => {
-            hydrateThemePreferences();
+            const cachedTheme = localStorage.getItem('nirvan_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', cachedTheme);
+            if(localStorage.getItem('nirvan_name')) document.getElementById('user-profile-name-badge').innerText = localStorage.getItem('nirvan_name').toUpperCase();
+            
             buildHighTierCoreVisualizerChart();
-            hydrationProfileSettingsFromStorage();
-
-            // Build miniature data trends graphics lines
             sparklineInstancesDictionary.hr = buildMiniatureSparklineElementNode('sparklineHR', '#26C6DA');
             sparklineInstancesDictionary.mv = buildMiniatureSparklineElementNode('sparklineMV', '#80DEEA');
             sparklineInstancesDictionary.lt = buildMiniatureSparklineElementNode('sparklineLT', '#ef4444');
             sparklineInstancesDictionary.st = buildMiniatureSparklineElementNode('sparklineST', '#f59e0b');
 
-            // Hide cinematic cover block and initialize loops mapping pipelines
             setTimeout(() => {
                 document.getElementById('global-loader-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('global-loader-screen').style.display = 'none';
-                }, 600);
-                
+                setTimeout(() => document.getElementById('global-loader-screen').style.display = 'none', 600);
                 runPlatformDataSyncCycle();
                 reinitializeDataPollingSchedule();
-            }, 2000);
+            }, 1000); // Shorter loading screen for speed
         });
     </script>
 </body>

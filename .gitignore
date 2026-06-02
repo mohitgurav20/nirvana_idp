@@ -1,0 +1,20 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Generated Data / Models
+data.csv
+model.pkl
+
+# IDE / OS files
+.vscode/
+.idea/
+.DS_Store

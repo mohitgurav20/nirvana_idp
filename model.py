@@ -1,12 +1,14 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 import os
+import joblib
 
 CSV_FILE = "data.csv"
+MODEL_FILE = "model.pkl"
 
 # 1. Safety Check: Ensure data file exists and isn't empty
 if not os.path.exists(CSV_FILE) or os.path.getsize(CSV_FILE) == 0:
-    print("[ERROR] 'data.csv' is missing or empty. Please run 'sensor_simulator.py' first!")
+    print("[ERROR] 'data.csv' is missing or empty. Please run the server/simulator first!")
     exit()
 
 # 2. Load Data
@@ -29,6 +31,10 @@ try:
     model = LinearRegression()
     model.fit(X, y)
     print("[SUCCESS] Linear Regression Model trained successfully on your dataset!")
+    
+    # Save the model
+    joblib.dump(model, MODEL_FILE)
+    print(f"[SUCCESS] Model saved to {MODEL_FILE}")
 
     # 6. Test Prediction using the most recent simulation row
     test = X.tail(1)
