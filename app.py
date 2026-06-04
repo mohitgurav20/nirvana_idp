@@ -20,6 +20,7 @@ import google.generativeai as genai
 app = Flask(__name__)
 CSV_FILE = os.path.join(os.path.dirname(__file__), "data.csv")
 MODEL_FILE = os.path.join(os.path.dirname(__file__), "model.pkl")
+MAX_CSV_ROWS = 200  # Cap rows to prevent file bloat
 
 # --- Gemini API Configuration ---
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -42,8 +43,7 @@ else:
 def load_and_clean_data():
     try:
         if os.path.exists(CSV_FILE) and os.path.getsize(CSV_FILE) > 0:
-            with open(CSV_FILE, 'r') as f:
-                data = pd.read_csv(f)
+            data = pd.read_csv(CSV_FILE)
             data.columns = data.columns.str.strip()
             required = ["timestamp", "heart_rate", "movement", "light", "stress"]
             if all(col in data.columns for col in required):
@@ -54,6 +54,26 @@ def load_and_clean_data():
     except Exception as e:
         print(f"CRITICAL: Telemetry parsing anomaly: {e}")
         return pd.DataFrame(columns=["timestamp", "heart_rate", "movement", "light", "stress"])
+
+
+def predict_stress(hr, mv, lt):
+    """Predict stress using the ML model with proper DataFrame input."""
+    if model_instance:
+        input_df = pd.DataFrame([[hr, mv, lt]], columns=["heart_rate", "movement", "light"])
+        return model_instance.predict(input_df)[0]
+    else:
+        return (hr * 0.26) + (mv * 4.6) + (lt * 0.015)
+
+
+def trim_csv_if_needed():
+    """Keep CSV file capped at MAX_CSV_ROWS to prevent bloat."""
+    try:
+        df = pd.read_csv(CSV_FILE)
+        if len(df) > MAX_CSV_ROWS:
+            df = df.tail(MAX_CSV_ROWS)
+            df.to_csv(CSV_FILE, index=False)
+    except Exception:
+        pass
 
 
 def seed_data_file():
@@ -75,7 +95,6 @@ def seed_data_file():
             writer.writerow(["timestamp", "heart_rate", "movement", "light", "stress"])
             
             now = datetime.now()
-            # Seed 12 intervals of 5 minutes going back 1 hour from now
             for i in range(12, 0, -1):
                 past_time = now - timedelta(minutes=i * 5)
                 cycle_progress = (i % 6) / 6.0
@@ -93,10 +112,7 @@ def seed_data_file():
                     mv = random.randint(0, 1)
                     lt = 0
                     
-                if model_instance:
-                    stress = model_instance.predict([[hr, mv, lt]])[0]
-                else:
-                    stress = (hr * 0.26) + (mv * 4.6) + (lt * 0.015)
+                stress = predict_stress(hr, mv, lt)
                     
                 timestamp_str = past_time.strftime("%H:%M:%S")
                 writer.writerow([timestamp_str, hr, mv, lt, f"{stress:.2f}"])
@@ -115,11 +131,7 @@ def ingest_esp32_data():
         light = float(payload.get("light", 0))
         
         # Calculate stress
-        if model_instance:
-            predicted_stress = model_instance.predict([[heart_rate, movement, light]])[0]
-        else:
-            predicted_stress = (heart_rate * 0.26) + (movement * 4.6) + (light * 0.015)
-            
+        predicted_stress = predict_stress(heart_rate, movement, light)
         clean_stress = "{:.2f}".format(predicted_stress)
         
         # Use REAL current timestamp
@@ -129,6 +141,7 @@ def ingest_esp32_data():
         with open(CSV_FILE, "a", newline="") as f:
             writer = csv.writer(f)
             writer.writerow([real_timestamp, heart_rate, movement, light, clean_stress])
+        trim_csv_if_needed()
             
         return jsonify({"status": "success", "timestamp": real_timestamp, "message": "Telemetry saved."}), 200
         
@@ -166,10 +179,7 @@ def background_simulator():
             mv = random.randint(1, 2)
             lt = 0
             
-        if model_instance:
-            calc_stress = model_instance.predict([[hr, mv, lt]])[0]
-        else:
-            calc_stress = (hr * 0.26) + (mv * 4.6) + (lt * 0.015)
+        calc_stress = predict_stress(hr, mv, lt)
         
         # Use REAL current timestamp
         real_timestamp = datetime.now().strftime("%H:%M:%S")
@@ -177,6 +187,7 @@ def background_simulator():
         with open(CSV_FILE, "a", newline="") as f:
             writer = csv.writer(f)
             writer.writerow([real_timestamp, hr, mv, lt, "{:.2f}".format(calc_stress)])
+        trim_csv_if_needed()
         time.sleep(5)  # New data every 5 seconds
 
 # Start Simulator Daemon
@@ -212,7 +223,7 @@ def run_predictive_pipeline():
         mv = float(last_frame["movement"].values[0])
         lt = float(last_frame["light"].values[0])
         
-        predicted_stress = model_instance.predict([[hr, mv, lt]])[0]
+        predicted_stress = predict_stress(hr, mv, lt)
         sleep_score = max(5, min(100, 100 - (predicted_stress * 0.85)))
 
         if mv <= 1 and hr <= 62:
