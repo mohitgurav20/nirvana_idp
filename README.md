@@ -136,14 +136,16 @@ Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser to experienc
 When live data crosses critical thresholds, Nirvana activates a full **Crisis Support Matrix**:
 
 - **Trigger Conditions**:
-  - Stress Index > 70 points
-  - Heart Rate > 98 BPM
-- **Emergency Banner**: A pulsing red alert bar appears at the top of the dashboard with the specific medical message.
-- **Crisis Modal**: Clicking "Find Nearest Doctor" opens a full support overlay with:
-  - Doctor contact card (name, specialty, location, phone, estimated walk time)
-  - Animated SVG schematic route map showing path from current position to clinic
+  - Stress Index > 35 points (simulation frequently ranges between 20-50 to make automatic triggers easily testable)
+  - Heart Rate > 90 BPM
+- **Emergency Demo Button**: A red `⚠ EMERGENCY DEMO` button is permanently available in the header control actions hub. Clicking it instantly triggers the emergency banner and opens the Crisis Support Matrix for demonstration purposes.
+- **Crisis Modal**: Opens a support overlay with:
+  - India Emergency Helplines (112, 108, iCall, and Vandrevala)
+  - Nearest Hospital card (pre-configured with SPARSH Hospital Yelahanka, Bengaluru with call capability)
+  - Animated SVG schematic route map showing transit path
   - Interactive Panic Control Breathing Coach (box breathing: 4s Inhale / 4s Hold / 4s Exhale / 4s Hold)
   - Crisis De-escalation Checklist
+  - "Download Session Report" button to export records as PDF
 
 ---
 
