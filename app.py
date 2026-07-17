@@ -121,10 +121,16 @@ def seed_data_file():
 # --- ESP32 Hardware Ingestion Route ---
 @app.route("/api/telemetry", methods=["POST"])
 def ingest_esp32_data():
+    global SIMULATION_MODE
     try:
         payload = request.json
         if not payload:
             return jsonify({"error": "Invalid JSON"}), 400
+        
+        # If we get real hardware data, automatically disable background simulation
+        if SIMULATION_MODE:
+            print("[NIRVANA] Real telemetry detected! Disabling background simulation mode.")
+            SIMULATION_MODE = False
         
         heart_rate = float(payload.get("heart_rate", 60))
         movement = float(payload.get("movement", 0))
