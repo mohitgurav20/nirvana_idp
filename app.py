@@ -251,12 +251,24 @@ def run_predictive_pipeline():
         if lt > 30 and hr > 80: insights.append("Stress index rising under ambient luminescence conditions.")
         if not insights: insights.append("All metabolic and neural systems within regular homeostatic baselines.")
 
+        # Determine emergency status
+        emergency = False
+        emergency_msg = ""
+        if predicted_stress > 70:
+            emergency = True
+            emergency_msg = f"Critical Stress Level detected ({round(predicted_stress, 1)} pts). Somatic overload under progress."
+        elif hr > 98:
+            emergency = True
+            emergency_msg = f"Nocturnal Tachycardia detected ({round(hr, 1)} BPM). Elevated cardiac risk detected."
+
         return jsonify({
             "stress_score": round(float(predicted_stress), 2),
             "sleep_score": round(float(sleep_score), 2),
             "sleep_stage": stage,
             "alerts": alerts,
             "insights": insights,
+            "emergency": emergency,
+            "emergency_msg": emergency_msg,
             "last_updated": last_frame["timestamp"].values[0] # Return the virtual clock timestamp
         })
     except Exception as e:

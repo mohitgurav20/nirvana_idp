@@ -702,6 +702,182 @@
             .metric-details-grid-content { grid-template-columns: 1fr; }
             .content-subnode-item[style*="grid-column"] { grid-column: span 1 !important; }
         }
+
+        /* Emergency Warning Alert Banner Styles */
+        .emergency-banner {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-left: 4px solid var(--neon-rose);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.1);
+            animation: pulseEmergencyBorder 2s infinite alternate ease-in-out;
+            flex-wrap: wrap;
+        }
+
+        @keyframes pulseEmergencyBorder {
+            0% {
+                border-color: rgba(239, 68, 68, 0.3);
+                box-shadow: 0 4px 15px rgba(239, 68, 68, 0.1);
+            }
+            100% {
+                border-color: rgba(239, 68, 68, 0.7);
+                box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+            }
+        }
+
+        .emergency-banner-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: var(--text-primary);
+        }
+
+        .emergency-banner-content strong {
+            color: var(--neon-rose);
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            display: block;
+        }
+
+        .emergency-banner-content span {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .emergency-btn {
+            background: var(--neon-rose);
+            color: #ffffff;
+            border: 1px solid var(--neon-rose);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+        }
+
+        .emergency-btn:hover {
+            transform: translateY(-2px);
+            background: #dc2626;
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Crisis Breathing Coach Visual Element */
+        .breathing-coach-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-line);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .breathing-ring-outer {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 2px dashed rgba(38, 198, 218, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .breathing-circle-core {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--neon-cyan) 0%, rgba(38, 198, 218, 0.3) 100%);
+            transition: all 4s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(38, 198, 218, 0.4);
+        }
+
+        /* Breath animations managed via JS adding/removing classes to fit timing */
+        .breathing-circle-core.inhale {
+            width: 130px;
+            height: 130px;
+            box-shadow: 0 0 35px rgba(38, 198, 218, 0.8);
+            transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .breathing-circle-core.hold {
+            box-shadow: 0 0 45px rgba(245, 158, 11, 0.8);
+            background: radial-gradient(circle, var(--neon-amber) 0%, rgba(245, 158, 11, 0.3) 100%);
+            transition: all 4s linear;
+        }
+
+        .breathing-circle-core.exhale {
+            width: 80px;
+            height: 80px;
+            box-shadow: 0 0 15px rgba(38, 198, 218, 0.2);
+            transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .breathing-text-indicator {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            margin-top: 10px;
+            min-height: 28px;
+        }
+
+        /* SVG Map Visualizer */
+        .visual-route-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-line);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .route-map-svg-container {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-line);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .route-map-pulse-dot {
+            animation: mapDotPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes mapDotPulse {
+            0% { r: 4px; opacity: 0.5; }
+            50% { r: 8px; opacity: 1; }
+            100% { r: 4px; opacity: 0.5; }
+        }
+
+        .route-path-line {
+            stroke-dasharray: 8;
+            animation: dashOffsetAnim 20s linear infinite;
+        }
+
+        @keyframes dashOffsetAnim {
+            to { stroke-dashoffset: -1000; }
+        }
     </style>
 </head>
 <body>
@@ -736,6 +912,20 @@
     </header>
 
     <div id="app-dashboard-frame">
+        
+        <!-- Emergency Alert Banner -->
+        <div id="emergency-alert-banner" class="emergency-banner" style="display: none;">
+            <div class="emergency-banner-content">
+                <i class="fa-solid fa-triangle-exclamation fa-fade" style="color: var(--neon-rose); font-size: 1.5rem;"></i>
+                <div>
+                    <strong>CRITICAL OVERLOAD DETECTED</strong>
+                    <span id="emergency-banner-text">High stress levels paired with anomalous cardiovascular markers.</span>
+                </div>
+            </div>
+            <button class="emergency-btn" onclick="openSystemModalWindow('emergency-medical-modal')">
+                <i class="fa-solid fa-user-doctor"></i> FIND NEAREST DOCTOR & GUIDE
+            </button>
+        </div>
         
         <!-- Bento Box Layout Core -->
         <div class="bento-box-layout">
@@ -895,6 +1085,92 @@
             <div style="display:flex; justify-content:flex-end; gap:14px; margin-top:24px; border-top:1px solid var(--border-line); padding-top:24px;">
                 <button class="premium-sys-btn" style="background:transparent; border:none;" onclick="closeSystemModalWindow('settings-config-modal')">Cancel</button>
                 <button class="premium-sys-btn" style="background:var(--neon-cyan); color:#ffffff; font-weight:600; border-color:var(--neon-cyan);" onclick="commitPlatformConfigurationSettings()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Medical Assistant Modal -->
+    <div class="sliding-overlay-modal" id="emergency-medical-modal">
+        <div class="premium-modal-window" style="max-width: 750px;">
+            <div class="modal-headline-block" style="border-bottom-color: rgba(239, 68, 68, 0.2);">
+                <h2><i class="fa-solid fa-circle-exclamation fa-fade" style="color:var(--neon-rose); margin-right:8px;"></i> Nirvana Crisis Support Matrix</h2>
+                <span class="modal-close-trigger" onclick="closeEmergencyModal()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; max-height: 520px; overflow-y: auto; padding-right: 8px;">
+                <!-- Left: Nearest Doctor Details & Navigation Map -->
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div class="content-subnode-item" style="border-left: 3px solid var(--neon-cyan); background: rgba(38, 198, 218, 0.05);">
+                        <h4 style="color: var(--neon-cyan);"><i class="fa-solid fa-user-doctor"></i> Primary Contact Practitioner</h4>
+                        <div style="margin-top: 10px; line-height: 1.5;">
+                            <strong style="font-size: 1.05rem; display: block; color: var(--text-primary);">Dr. Rajeev Sharma, MD</strong>
+                            <span style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 8px;">Sleep Medicine & Autonomic Cardiology</span>
+                            <span style="font-size: 0.85rem; display: block; color: var(--text-primary);"><i class="fa-solid fa-location-dot" style="margin-right: 6px; color: var(--neon-rose);"></i> Block C, Floor 2, Academic Center Clinic</span>
+                            <span style="font-size: 0.85rem; display: block; color: var(--text-primary);"><i class="fa-solid fa-phone" style="margin-right: 6px; color: var(--neon-cyan);"></i> +91 98765 43210</span>
+                            <span style="font-size: 0.85rem; display: block; color: var(--neon-amber); margin-top: 4px; font-weight: 600;"><i class="fa-solid fa-walking" style="margin-right: 6px;"></i> 250m Away (Approx. 3 min walk)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="visual-route-card">
+                        <h4 style="color: var(--text-primary); font-size: 0.85rem; margin-bottom: 4px;">Schematic Transit Route</h4>
+                        <div class="route-map-svg-container">
+                            <svg width="100%" height="100%" viewBox="0 0 300 180" style="background: rgba(15, 23, 42, 0.4);">
+                                <!-- Map Grid Lines -->
+                                <line x1="0" y1="30" x2="300" y2="30" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
+                                <line x1="0" y1="90" x2="300" y2="90" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
+                                <line x1="0" y1="150" x2="300" y2="150" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
+                                <line x1="75" y1="0" x2="75" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
+                                <line x1="150" y1="0" x2="150" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
+                                <line x1="225" y1="0" x2="225" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
+                                
+                                <!-- Obstacles/Rooms -->
+                                <rect x="30" y="20" width="80" height="50" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
+                                <text x="70" y="48" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle" font-family="monospace">BLOCK A</text>
+                                <rect x="180" y="20" width="90" height="50" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
+                                <text x="225" y="48" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle" font-family="monospace">BLOCK B</text>
+                                <rect x="30" y="110" width="80" height="50" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
+                                <text x="70" y="138" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle" font-family="monospace">LIBRARY</text>
+                                
+                                <!-- Transit Path -->
+                                <path d="M 230 140 L 150 140 L 150 80 L 70 80" fill="none" stroke="var(--neon-cyan)" stroke-width="3" stroke-linecap="round" class="route-path-line"></path>
+                                
+                                <!-- User Dot -->
+                                <circle cx="230" cy="140" r="6" fill="var(--neon-rose)" class="route-map-pulse-dot"></circle>
+                                <text x="230" y="158" fill="var(--neon-rose)" font-size="9" font-weight="700" text-anchor="middle">YOU</text>
+                                
+                                <!-- Clinic Dot -->
+                                <circle cx="70" cy="80" r="6" fill="var(--neon-cyan)" class="route-map-pulse-dot"></circle>
+                                <text x="70" y="68" fill="var(--neon-cyan)" font-size="9" font-weight="700" text-anchor="middle">CLINIC (Block C)</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right: Interactive Breathing Coach & Safety Checklist -->
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div class="breathing-coach-box">
+                        <h4 style="color: var(--neon-cyan); margin-bottom: 2px;">Panic Control Breathing Coach</h4>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary);">Calm your sympathetic system with box breathing</span>
+                        <div class="breathing-ring-outer">
+                            <div class="breathing-circle-core" id="breathingCoreCircle">
+                                <span style="font-size: 0.75rem; font-weight: 700; color: #ffffff;" id="breathingActionTimer">--</span>
+                            </div>
+                        </div>
+                        <div class="breathing-text-indicator" id="breathingInstructionLabel">Breathing Coach Idle</div>
+                        <button class="premium-sys-btn" id="breathingCoachToggleBtn" style="background: var(--neon-cyan); color: #ffffff; width: 100%; font-weight: 600; border-color: var(--neon-cyan); margin-top: 10px;" onclick="toggleBreathingCoachSystem()">START BREATHING COACH</button>
+                    </div>
+                    
+                    <div class="content-subnode-item" style="border-left: 3px solid var(--neon-rose); background: rgba(239, 68, 68, 0.05);">
+                        <h4 style="color: var(--neon-rose); margin-bottom: 6px;"><i class="fa-solid fa-list-check"></i> Crisis De-escalation Checklist</h4>
+                        <ul style="font-size: 0.8rem; padding-left: 14px; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px;">
+                            <li>Sit down immediately in a comfortable posture.</li>
+                            <li>Close your eyes to shut down high light pollution factors.</li>
+                            <li>Take slow, deep sips of room-temperature water.</li>
+                            <li>Loosen any tight clothing around your chest or neck.</li>
+                            <li>If indoors, reduce ambient lighting to 0 Lux immediately.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1147,6 +1423,31 @@
                     circle.style.strokeDasharray = circumference;
                     circle.style.strokeDashoffset = circumference - (score / 100) * circumference;
 
+                    // --- Handle Emergency Warning Banner ---
+                    const emergencyBanner = document.getElementById('emergency-alert-banner');
+                    if (payload.emergency) {
+                        document.getElementById('emergency-banner-text').innerText = payload.emergency_msg;
+                        if (emergencyBanner.style.display === 'none') {
+                            emergencyBanner.style.display = 'flex';
+                            emergencyBanner.style.opacity = '0';
+                            emergencyBanner.style.transform = 'translateY(-10px)';
+                            setTimeout(() => {
+                                emergencyBanner.style.transition = 'all 0.5s ease';
+                                emergencyBanner.style.opacity = '1';
+                                emergencyBanner.style.transform = 'translateY(0)';
+                            }, 50);
+                        }
+                    } else {
+                        if (emergencyBanner.style.display !== 'none') {
+                            emergencyBanner.style.transition = 'all 0.5s ease';
+                            emergencyBanner.style.opacity = '0';
+                            emergencyBanner.style.transform = 'translateY(-10px)';
+                            setTimeout(() => {
+                                emergencyBanner.style.display = 'none';
+                            }, 500);
+                        }
+                    }
+
                     // --- Only re-render alerts if their content actually changed ---
                     const newAlertSig = JSON.stringify(payload.alerts);
                     if (newAlertSig !== _prevAlertSignature) {
@@ -1195,6 +1496,83 @@
         function reinitializeDataPollingSchedule() {
             if(pollingIntervalTimerRef) clearInterval(pollingIntervalTimerRef);
             pollingIntervalTimerRef = setInterval(runPlatformDataSyncCycle, parseInt(localStorage.getItem('nirvan_speed') || "2000"));
+        }
+
+        /* --- Emergency Breathing Coach Logic Hub --- */
+        let breathingCoachIntervalRef = null;
+        let breathingCountdownIntervalRef = null;
+        let isBreathingCoachRunning = false;
+
+        function closeEmergencyModal() {
+            closeSystemModalWindow('emergency-medical-modal');
+            stopBreathingCoachSystem();
+        }
+
+        function stopBreathingCoachSystem() {
+            if (breathingCoachIntervalRef) clearInterval(breathingCoachIntervalRef);
+            if (breathingCountdownIntervalRef) clearInterval(breathingCountdownIntervalRef);
+            
+            isBreathingCoachRunning = false;
+            
+            const circle = document.getElementById('breathingCoreCircle');
+            circle.className = "breathing-circle-core";
+            document.getElementById('breathingActionTimer').innerText = "--";
+            document.getElementById('breathingInstructionLabel').innerText = "Breathing Coach Idle";
+            
+            const btn = document.getElementById('breathingCoachToggleBtn');
+            btn.innerText = "START BREATHING COACH";
+            btn.style.background = "var(--neon-cyan)";
+            btn.style.borderColor = "var(--neon-cyan)";
+        }
+
+        function toggleBreathingCoachSystem() {
+            if (isBreathingCoachRunning) {
+                stopBreathingCoachSystem();
+                return;
+            }
+
+            isBreathingCoachRunning = true;
+            
+            const btn = document.getElementById('breathingCoachToggleBtn');
+            btn.innerText = "STOP BREATHING COACH";
+            btn.style.background = "var(--neon-rose)";
+            btn.style.borderColor = "var(--neon-rose)";
+
+            const phases = [
+                { text: "Breathe In", className: "inhale" },
+                { text: "Hold Breath", className: "hold" },
+                { text: "Breathe Out", className: "exhale" },
+                { text: "Hold Breath", className: "hold" }
+            ];
+
+            let currentPhaseIdx = 0;
+            let secondsLeft = 4;
+
+            function runBreathingStep() {
+                const phase = phases[currentPhaseIdx];
+                const circle = document.getElementById('breathingCoreCircle');
+                
+                circle.className = "breathing-circle-core " + phase.className;
+                document.getElementById('breathingInstructionLabel').innerText = phase.text + " (4s)";
+                
+                secondsLeft = 4;
+                document.getElementById('breathingActionTimer').innerText = secondsLeft;
+
+                if (breathingCountdownIntervalRef) clearInterval(breathingCountdownIntervalRef);
+                breathingCountdownIntervalRef = setInterval(() => {
+                    secondsLeft--;
+                    if (secondsLeft >= 0) {
+                        document.getElementById('breathingActionTimer').innerText = secondsLeft;
+                    }
+                }, 1000);
+
+                currentPhaseIdx = (currentPhaseIdx + 1) % phases.length;
+            }
+
+            // Run first step immediately
+            runBreathingStep();
+            // Set 4-second loop
+            breathingCoachIntervalRef = setInterval(runBreathingStep, 4000);
         }
 
         window.addEventListener('DOMContentLoaded', () => {

@@ -21,6 +21,22 @@ Nirvana features a bespoke, premium visual identity tailored for surgical clarit
 
 ---
 
+## Key Features
+
+| Feature | Description |
+|---|---|
+| **Real-Time Biometric Dashboard** | Live 2-second polling of Heart Rate, Movement, Light, and Stress from ESP32 or simulation |
+| **ML Stress Prediction** | Trained linear regression model estimates stress score from raw sensor triplet |
+| **Sleep Stage Classification** | Auto-classifies Deep Sleep N3, REM, Light Sleep N1/N2, and Active Wakefulness |
+| **Emergency Alert System** | Pulsing red banner auto-activates when Stress > 70 or Heart Rate > 98 BPM |
+| **Crisis Support Modal** | Nearest doctor contact info, animated SVG route map, and interactive breathing coach |
+| **Panic Control Breathing Coach** | Box-breathing guided animation cycles (Inhale 4s / Hold 4s / Exhale 4s / Hold 4s) |
+| **Gemini AI Copilot** | Context-aware chatbot answers health queries using live telemetry as context |
+| **Real Hardware Auto-Switch** | When ESP32 POSTs data, simulation mode auto-disables for 100% real data |
+| **Dark/Light Theme Toggle** | Persisted via localStorage, switchable in one click |
+
+---
+
 ## Architecture & Core Components
 
 ```mermaid
@@ -46,7 +62,7 @@ graph TD
 
 ```
 nirvana_idp/
-├── .env.template          # API key placeholder
+├── .env.template          # API key placeholder (copy to .env and fill in)
 ├── .gitignore             # Git ignore rules
 ├── README.md              # Setup & usage docs
 ├── requirements.txt       # Python dependencies (Flask, pandas, scikit-learn, etc.)
@@ -74,25 +90,31 @@ Ensure you have Python 3.8+ installed along with the required libraries:
 pip install -r requirements.txt
 ```
 
-### 2. Train the Predictive Model
+### 2. Set Up API Key (Optional — for AI Copilot)
+Copy `.env.template` to `.env` and paste your Gemini API key:
+```bash
+cp .env.template .env
+# Then edit .env and replace 'your_gemini_api_key_here' with your key
+```
+Get a free key at: https://aistudio.google.com/
+
+### 3. Train the Predictive Model
 Initialize the machine learning weights before starting:
 ```bash
 python model.py
 ```
 
-### 3. Launch the Flask Server
+### 4. Launch the Flask Server
 Run the backend web app in a terminal window:
 ```bash
 python app.py
 ```
 
-### 4. Feed Telemetry Stream (Choose One Option)
+### 5. Feed Telemetry Stream (Choose One Option)
 
-#### Option A: Software Simulation
-Generate virtual biometric data and send it to the Flask server:
-```bash
-python sensor_simulator.py
-```
+#### Option A: Software Simulation (No Hardware Needed)
+The Flask server automatically starts a background simulator. No extra steps needed.
+Open the dashboard and data will appear within 5 seconds.
 
 #### Option B: Real ESP32 Hardware
 1. Flash the firmware from the `firmware/esp32_firmware/` directory to your ESP32.
@@ -102,6 +124,36 @@ python sensor_simulator.py
    ```bash
    python serial_reader.py
    ```
+   The Flask server will **automatically detect real hardware** and disable simulation mode.
 
-### 5. Access Dashboard
+### 6. Access Dashboard
 Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser to experience the platform.
+
+---
+
+## Emergency System
+
+When live data crosses critical thresholds, Nirvana activates a full **Crisis Support Matrix**:
+
+- **Trigger Conditions**:
+  - Stress Index > 70 points
+  - Heart Rate > 98 BPM
+- **Emergency Banner**: A pulsing red alert bar appears at the top of the dashboard with the specific medical message.
+- **Crisis Modal**: Clicking "Find Nearest Doctor" opens a full support overlay with:
+  - Doctor contact card (name, specialty, location, phone, estimated walk time)
+  - Animated SVG schematic route map showing path from current position to clinic
+  - Interactive Panic Control Breathing Coach (box breathing: 4s Inhale / 4s Hold / 4s Exhale / 4s Hold)
+  - Crisis De-escalation Checklist
+
+---
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/` | Landing page |
+| `GET` | `/dashboard` | Live telemetry dashboard |
+| `GET` | `/data` | Returns last 150 biometric records as JSON |
+| `GET` | `/predict` | Returns stress score, sleep stage, alerts, emergency status |
+| `POST` | `/api/telemetry` | Accepts ESP32 hardware data `{heart_rate, movement, light}` |
+| `POST` | `/chat` | Gemini AI copilot query `{message}` |

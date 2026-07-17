@@ -80,12 +80,7 @@ def main():
                     try:
                         response = requests.post(API_URL, json=payload, timeout=2)
                         if response.status_code == 200:
-                            res_json = response.json()
-                            stress = res_json.get("stress", "N/A") # Wait, does app.py return stress score?
-                            # Let's check app.py response:
-                            # return jsonify({"status": "success", "timestamp": real_timestamp, "message": "Telemetry saved."}), 200
-                            # It doesn't return stress directly, but let's check if it does. It's fine either way.
-                            print(f"[{timestamp}] Sent -> HR: {hr} | MV: {mv} | LT: {lt} (Status: {response.status_code})")
+                            print(f"[{timestamp}] Sent -> HR: {hr} BPM | MV: {mv} Hz | LT: {lt} Lux")
                         else:
                             print(f"[{timestamp}] [WARN] Server returned error {response.status_code}: {response.text}")
                     except requests.RequestException as e:
