@@ -1030,6 +1030,15 @@
                     </div>
                 </div>
 
+                <!-- Download Report Button - always visible on dashboard -->
+                <div style="padding: 0 4px 4px 4px;">
+                    <button onclick="downloadNirvanaReport()" style="width:100%; display:flex; align-items:center; justify-content:center; gap:10px; background: linear-gradient(135deg, #26C6DA, #80DEEA); color: #0a192f; border: none; padding: 14px 20px; border-radius: 12px; font-size: 0.88rem; font-weight: 800; cursor: pointer; font-family: 'Outfit', sans-serif; box-shadow: 0 4px 16px rgba(38,198,218,0.25); transition: all 0.25s ease; letter-spacing: 0.3px;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <i class="fa-solid fa-file-arrow-down" style="font-size:1rem;"></i>
+                        Download Session Report
+                    </button>
+                </div>
+
+
             </div>
         </div>
 
@@ -1092,62 +1101,96 @@
 
     <!-- Emergency Medical Assistant Modal -->
     <div class="sliding-overlay-modal" id="emergency-medical-modal">
-        <div class="premium-modal-window" style="max-width: 750px;">
+        <div class="premium-modal-window" style="max-width: 780px;">
             <div class="modal-headline-block" style="border-bottom-color: rgba(239, 68, 68, 0.2);">
                 <h2><i class="fa-solid fa-circle-exclamation fa-fade" style="color:var(--neon-rose); margin-right:8px;"></i> Nirvana Crisis Support Matrix</h2>
                 <span class="modal-close-trigger" onclick="closeEmergencyModal()"><i class="fa-solid fa-xmark"></i></span>
             </div>
             
-            <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; max-height: 520px; overflow-y: auto; padding-right: 8px;">
-                <!-- Left: Nearest Doctor Details & Navigation Map -->
-                <div style="display: flex; flex-direction: column; gap: 16px;">
-                    <div class="content-subnode-item" style="border-left: 3px solid var(--neon-cyan); background: rgba(38, 198, 218, 0.05);">
-                        <h4 style="color: var(--neon-cyan);"><i class="fa-solid fa-user-doctor"></i> Primary Contact Practitioner</h4>
-                        <div style="margin-top: 10px; line-height: 1.5;">
-                            <strong style="font-size: 1.05rem; display: block; color: var(--text-primary);">Dr. Rajeev Sharma, MD</strong>
-                            <span style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 8px;">Sleep Medicine & Autonomic Cardiology</span>
-                            <span style="font-size: 0.85rem; display: block; color: var(--text-primary);"><i class="fa-solid fa-location-dot" style="margin-right: 6px; color: var(--neon-rose);"></i> Block C, Floor 2, Academic Center Clinic</span>
-                            <span style="font-size: 0.85rem; display: block; color: var(--text-primary);"><i class="fa-solid fa-phone" style="margin-right: 6px; color: var(--neon-cyan);"></i> +91 98765 43210</span>
-                            <span style="font-size: 0.85rem; display: block; color: var(--neon-amber); margin-top: 4px; font-weight: 600;"><i class="fa-solid fa-walking" style="margin-right: 6px;"></i> 250m Away (Approx. 3 min walk)</span>
+            <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; max-height: 480px; overflow-y: auto; padding-right: 8px;">
+                <!-- Left: Emergency Contacts & Navigation Map -->
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+
+                    <!-- Real Emergency Helplines -->
+                    <div class="content-subnode-item" style="border-left: 3px solid var(--neon-rose); background: rgba(239, 68, 68, 0.06); padding: 14px 16px;">
+                        <h4 style="color: var(--neon-rose); margin-bottom: 10px;"><i class="fa-solid fa-phone-volume"></i> India Emergency Helplines</h4>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <a href="tel:112" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding: 8px 10px; background: rgba(239,68,68,0.08); border-radius: 8px; border: 1px solid rgba(239,68,68,0.2);">
+                                <span style="background:var(--neon-rose); color:#fff; font-size:0.7rem; font-weight:800; padding:4px 8px; border-radius:6px; min-width:36px; text-align:center;">112</span>
+                                <div>
+                                    <strong style="font-size:0.85rem; color:var(--text-primary); display:block;">National Emergency</strong>
+                                    <span style="font-size:0.75rem; color:var(--text-secondary);">Police / Fire / Ambulance (24x7)</span>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:auto; color:var(--text-secondary); font-size:0.7rem;"></i>
+                            </a>
+                            <a href="tel:108" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding: 8px 10px; background: rgba(245,158,11,0.08); border-radius: 8px; border: 1px solid rgba(245,158,11,0.2);">
+                                <span style="background:var(--neon-amber); color:#000; font-size:0.7rem; font-weight:800; padding:4px 8px; border-radius:6px; min-width:36px; text-align:center;">108</span>
+                                <div>
+                                    <strong style="font-size:0.85rem; color:var(--text-primary); display:block;">Medical Ambulance</strong>
+                                    <span style="font-size:0.75rem; color:var(--text-secondary);">Free emergency ambulance (24x7)</span>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:auto; color:var(--text-secondary); font-size:0.7rem;"></i>
+                            </a>
+                            <a href="tel:9152987821" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding: 8px 10px; background: rgba(38,198,218,0.06); border-radius: 8px; border: 1px solid rgba(38,198,218,0.15);">
+                                <span style="background:var(--neon-cyan); color:#fff; font-size:0.55rem; font-weight:800; padding:4px 6px; border-radius:6px; min-width:36px; text-align:center;">iCall</span>
+                                <div>
+                                    <strong style="font-size:0.85rem; color:var(--text-primary); display:block;">iCall — 9152987821</strong>
+                                    <span style="font-size:0.75rem; color:var(--text-secondary);">TISS Mental Health Helpline (Mon–Sat)</span>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:auto; color:var(--text-secondary); font-size:0.7rem;"></i>
+                            </a>
+                            <a href="tel:18602662345" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding: 8px 10px; background: rgba(38,198,218,0.06); border-radius: 8px; border: 1px solid rgba(38,198,218,0.15);">
+                                <span style="background:var(--neon-cyan); color:#fff; font-size:0.5rem; font-weight:800; padding:4px 4px; border-radius:6px; min-width:36px; text-align:center; line-height:1.2;">VAN</span>
+                                <div>
+                                    <strong style="font-size:0.85rem; color:var(--text-primary); display:block;">Vandrevala — 1860-2662-345</strong>
+                                    <span style="font-size:0.75rem; color:var(--text-secondary);">Mental Health Crisis Line (24x7 Free)</span>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:auto; color:var(--text-secondary); font-size:0.7rem;"></i>
+                            </a>
                         </div>
                     </div>
-                    
+
+                    <!-- Nearest Hospital placeholder for user's city -->
+                    <div class="content-subnode-item" style="border-left: 3px solid var(--neon-cyan); background: rgba(38,198,218,0.04); padding: 14px 16px;" id="local-hospital-card">
+                        <h4 style="color: var(--neon-cyan); margin-bottom: 8px;"><i class="fa-solid fa-hospital"></i> Nearest Hospital</h4>
+                        <div style="line-height: 1.7; font-size: 0.85rem;">
+                            <strong style="display:block; font-size:0.95rem; color:var(--text-primary);" id="hospital-name">SPARSH Hospital</strong>
+                            <span style="font-size:0.78rem; color:var(--text-secondary); display:block; margin-bottom:4px;">24x7 Emergency, Trauma &amp; Critical Care — Yelahanka</span>
+                            <span style="color:var(--text-secondary); display:block;" id="hospital-address"><i class="fa-solid fa-location-dot" style="color:var(--neon-rose); margin-right:5px;"></i> No. 1474/138, International Airport Rd, Kogilu Cross, Yelahanka, Bengaluru 560064</span>
+                            <span style="color:var(--text-primary); display:block; font-weight:600;" id="hospital-phone"><i class="fa-solid fa-phone" style="color:var(--neon-cyan); margin-right:5px;"></i> 080-61-222-000</span>
+                            <a href="tel:08061222000" style="display:inline-flex; align-items:center; gap:6px; margin-top:10px; background:var(--neon-rose); color:#fff; padding:8px 16px; border-radius:8px; font-size:0.8rem; font-weight:700; text-decoration:none; box-shadow: 0 4px 10px rgba(239,68,68,0.3);">
+                                <i class="fa-solid fa-phone-volume"></i> Call Emergency: 080-61-222-000
+                            </a>
+                        </div>
+                    </div>
+
                     <div class="visual-route-card">
                         <h4 style="color: var(--text-primary); font-size: 0.85rem; margin-bottom: 4px;">Schematic Transit Route</h4>
                         <div class="route-map-svg-container">
                             <svg width="100%" height="100%" viewBox="0 0 300 180" style="background: rgba(15, 23, 42, 0.4);">
-                                <!-- Map Grid Lines -->
                                 <line x1="0" y1="30" x2="300" y2="30" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
                                 <line x1="0" y1="90" x2="300" y2="90" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
                                 <line x1="0" y1="150" x2="300" y2="150" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
                                 <line x1="75" y1="0" x2="75" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
                                 <line x1="150" y1="0" x2="150" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
                                 <line x1="225" y1="0" x2="225" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
-                                
-                                <!-- Obstacles/Rooms -->
                                 <rect x="30" y="20" width="80" height="50" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
                                 <text x="70" y="48" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle" font-family="monospace">BLOCK A</text>
                                 <rect x="180" y="20" width="90" height="50" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
                                 <text x="225" y="48" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle" font-family="monospace">BLOCK B</text>
                                 <rect x="30" y="110" width="80" height="50" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
                                 <text x="70" y="138" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle" font-family="monospace">LIBRARY</text>
-                                
-                                <!-- Transit Path -->
                                 <path d="M 230 140 L 150 140 L 150 80 L 70 80" fill="none" stroke="var(--neon-cyan)" stroke-width="3" stroke-linecap="round" class="route-path-line"></path>
-                                
-                                <!-- User Dot -->
                                 <circle cx="230" cy="140" r="6" fill="var(--neon-rose)" class="route-map-pulse-dot"></circle>
                                 <text x="230" y="158" fill="var(--neon-rose)" font-size="9" font-weight="700" text-anchor="middle">YOU</text>
-                                
-                                <!-- Clinic Dot -->
                                 <circle cx="70" cy="80" r="6" fill="var(--neon-cyan)" class="route-map-pulse-dot"></circle>
-                                <text x="70" y="68" fill="var(--neon-cyan)" font-size="9" font-weight="700" text-anchor="middle">CLINIC (Block C)</text>
+                                <text x="70" y="68" fill="var(--neon-cyan)" font-size="9" font-weight="700" text-anchor="middle">HOSPITAL</text>
                             </svg>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Right: Interactive Breathing Coach & Safety Checklist -->
+                <!-- Right: Breathing Coach & Checklist -->
                 <div style="display: flex; flex-direction: column; gap: 16px;">
                     <div class="breathing-coach-box">
                         <h4 style="color: var(--neon-cyan); margin-bottom: 2px;">Panic Control Breathing Coach</h4>
@@ -1172,6 +1215,16 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+
+            <!-- Prominent Footer with Close + Download -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(239,68,68,0.2); gap: 14px; flex-wrap: wrap;">
+                <button onclick="downloadNirvanaReport()" style="display:flex; align-items:center; gap:8px; background: var(--neon-cyan); color: #ffffff; border: none; padding: 12px 24px; border-radius: 10px; font-size: 0.88rem; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(38,198,218,0.3);">
+                    <i class="fa-solid fa-file-arrow-down"></i> Download Session Report
+                </button>
+                <button onclick="closeEmergencyModal()" style="display:flex; align-items:center; gap:8px; background: rgba(239,68,68,0.12); color: var(--neon-rose); border: 2px solid rgba(239,68,68,0.4); padding: 12px 32px; border-radius: 10px; font-size: 0.9rem; font-weight: 800; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s ease; letter-spacing: 0.5px;">
+                    <i class="fa-solid fa-xmark"></i> CLOSE &amp; DISMISS
+                </button>
             </div>
         </div>
     </div>
@@ -1497,6 +1550,156 @@
         function reinitializeDataPollingSchedule() {
             if(pollingIntervalTimerRef) clearInterval(pollingIntervalTimerRef);
             pollingIntervalTimerRef = setInterval(runPlatformDataSyncCycle, parseInt(localStorage.getItem('nirvan_speed') || "2000"));
+        }
+
+        /* --- Downloadable Session Report Generator --- */
+        async function downloadNirvanaReport() {
+            // Gather live values from DOM
+            const hr  = document.getElementById('metric-txt-hr').innerText || '--';
+            const mv  = document.getElementById('metric-txt-mv').innerText || '--';
+            const lt  = document.getElementById('metric-txt-lt').innerText || '--';
+            const st  = document.getElementById('metric-txt-st').innerText || '--';
+            const score = document.getElementById('radial-gauge-score-txt').innerText || '--%';
+            const stage = document.getElementById('metric-txt-stage').innerText || 'Unknown';
+            const alerts = document.getElementById('ui-alerts-injector-node').innerText || 'None';
+            const insights = document.getElementById('ui-insights-injector-node').innerText || 'None';
+            const ts = document.getElementById('live-clock-value').innerText || '--:--:--';
+            const today = new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+            // Fetch historical data for table
+            let tableRows = '';
+            try {
+                const res = await fetch('/data');
+                const records = await res.json();
+                const last20 = records.slice(-20).reverse();
+                last20.forEach(r => {
+                    tableRows += `<tr>
+                        <td>${r.timestamp}</td>
+                        <td>${r.heart_rate}</td>
+                        <td>${r.movement}</td>
+                        <td>${r.light}</td>
+                        <td>${parseFloat(r.stress).toFixed(2)}</td>
+                    </tr>`;
+                });
+            } catch(e) {
+                tableRows = '<tr><td colspan="5" style="text-align:center; color:#94a3b8;">No historical data available</td></tr>';
+            }
+
+            const reportHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Nirvana Telemetry Report — ${today}</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #f8faff; color: #0a192f; padding: 40px; max-width: 900px; margin: auto; }
+  .header { background: linear-gradient(135deg, #0f172a, #1e293b); color: #e0f7fa; padding: 30px 40px; border-radius: 16px; margin-bottom: 30px; }
+  .header h1 { margin: 0 0 4px 0; font-size: 2rem; letter-spacing: -1px; }
+  .header h1 span { color: #26C6DA; }
+  .header p { margin: 0; color: #80DEEA; font-size: 0.9rem; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .metric-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .metric-card .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #64748b; font-weight: 700; margin-bottom: 8px; }
+  .metric-card .value { font-size: 2rem; font-weight: 800; color: #0f172a; }
+  .metric-card .unit { font-size: 0.8rem; color: #94a3b8; font-weight: 500; }
+  .section { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+  .section h2 { margin: 0 0 16px 0; font-size: 1rem; color: #0f172a; border-bottom: 2px solid #26C6DA; padding-bottom: 8px; }
+  .score-row { display: flex; align-items: center; gap: 20px; }
+  .score-circle { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #26C6DA, #80DEEA); display: flex; align-items: center; justify-content: center; }
+  .score-circle span { font-size: 1.3rem; font-weight: 800; color: #fff; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #0f172a; color: #80DEEA; padding: 10px 14px; text-align: left; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8faff; }
+  .helplines { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .helpline-item { display: flex; gap: 12px; align-items: center; padding: 10px; background: #f8faff; border-radius: 8px; border: 1px solid #e2e8f0; }
+  .helpline-badge { background: #0f172a; color: #26C6DA; padding: 6px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 800; min-width: 50px; text-align: center; }
+  .footer { text-align: center; color: #94a3b8; font-size: 0.8rem; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+  @media print { body { padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Nirvana <span>Telemetry</span> Report</h1>
+  <p>Session Date: ${today} &nbsp;|&nbsp; Generated at: ${ts} &nbsp;|&nbsp; Real-Time Physiological Analysis</p>
+</div>
+
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="label">Heart Rate</div>
+    <div class="value">${hr}</div>
+    <div class="unit">BPM</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Movement</div>
+    <div class="value">${mv}</div>
+    <div class="unit">Hz</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Ambient Light</div>
+    <div class="value">${lt}</div>
+    <div class="unit">Lux</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Stress Index</div>
+    <div class="value">${st}</div>
+    <div class="unit">pts</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Sleep Analysis Summary</h2>
+  <div class="score-row">
+    <div class="score-circle"><span>${score}</span></div>
+    <div>
+      <p style="font-size: 1.1rem; font-weight: 700; margin: 0 0 4px 0;">Sleep Score: ${score}</p>
+      <p style="margin: 0 0 4px 0; color: #26C6DA; font-weight: 700;">Stage: ${stage}</p>
+      <p style="margin: 0; font-size: 0.85rem; color: #64748b;">Processed by Nirvana ML Regression Engine</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>AI Diagnostics &amp; Alerts</h2>
+  <p style="color: #ef4444; font-size: 0.88rem; white-space: pre-wrap;">${alerts}</p>
+  <p style="color: #475569; font-size: 0.88rem; white-space: pre-wrap; margin-top: 12px;">${insights}</p>
+</div>
+
+<div class="section">
+  <h2>Last 20 Telemetry Records</h2>
+  <table>
+    <thead><tr><th>Time</th><th>Heart Rate (BPM)</th><th>Movement (Hz)</th><th>Light (Lux)</th><th>Stress (pts)</th></tr></thead>
+    <tbody>${tableRows}</tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Emergency Contacts</h2>
+  <div class="helplines">
+    <div class="helpline-item"><div class="helpline-badge" style="background:#ef4444; color:#fff;">112</div><div><strong>National Emergency</strong><br><small style="color:#64748b;">Police / Fire / Ambulance (24x7)</small></div></div>
+    <div class="helpline-item"><div class="helpline-badge" style="background:#f59e0b; color:#000;">108</div><div><strong>Medical Ambulance</strong><br><small style="color:#64748b;">Free ambulance (24x7)</small></div></div>
+    <div class="helpline-item"><div class="helpline-badge" style="background:#1e3a5f; color:#26C6DA;">SPARSH</div><div><strong>080-61-222-000</strong><br><small style="color:#64748b;">SPARSH Hospital, Kogilu Cross, Yelahanka (24x7)</small></div></div>
+    <div class="helpline-item"><div class="helpline-badge" style="background:#1e3a5f; color:#26C6DA;">Aster</div><div><strong>88845 66388</strong><br><small style="color:#64748b;">Aster Clinic, Yelahanka New Town</small></div></div>
+    <div class="helpline-item"><div class="helpline-badge">iCall</div><div><strong>9152987821</strong><br><small style="color:#64748b;">TISS Mental Health (Mon–Sat)</small></div></div>
+    <div class="helpline-item"><div class="helpline-badge">VAN</div><div><strong>1860-2662-345</strong><br><small style="color:#64748b;">Vandrevala Crisis Line (24x7 Free)</small></div></div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Generated by <strong>Nirvana OS</strong> — Real-Time Physiological Telemetry Platform &nbsp;|&nbsp; Academic Research Project</p>
+  <p>For emergency, call 112 immediately. This report is for informational purposes only and is not a medical diagnosis.</p>
+</div>
+</body>
+</html>`;
+
+            const blob = new Blob([reportHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const win = window.open(url, '_blank');
+            if(win) {
+                win.addEventListener('load', () => {
+                    setTimeout(() => win.print(), 500);
+                });
+            }
         }
 
         /* --- Emergency Demo Trigger (for Presentation) --- */
