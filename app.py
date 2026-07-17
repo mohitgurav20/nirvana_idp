@@ -254,12 +254,12 @@ def run_predictive_pipeline():
         # Determine emergency status
         emergency = False
         emergency_msg = ""
-        if predicted_stress > 70:
+        if predicted_stress > 35:
             emergency = True
             emergency_msg = f"Critical Stress Level detected ({round(predicted_stress, 1)} pts). Somatic overload under progress."
-        elif hr > 98:
+        elif hr > 90:
             emergency = True
-            emergency_msg = f"Nocturnal Tachycardia detected ({round(hr, 1)} BPM). Elevated cardiac risk detected."
+            emergency_msg = f"Elevated Heart Rate detected ({round(hr, 1)} BPM). Potential cardiac risk flagged."
 
         return jsonify({
             "stress_score": round(float(predicted_stress), 2),

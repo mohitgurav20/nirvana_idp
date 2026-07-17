@@ -906,6 +906,7 @@
         </a>
         <div class="control-actions-hub">
             <div id="live-runtime-timestamp" style="font-size:0.8rem; font-weight:600; font-family:'JetBrains Mono', monospace; border:1px solid var(--border-line); padding:10px 18px; border-radius:8px; background:var(--bg-surface); color:var(--text-secondary); margin-right: 8px; min-width: 180px; text-align:center;"><i class="fa-solid fa-clock" style="color:var(--neon-cyan); margin-right:6px;"></i><span id="live-clock-value">--:--:--</span></div>
+            <button class="premium-sys-btn" id="demo-emergency-btn" onclick="triggerDemoEmergency()" title="Demo Emergency System" style="background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.4); color: var(--neon-rose); font-weight:700; font-size:0.72rem; letter-spacing:0.5px; padding: 10px 14px; gap:6px; display:flex; align-items:center;"><i class="fa-solid fa-triangle-exclamation"></i> EMERGENCY DEMO</button>
             <button class="premium-sys-btn" onclick="togglePlatformColorPaletteTheme()" title="Toggle Theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
             <button class="premium-sys-btn" onclick="openSystemModalWindow('settings-config-modal')" title="Settings"><i class="fa-solid fa-sliders"></i></button>
         </div>
@@ -1496,6 +1497,24 @@
         function reinitializeDataPollingSchedule() {
             if(pollingIntervalTimerRef) clearInterval(pollingIntervalTimerRef);
             pollingIntervalTimerRef = setInterval(runPlatformDataSyncCycle, parseInt(localStorage.getItem('nirvan_speed') || "2000"));
+        }
+
+        /* --- Emergency Demo Trigger (for Presentation) --- */
+        function triggerDemoEmergency() {
+            const emergencyBanner = document.getElementById('emergency-alert-banner');
+            document.getElementById('emergency-banner-text').innerText = 'Critical Stress Level detected (42.3 pts). Demo mode: Somatic overload simulation active.';
+            emergencyBanner.style.display = 'flex';
+            emergencyBanner.style.opacity = '0';
+            emergencyBanner.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                emergencyBanner.style.transition = 'all 0.5s ease';
+                emergencyBanner.style.opacity = '1';
+                emergencyBanner.style.transform = 'translateY(0)';
+            }, 50);
+            // Auto-open the crisis modal after banner appears
+            setTimeout(() => {
+                openSystemModalWindow('emergency-medical-modal');
+            }, 600);
         }
 
         /* --- Emergency Breathing Coach Logic Hub --- */
