@@ -1101,133 +1101,191 @@
 
     <!-- Emergency Medical Assistant Modal -->
     <div class="sliding-overlay-modal" id="emergency-medical-modal">
-        <div class="premium-modal-window" style="max-width: 780px;">
-            <div class="modal-headline-block" style="border-bottom-color: rgba(239, 68, 68, 0.2);">
-                <h2><i class="fa-solid fa-circle-exclamation fa-fade" style="color:var(--neon-rose); margin-right:8px;"></i> Nirvana Crisis Support Matrix</h2>
-                <span class="modal-close-trigger" onclick="closeEmergencyModal()"><i class="fa-solid fa-xmark"></i></span>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; max-height: 480px; overflow-y: auto; padding-right: 8px;">
-                <!-- Left: Emergency Contacts & Navigation Map -->
-                <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div class="premium-modal-window" style="max-width:860px; padding:0; overflow:hidden; border-radius:20px;">
 
-                    <!-- Real Emergency Helplines -->
-                    <div class="content-subnode-item" style="border-left: 3px solid var(--neon-rose); background: rgba(239, 68, 68, 0.06); padding: 14px 16px;">
-                        <h4 style="color: var(--neon-rose); margin-bottom: 10px;"><i class="fa-solid fa-phone-volume"></i> India Emergency Helplines</h4>
-                        <div style="display: flex; flex-direction: column; gap: 8px;">
-                            <a href="tel:112" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding: 8px 10px; background: rgba(239,68,68,0.08); border-radius: 8px; border: 1px solid rgba(239,68,68,0.2);">
-                                <span style="background:var(--neon-rose); color:#fff; font-size:0.7rem; font-weight:800; padding:4px 8px; border-radius:6px; min-width:36px; text-align:center;">112</span>
-                                <div>
-                                    <strong style="font-size:0.85rem; color:var(--text-primary); display:block;">National Emergency</strong>
-                                    <span style="font-size:0.75rem; color:var(--text-secondary);">Police / Fire / Ambulance (24x7)</span>
-                                </div>
-                                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:auto; color:var(--text-secondary); font-size:0.7rem;"></i>
-                            </a>
-                            <a href="tel:108" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding: 8px 10px; background: rgba(245,158,11,0.08); border-radius: 8px; border: 1px solid rgba(245,158,11,0.2);">
-                                <span style="background:var(--neon-amber); color:#000; font-size:0.7rem; font-weight:800; padding:4px 8px; border-radius:6px; min-width:36px; text-align:center;">108</span>
-                                <div>
-                                    <strong style="font-size:0.85rem; color:var(--text-primary); display:block;">Medical Ambulance</strong>
-                                    <span style="font-size:0.75rem; color:var(--text-secondary);">Free emergency ambulance (24x7)</span>
-                                </div>
-                                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:auto; color:var(--text-secondary); font-size:0.7rem;"></i>
-                            </a>
-                            <a href="tel:9152987821" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding: 8px 10px; background: rgba(38,198,218,0.06); border-radius: 8px; border: 1px solid rgba(38,198,218,0.15);">
-                                <span style="background:var(--neon-cyan); color:#fff; font-size:0.55rem; font-weight:800; padding:4px 6px; border-radius:6px; min-width:36px; text-align:center;">iCall</span>
-                                <div>
-                                    <strong style="font-size:0.85rem; color:var(--text-primary); display:block;">iCall — 9152987821</strong>
-                                    <span style="font-size:0.75rem; color:var(--text-secondary);">TISS Mental Health Helpline (Mon–Sat)</span>
-                                </div>
-                                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:auto; color:var(--text-secondary); font-size:0.7rem;"></i>
-                            </a>
-                            <a href="tel:18602662345" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding: 8px 10px; background: rgba(38,198,218,0.06); border-radius: 8px; border: 1px solid rgba(38,198,218,0.15);">
-                                <span style="background:var(--neon-cyan); color:#fff; font-size:0.5rem; font-weight:800; padding:4px 4px; border-radius:6px; min-width:36px; text-align:center; line-height:1.2;">VAN</span>
-                                <div>
-                                    <strong style="font-size:0.85rem; color:var(--text-primary); display:block;">Vandrevala — 1860-2662-345</strong>
-                                    <span style="font-size:0.75rem; color:var(--text-secondary);">Mental Health Crisis Line (24x7 Free)</span>
-                                </div>
-                                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:auto; color:var(--text-secondary); font-size:0.7rem;"></i>
-                            </a>
-                        </div>
+            <!-- Modal Header -->
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.18),rgba(239,68,68,0.06)); padding:22px 28px 18px 28px; border-bottom:1px solid rgba(239,68,68,0.2); display:flex; align-items:center; justify-content:space-between;">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:42px; height:42px; border-radius:12px; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-circle-exclamation fa-beat" style="color:var(--neon-rose); font-size:1.2rem;"></i>
                     </div>
-
-                    <!-- Nearest Hospital placeholder for user's city -->
-                    <div class="content-subnode-item" style="border-left: 3px solid var(--neon-cyan); background: rgba(38,198,218,0.04); padding: 14px 16px;" id="local-hospital-card">
-                        <h4 style="color: var(--neon-cyan); margin-bottom: 8px;"><i class="fa-solid fa-hospital"></i> Nearest Hospital</h4>
-                        <div style="line-height: 1.7; font-size: 0.85rem;">
-                            <strong style="display:block; font-size:0.95rem; color:var(--text-primary);" id="hospital-name">SPARSH Hospital</strong>
-                            <span style="font-size:0.78rem; color:var(--text-secondary); display:block; margin-bottom:4px;">24x7 Emergency, Trauma &amp; Critical Care — Yelahanka</span>
-                            <span style="color:var(--text-secondary); display:block;" id="hospital-address"><i class="fa-solid fa-location-dot" style="color:var(--neon-rose); margin-right:5px;"></i> No. 1474/138, International Airport Rd, Kogilu Cross, Yelahanka, Bengaluru 560064</span>
-                            <span style="color:var(--text-primary); display:block; font-weight:600;" id="hospital-phone"><i class="fa-solid fa-phone" style="color:var(--neon-cyan); margin-right:5px;"></i> 080-61-222-000</span>
-                            <a href="tel:08061222000" style="display:inline-flex; align-items:center; gap:6px; margin-top:10px; background:var(--neon-rose); color:#fff; padding:8px 16px; border-radius:8px; font-size:0.8rem; font-weight:700; text-decoration:none; box-shadow: 0 4px 10px rgba(239,68,68,0.3);">
-                                <i class="fa-solid fa-phone-volume"></i> Call Emergency: 080-61-222-000
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="visual-route-card">
-                        <h4 style="color: var(--text-primary); font-size: 0.85rem; margin-bottom: 4px;">Schematic Transit Route</h4>
-                        <div class="route-map-svg-container">
-                            <svg width="100%" height="100%" viewBox="0 0 300 180" style="background: rgba(15, 23, 42, 0.4);">
-                                <line x1="0" y1="30" x2="300" y2="30" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
-                                <line x1="0" y1="90" x2="300" y2="90" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
-                                <line x1="0" y1="150" x2="300" y2="150" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
-                                <line x1="75" y1="0" x2="75" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
-                                <line x1="150" y1="0" x2="150" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
-                                <line x1="225" y1="0" x2="225" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"></line>
-                                <rect x="30" y="20" width="80" height="50" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
-                                <text x="70" y="48" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle" font-family="monospace">BLOCK A</text>
-                                <rect x="180" y="20" width="90" height="50" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
-                                <text x="225" y="48" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle" font-family="monospace">BLOCK B</text>
-                                <rect x="30" y="110" width="80" height="50" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
-                                <text x="70" y="138" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle" font-family="monospace">LIBRARY</text>
-                                <path d="M 230 140 L 150 140 L 150 80 L 70 80" fill="none" stroke="var(--neon-cyan)" stroke-width="3" stroke-linecap="round" class="route-path-line"></path>
-                                <circle cx="230" cy="140" r="6" fill="var(--neon-rose)" class="route-map-pulse-dot"></circle>
-                                <text x="230" y="158" fill="var(--neon-rose)" font-size="9" font-weight="700" text-anchor="middle">YOU</text>
-                                <circle cx="70" cy="80" r="6" fill="var(--neon-cyan)" class="route-map-pulse-dot"></circle>
-                                <text x="70" y="68" fill="var(--neon-cyan)" font-size="9" font-weight="700" text-anchor="middle">HOSPITAL</text>
-                            </svg>
-                        </div>
+                    <div>
+                        <h2 style="margin:0; font-size:1.1rem; font-weight:800; color:var(--text-primary);">Nirvana Crisis Support Matrix</h2>
+                        <span style="font-size:0.75rem; color:var(--text-secondary);">Yelahanka, Bengaluru — Real-time emergency contacts</span>
                     </div>
                 </div>
-                
-                <!-- Right: Breathing Coach & Checklist -->
-                <div style="display: flex; flex-direction: column; gap: 16px;">
-                    <div class="breathing-coach-box">
-                        <h4 style="color: var(--neon-cyan); margin-bottom: 2px;">Panic Control Breathing Coach</h4>
-                        <span style="font-size: 0.75rem; color: var(--text-secondary);">Calm your sympathetic system with box breathing</span>
-                        <div class="breathing-ring-outer">
-                            <div class="breathing-circle-core" id="breathingCoreCircle">
-                                <span style="font-size: 0.75rem; font-weight: 700; color: #ffffff;" id="breathingActionTimer">--</span>
+                <span class="modal-close-trigger" onclick="closeEmergencyModal()" style="width:36px; height:36px; border-radius:10px; background:rgba(255,255,255,0.06); border:1px solid var(--border-line); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.1rem; color:var(--text-secondary); transition:all 0.2s;"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+
+            <!-- National Emergency Strip -->
+            <div style="background:rgba(239,68,68,0.08); border-bottom:1px solid rgba(239,68,68,0.15); padding:10px 28px; display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+                <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--neon-rose);">National Helplines:</span>
+                <a href="tel:112" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.25); padding:6px 14px; border-radius:8px; color:var(--text-primary); font-weight:700; font-size:0.82rem;">
+                    <span style="background:var(--neon-rose); color:#fff; padding:2px 7px; border-radius:5px; font-size:0.72rem; font-weight:800;">112</span> National Emergency
+                </a>
+                <a href="tel:108" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); padding:6px 14px; border-radius:8px; color:var(--text-primary); font-weight:700; font-size:0.82rem;">
+                    <span style="background:var(--neon-amber); color:#000; padding:2px 7px; border-radius:5px; font-size:0.72rem; font-weight:800;">108</span> Ambulance
+                </a>
+                <a href="tel:9152987821" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; background:rgba(38,198,218,0.08); border:1px solid rgba(38,198,218,0.2); padding:6px 14px; border-radius:8px; color:var(--text-primary); font-weight:700; font-size:0.82rem;">
+                    <span style="background:var(--neon-cyan); color:#fff; padding:2px 7px; border-radius:5px; font-size:0.72rem; font-weight:800;">iCall</span> 9152987821
+                </a>
+                <a href="tel:18602662345" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; background:rgba(38,198,218,0.08); border:1px solid rgba(38,198,218,0.2); padding:6px 14px; border-radius:8px; color:var(--text-primary); font-weight:700; font-size:0.82rem;">
+                    <span style="background:var(--neon-cyan); color:#fff; padding:2px 7px; border-radius:5px; font-size:0.72rem; font-weight:800;">VAN</span> 1860-2662-345
+                </a>
+            </div>
+
+            <!-- Main Body -->
+            <div style="display:grid; grid-template-columns:1fr 0.85fr; gap:0; max-height:440px;">
+
+                <!-- LEFT: Hospitals -->
+                <div style="padding:20px 24px; overflow-y:auto; border-right:1px solid var(--border-line);">
+                    <h4 style="margin:0 0 14px 0; font-size:0.72rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-secondary); font-weight:800;">
+                        <i class="fa-solid fa-hospital-user" style="margin-right:6px; color:var(--neon-cyan);"></i>Nearby Hospitals — Yelahanka, Bengaluru
+                    </h4>
+
+                    <!-- Hospital 1: SPARSH (Primary) -->
+                    <div style="background:linear-gradient(135deg,rgba(38,198,218,0.08),rgba(38,198,218,0.03)); border:1px solid rgba(38,198,218,0.2); border-radius:14px; padding:14px 16px; margin-bottom:12px; position:relative;">
+                        <div style="position:absolute; top:10px; right:12px; background:var(--neon-cyan); color:#0a192f; font-size:0.6rem; font-weight:800; padding:3px 8px; border-radius:20px; text-transform:uppercase; letter-spacing:0.5px;">NEAREST</div>
+                        <div style="display:flex; align-items:flex-start; gap:12px;">
+                            <div style="width:38px; height:38px; border-radius:10px; background:rgba(38,198,218,0.12); border:1px solid rgba(38,198,218,0.25); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <i class="fa-solid fa-hospital" style="color:var(--neon-cyan); font-size:1rem;"></i>
+                            </div>
+                            <div style="flex:1; min-width:0;">
+                                <strong style="display:block; font-size:0.95rem; color:var(--text-primary); font-weight:800; margin-bottom:2px;">SPARSH Hospital</strong>
+                                <span style="font-size:0.72rem; color:var(--neon-cyan); font-weight:600; display:block; margin-bottom:6px;">Multi-specialty · Trauma &amp; Emergency · 24x7</span>
+                                <span style="font-size:0.78rem; color:var(--text-secondary); display:block; line-height:1.5;"><i class="fa-solid fa-location-dot" style="color:var(--neon-rose); margin-right:5px; width:12px;"></i>Kogilu Cross, Int'l Airport Rd, Yelahanka, Bengaluru 560064</span>
+                                <div style="display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap;">
+                                    <a href="tel:08061222000" style="display:inline-flex; align-items:center; gap:6px; background:var(--neon-rose); color:#fff; padding:7px 16px; border-radius:8px; font-size:0.78rem; font-weight:700; text-decoration:none;">
+                                        <i class="fa-solid fa-phone-volume"></i> 080-61-222-000
+                                    </a>
+                                    <a href="https://maps.google.com/?q=SPARSH+Hospital+Yelahanka+Bangalore" target="_blank" style="display:inline-flex; align-items:center; gap:5px; color:var(--text-secondary); font-size:0.75rem; text-decoration:none; border:1px solid var(--border-line); padding:6px 12px; border-radius:8px;">
+                                        <i class="fa-solid fa-map-location-dot"></i> Maps
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="breathing-text-indicator" id="breathingInstructionLabel">Breathing Coach Idle</div>
-                        <button class="premium-sys-btn" id="breathingCoachToggleBtn" style="background: var(--neon-cyan); color: #ffffff; width: 100%; font-weight: 600; border-color: var(--neon-cyan); margin-top: 10px;" onclick="toggleBreathingCoachSystem()">START BREATHING COACH</button>
                     </div>
-                    
-                    <div class="content-subnode-item" style="border-left: 3px solid var(--neon-rose); background: rgba(239, 68, 68, 0.05);">
-                        <h4 style="color: var(--neon-rose); margin-bottom: 6px;"><i class="fa-solid fa-list-check"></i> Crisis De-escalation Checklist</h4>
-                        <ul style="font-size: 0.8rem; padding-left: 14px; line-height: 1.6; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px;">
-                            <li>Sit down immediately in a comfortable posture.</li>
-                            <li>Close your eyes to shut down high light pollution factors.</li>
-                            <li>Take slow, deep sips of room-temperature water.</li>
-                            <li>Loosen any tight clothing around your chest or neck.</li>
-                            <li>If indoors, reduce ambient lighting to 0 Lux immediately.</li>
-                        </ul>
+
+                    <!-- Hospital 2: Dhaara -->
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-line); border-radius:14px; padding:14px 16px; margin-bottom:12px;">
+                        <div style="display:flex; align-items:flex-start; gap:12px;">
+                            <div style="width:36px; height:36px; border-radius:10px; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <i class="fa-solid fa-kit-medical" style="color:var(--neon-amber); font-size:0.95rem;"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <strong style="display:block; font-size:0.9rem; color:var(--text-primary); font-weight:700; margin-bottom:1px;">Dhaara Hospital</strong>
+                                <span style="font-size:0.72rem; color:var(--neon-amber); font-weight:600; display:block; margin-bottom:5px;">Emergency · Trauma Surgery · Critical Care · 24x7</span>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); display:block;"><i class="fa-solid fa-location-dot" style="color:var(--neon-rose); margin-right:5px;"></i>Yelahanka, Bengaluru</span>
+                                <a href="tel:8747874666" style="display:inline-flex; align-items:center; gap:6px; margin-top:8px; color:var(--neon-amber); font-size:0.78rem; font-weight:700; text-decoration:none; border:1px solid rgba(245,158,11,0.3); padding:5px 12px; border-radius:8px;">
+                                    <i class="fa-solid fa-phone"></i> 87478 74666
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hospital 3: Kishore -->
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-line); border-radius:14px; padding:14px 16px; margin-bottom:12px;">
+                        <div style="display:flex; align-items:flex-start; gap:12px;">
+                            <div style="width:36px; height:36px; border-radius:10px; background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <i class="fa-solid fa-stethoscope" style="color:#a78bfa; font-size:0.95rem;"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <strong style="display:block; font-size:0.9rem; color:var(--text-primary); font-weight:700; margin-bottom:1px;">Kishore Multi Speciality Hospital</strong>
+                                <span style="font-size:0.72rem; color:#a78bfa; font-weight:600; display:block; margin-bottom:5px;">ICU · Surgery · 24x7 Emergency Care</span>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); display:block;"><i class="fa-solid fa-location-dot" style="color:var(--neon-rose); margin-right:5px;"></i>Yelahanka New Town, Bengaluru</span>
+                                <a href="tel:9632058805" style="display:inline-flex; align-items:center; gap:6px; margin-top:8px; color:#a78bfa; font-size:0.78rem; font-weight:700; text-decoration:none; border:1px solid rgba(139,92,246,0.3); padding:5px 12px; border-radius:8px;">
+                                    <i class="fa-solid fa-phone"></i> +91 96320 58805
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hospital 4: Manipal -->
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-line); border-radius:14px; padding:14px 16px;">
+                        <div style="display:flex; align-items:flex-start; gap:12px;">
+                            <div style="width:36px; height:36px; border-radius:10px; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <i class="fa-solid fa-heart-pulse" style="color:#4ade80; font-size:0.95rem;"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <strong style="display:block; font-size:0.9rem; color:var(--text-primary); font-weight:700; margin-bottom:1px;">Manipal Hospital, Yelahanka</strong>
+                                <span style="font-size:0.72rem; color:#4ade80; font-weight:600; display:block; margin-bottom:5px;">Cardiac · Neurology · Pediatric Emergency · 24x7</span>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); display:block;"><i class="fa-solid fa-location-dot" style="color:var(--neon-rose); margin-right:5px;"></i>Yelahanka, Bengaluru</span>
+                                <a href="https://maps.google.com/?q=Manipal+Hospital+Yelahanka+Bangalore" target="_blank" style="display:inline-flex; align-items:center; gap:6px; margin-top:8px; color:#4ade80; font-size:0.78rem; font-weight:700; text-decoration:none; border:1px solid rgba(34,197,94,0.3); padding:5px 12px; border-radius:8px;">
+                                    <i class="fa-solid fa-map-location-dot"></i> View on Google Maps
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Breathing Coach + Checklist -->
+                <div style="padding:20px 20px; overflow-y:auto; display:flex; flex-direction:column; gap:16px;">
+                    <!-- Breathing Coach -->
+                    <div style="background:rgba(38,198,218,0.05); border:1px solid rgba(38,198,218,0.15); border-radius:14px; padding:16px; text-align:center;">
+                        <h4 style="margin:0 0 4px 0; color:var(--neon-cyan); font-size:0.88rem; font-weight:800;">
+                            <i class="fa-solid fa-wind" style="margin-right:6px;"></i>Panic Control Breathing Coach
+                        </h4>
+                        <span style="font-size:0.72rem; color:var(--text-secondary); display:block; margin-bottom:12px;">Box breathing to calm your nervous system</span>
+                        <div class="breathing-ring-outer" style="margin:0 auto 10px auto; width:110px; height:110px;">
+                            <div class="breathing-circle-core" id="breathingCoreCircle">
+                                <span style="font-size:0.75rem; font-weight:700; color:#ffffff;" id="breathingActionTimer">--</span>
+                            </div>
+                        </div>
+                        <div class="breathing-text-indicator" id="breathingInstructionLabel" style="margin-bottom:10px;">Breathing Coach Idle</div>
+                        <button id="breathingCoachToggleBtn" onclick="toggleBreathingCoachSystem()" style="width:100%; background:var(--neon-cyan); color:#0a192f; border:none; padding:10px; border-radius:10px; font-size:0.82rem; font-weight:800; cursor:pointer; font-family:'Outfit',sans-serif; letter-spacing:0.3px;">
+                            <i class="fa-solid fa-play" style="margin-right:6px;"></i>START BREATHING COACH
+                        </button>
+                    </div>
+
+                    <!-- Crisis Checklist -->
+                    <div style="background:rgba(239,68,68,0.04); border:1px solid rgba(239,68,68,0.15); border-radius:14px; padding:16px; flex:1;">
+                        <h4 style="margin:0 0 12px 0; color:var(--neon-rose); font-size:0.82rem; font-weight:800;">
+                            <i class="fa-solid fa-list-check" style="margin-right:6px;"></i>Crisis De-escalation Steps
+                        </h4>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <div style="display:flex; gap:10px; align-items:flex-start; font-size:0.78rem; color:var(--text-secondary); line-height:1.4;">
+                                <span style="background:rgba(239,68,68,0.15); color:var(--neon-rose); border-radius:6px; padding:2px 7px; font-weight:800; font-size:0.7rem; flex-shrink:0; margin-top:1px;">1</span>
+                                Sit down immediately in a comfortable position.
+                            </div>
+                            <div style="display:flex; gap:10px; align-items:flex-start; font-size:0.78rem; color:var(--text-secondary); line-height:1.4;">
+                                <span style="background:rgba(239,68,68,0.15); color:var(--neon-rose); border-radius:6px; padding:2px 7px; font-weight:800; font-size:0.7rem; flex-shrink:0; margin-top:1px;">2</span>
+                                Close your eyes, reduce visual stimuli.
+                            </div>
+                            <div style="display:flex; gap:10px; align-items:flex-start; font-size:0.78rem; color:var(--text-secondary); line-height:1.4;">
+                                <span style="background:rgba(239,68,68,0.15); color:var(--neon-rose); border-radius:6px; padding:2px 7px; font-weight:800; font-size:0.7rem; flex-shrink:0; margin-top:1px;">3</span>
+                                Sip room-temperature water slowly.
+                            </div>
+                            <div style="display:flex; gap:10px; align-items:flex-start; font-size:0.78rem; color:var(--text-secondary); line-height:1.4;">
+                                <span style="background:rgba(239,68,68,0.15); color:var(--neon-rose); border-radius:6px; padding:2px 7px; font-weight:800; font-size:0.7rem; flex-shrink:0; margin-top:1px;">4</span>
+                                Loosen tight clothing around chest/neck.
+                            </div>
+                            <div style="display:flex; gap:10px; align-items:flex-start; font-size:0.78rem; color:var(--text-secondary); line-height:1.4;">
+                                <span style="background:rgba(239,68,68,0.15); color:var(--neon-rose); border-radius:6px; padding:2px 7px; font-weight:800; font-size:0.7rem; flex-shrink:0; margin-top:1px;">5</span>
+                                Use box breathing (4-4-4-4 seconds).
+                            </div>
+                            <div style="display:flex; gap:10px; align-items:flex-start; font-size:0.78rem; color:var(--text-secondary); line-height:1.4;">
+                                <span style="background:rgba(239,68,68,0.15); color:var(--neon-rose); border-radius:6px; padding:2px 7px; font-weight:800; font-size:0.7rem; flex-shrink:0; margin-top:1px;">6</span>
+                                Call 080-61-222-000 (SPARSH) if unwell.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Prominent Footer with Close + Download -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(239,68,68,0.2); gap: 14px; flex-wrap: wrap;">
-                <button onclick="downloadNirvanaReport()" style="display:flex; align-items:center; gap:8px; background: var(--neon-cyan); color: #ffffff; border: none; padding: 12px 24px; border-radius: 10px; font-size: 0.88rem; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(38,198,218,0.3);">
+            <!-- Footer -->
+            <div style="padding:16px 28px; border-top:1px solid var(--border-line); background:rgba(255,255,255,0.02); display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+                <button onclick="downloadNirvanaReport()" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#26C6DA,#80DEEA); color:#0a192f; border:none; padding:12px 22px; border-radius:10px; font-size:0.85rem; font-weight:800; cursor:pointer; font-family:'Outfit',sans-serif; box-shadow:0 4px 14px rgba(38,198,218,0.3);">
                     <i class="fa-solid fa-file-arrow-down"></i> Download Session Report
                 </button>
-                <button onclick="closeEmergencyModal()" style="display:flex; align-items:center; gap:8px; background: rgba(239,68,68,0.12); color: var(--neon-rose); border: 2px solid rgba(239,68,68,0.4); padding: 12px 32px; border-radius: 10px; font-size: 0.9rem; font-weight: 800; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s ease; letter-spacing: 0.5px;">
+                <button onclick="closeEmergencyModal()" style="display:inline-flex; align-items:center; gap:8px; background:rgba(239,68,68,0.1); color:var(--neon-rose); border:2px solid rgba(239,68,68,0.35); padding:11px 28px; border-radius:10px; font-size:0.88rem; font-weight:800; cursor:pointer; font-family:'Outfit',sans-serif; letter-spacing:0.5px; transition:all 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.18)'" onmouseout="this.style.background='rgba(239,68,68,0.1)'">
                     <i class="fa-solid fa-xmark"></i> CLOSE &amp; DISMISS
                 </button>
             </div>
+
         </div>
     </div>
+
+
 
     <!-- Logic Engine -->
     <script>
