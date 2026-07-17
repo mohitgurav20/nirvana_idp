@@ -1,25 +1,18 @@
 """
 Nirvana OS - Advanced Biometric Telemetry Simulator
+Simulates sensor data and posts it to Flask API telemetry endpoint.
 """
 import random
 import time
-import csv
-import os
+import requests
 from datetime import datetime
 
-CSV_FILE = os.path.join(os.path.dirname(__file__), "data.csv")
+API_URL = "http://127.0.0.1:5000/api/telemetry"
 
 print("====================================================")
 print("   Nirvana HIGH-FIDELITY BIOMETRIC SIMULATION ENGINE ")
+print("   Posting telemetry data to: " + API_URL)
 print("====================================================")
-
-file_exists = os.path.isfile(CSV_FILE) and os.path.getsize(CSV_FILE) > 0
-
-if not file_exists:
-    with open(CSV_FILE, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["timestamp", "heart_rate", "movement", "light", "stress"])
-    print("[INFO] Successfully initialized fresh data.csv logs with 5-channel headers.")
 
 try:
     while True:
@@ -34,11 +27,22 @@ try:
         calculated_stress = (heart_rate * 0.26) + (movement_frequency * 4.6) + (ambient_lux * 0.015)
         clean_stress_metric = "{:.2f}".format(calculated_stress)
         
-        print(f"[{timestamp_str}] CARDIO: {heart_rate} BPM | MOTION: {movement_frequency} Hz | LIGHT: {ambient_lux} Lux | STRESS: {clean_stress_metric}")
-
-        with open(CSV_FILE, "a", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow([timestamp_str, heart_rate, movement_frequency, ambient_lux, clean_stress_metric])
+        # Post data to Flask app telemetry API
+        payload = {
+            "heart_rate": heart_rate,
+            "movement": movement_frequency,
+            "light": ambient_lux
+        }
+        
+        try:
+            response = requests.post(API_URL, json=payload, timeout=2)
+            if response.status_code == 200:
+                print(f"[{timestamp_str}] Posted -> CARDIO: {heart_rate} BPM | MOTION: {movement_frequency} Hz | LIGHT: {ambient_lux} Lux (Status: {response.status_code})")
+            else:
+                print(f"[{timestamp_str}] [WARN] Server returned error {response.status_code}: {response.text}")
+        except requests.RequestException as e:
+            print(f"[{timestamp_str}] [ERROR] Failed to post telemetry to Flask API: {e}")
+            print("          Is the Flask app running on port 5000?")
         
         time.sleep(2)
         

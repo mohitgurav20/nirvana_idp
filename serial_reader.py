@@ -1,17 +1,16 @@
 """
 Nirvana OS - USB Serial Reader for ESP32
-Reads sensor data from ESP32 over USB cable and saves it to data.csv
-Using Time-Lapse 5-Minute Epoch increments.
+Reads sensor data from ESP32 over USB cable and posts it to Flask API telemetry endpoint.
+Uses real-time timestamps.
 """
 import serial
 import serial.tools.list_ports
-import csv
-import os
 import sys
 import time
-from datetime import datetime, timedelta
+import requests
+from datetime import datetime
 
-CSV_FILE = os.path.join(os.path.dirname(__file__), "data.csv")
+API_URL = "http://127.0.0.1:5000/api/telemetry"
 
 def find_esp32_port():
     """Auto-detect the ESP32 COM port."""
@@ -33,26 +32,6 @@ def find_esp32_port():
     
     return None
 
-def get_next_timestamp():
-    """Reads data.csv and calculates the next logical 5-minute epoch timestamp."""
-    if os.path.exists(CSV_FILE) and os.path.getsize(CSV_FILE) > 0:
-        try:
-            with open(CSV_FILE, 'r') as f:
-                reader = csv.reader(f)
-                rows = list(reader)
-                if len(rows) > 1:
-                    last_time_str = rows[-1][0].strip()
-                    try:
-                        last_time = datetime.strptime(last_time_str, "%H:%M")
-                        next_time = last_time + timedelta(minutes=5)
-                        return next_time.strftime("%H:%M")
-                    except ValueError:
-                        pass
-        except Exception as e:
-            print(f"[WARN] Error reading last timestamp: {e}")
-            
-    return "22:00"
-
 def main():
     if len(sys.argv) > 1:
         port = sys.argv[1]
@@ -63,19 +42,12 @@ def main():
         print("[ERROR] No COM ports found. Is your ESP32 plugged in via USB?")
         sys.exit(1)
     
-    # Ensure CSV file has headers
-    if not os.path.exists(CSV_FILE) or os.path.getsize(CSV_FILE) == 0:
-        with open(CSV_FILE, "w", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(["timestamp", "heart_rate", "movement", "light", "stress"])
-        print("[NIRVANA] Initialized fresh data.csv")
-    
-    print(f"\n{'='*50}")
-    print(f"  NIRVANA USB SERIAL READER (5-MIN TIME-LAPSE MODE)")
+    print(f"\n{'='*60}")
+    print(f"  NIRVANA USB SERIAL READER (REAL-TIME HARDWARE MODE)")
     print(f"  Listening on: {port} @ 9600 baud")
-    print(f"  Each ESP32 signal increments simulation clock by 5 mins.")
+    print(f"  Posting telemetry data to: {API_URL}")
     print(f"  Press Ctrl+C to stop")
-    print(f"{'='*50}\n")
+    print(f"{'='*60}\n")
     
     try:
         ser = serial.Serial(port, 9600, timeout=2)
@@ -97,23 +69,33 @@ def main():
                     mv = float(parts[1])
                     lt = float(parts[2])
                     
-                    # Calculate stress
-                    stress = (hr * 0.26) + (mv * 4.6) + (lt * 0.015)
+                    # Post data to Flask app telemetry API
+                    payload = {
+                        "heart_rate": hr,
+                        "movement": mv,
+                        "light": lt
+                    }
                     
-                    # Get next 5-minute epoch timestamp
-                    timestamp = get_next_timestamp()
-                    
-                    # Save to CSV
-                    with open(CSV_FILE, "a", newline="") as f:
-                        writer = csv.writer(f)
-                        writer.writerow([timestamp, hr, mv, lt, f"{stress:.2f}"])
-                    
-                    print(f"[{timestamp}] HR: {hr} | MV: {mv} | LT: {lt} | STRESS: {stress:.2f}")
+                    timestamp = datetime.now().strftime("%H:%M:%S")
+                    try:
+                        response = requests.post(API_URL, json=payload, timeout=2)
+                        if response.status_code == 200:
+                            res_json = response.json()
+                            stress = res_json.get("stress", "N/A") # Wait, does app.py return stress score?
+                            # Let's check app.py response:
+                            # return jsonify({"status": "success", "timestamp": real_timestamp, "message": "Telemetry saved."}), 200
+                            # It doesn't return stress directly, but let's check if it does. It's fine either way.
+                            print(f"[{timestamp}] Sent -> HR: {hr} | MV: {mv} | LT: {lt} (Status: {response.status_code})")
+                        else:
+                            print(f"[{timestamp}] [WARN] Server returned error {response.status_code}: {response.text}")
+                    except requests.RequestException as e:
+                        print(f"[{timestamp}] [ERROR] Failed to post telemetry to Flask API: {e}")
+                        print("          Is the Flask app running on port 5000?")
                     
                 except ValueError:
                     print(f"[WARN] Skipping malformed data: {line}")
             else:
-                print(f"[INFO] ESP32: {line}")
+                print(f"[INFO] ESP32 raw: {line}")
                 
     except serial.SerialException as e:
         print(f"[ERROR] Could not open {port}: {e}")
@@ -121,7 +103,8 @@ def main():
         sys.exit(1)
     except KeyboardInterrupt:
         print("\n[STOP] Serial reader stopped safely.")
-        ser.close()
+        if 'ser' in locals() and ser.is_open:
+            ser.close()
 
 if __name__ == "__main__":
     main()

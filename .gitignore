@@ -18,3 +18,8 @@ model.pkl
 .vscode/
 .idea/
 .DS_Store
+Thumbs.db
+
+# Agent/Developer tools
+.agents/
+*.log
