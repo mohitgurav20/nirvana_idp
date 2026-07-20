@@ -1,4 +1,5 @@
 import os
+import math
 from dotenv import load_dotenv
 
 # Load environment variables from .env relative to app.py
@@ -43,6 +44,25 @@ else:
 def load_and_clean_data():
     try:
         if os.path.exists(CSV_FILE) and os.path.getsize(CSV_FILE) > 0:
+            # Check the first line of the file directly
+            with open(CSV_FILE, "r") as f:
+                first_line = f.readline().strip()
+            
+            expected_headers = ["timestamp", "heart_rate", "movement", "light", "stress"]
+            headers_present = all(h in first_line for h in expected_headers)
+            
+            if not headers_present:
+                print("[NIRVANA] Detected missing headers in data.csv. Re-injecting headers...")
+                with open(CSV_FILE, "r") as f:
+                    lines = f.readlines()
+                with open(CSV_FILE, "w", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow(expected_headers)
+                    for line in lines:
+                        parts = [p.strip() for p in line.strip().split(",")]
+                        if len(parts) == 5 and parts[0] != "timestamp":
+                            writer.writerow(parts)
+            
             data = pd.read_csv(CSV_FILE)
             data.columns = data.columns.str.strip()
             required = ["timestamp", "heart_rate", "movement", "light", "stress"]
@@ -95,22 +115,29 @@ def seed_data_file():
             writer.writerow(["timestamp", "heart_rate", "movement", "light", "stress"])
             
             now = datetime.now()
-            for i in range(12, 0, -1):
-                past_time = now - timedelta(minutes=i * 5)
-                cycle_progress = (i % 6) / 6.0
+            # Use drifting state for organic, non-repeating seed data
+            hr_s = random.uniform(62, 72)
+            mv_s = random.uniform(0.5, 3.0)
+            lt_s = random.uniform(0, 20)
+            
+            for i in range(20, 0, -1):
+                past_time = now - timedelta(minutes=i * 3)
                 
-                if cycle_progress < 0.3:
-                    hr = random.randint(68, 78)
-                    mv = random.randint(2, 5)
-                    lt = random.randint(5, 30)
-                elif cycle_progress < 0.6:
-                    hr = random.randint(60, 70)
-                    mv = random.randint(0, 2)
-                    lt = random.randint(0, 10)
-                else:
-                    hr = random.randint(55, 65)
-                    mv = random.randint(0, 1)
-                    lt = 0
+                # Random walk drift with occasional micro-events
+                hr_s += random.uniform(-3.0, 3.0)
+                mv_s += random.uniform(-1.0, 1.0)
+                lt_s += random.uniform(-8.0, 8.0)
+                
+                # Occasional spike events (5% chance)
+                if random.random() < 0.05:
+                    hr_s += random.choice([-8, 8, 10, -6])
+                if random.random() < 0.05:
+                    mv_s += random.choice([3, -2, 4])
+                
+                # Clamp to realistic ranges
+                hr = int(max(52, min(110, hr_s)))
+                mv = int(max(0, min(10, mv_s)))
+                lt = int(max(0, min(600, lt_s)))
                     
                 stress = predict_stress(hr, mv, lt)
                     
@@ -144,8 +171,11 @@ def ingest_esp32_data():
         real_timestamp = datetime.now().strftime("%H:%M:%S")
         
         # Save to CSV
+        file_exists = os.path.exists(CSV_FILE) and os.path.getsize(CSV_FILE) > 0
         with open(CSV_FILE, "a", newline="") as f:
             writer = csv.writer(f)
+            if not file_exists:
+                writer.writerow(["timestamp", "heart_rate", "movement", "light", "stress"])
             writer.writerow([real_timestamp, heart_rate, movement, light, clean_stress])
         trim_csv_if_needed()
             
@@ -156,34 +186,55 @@ def ingest_esp32_data():
 
 
 # --- Background Simulator (Fallback/Presentation Mode) ---
-# Generates realistic sensor data with REAL timestamps every 5 seconds
+# Generates naturalistic sensor data with continuous drift and random micro-events.
+# Avoids deterministic cycles so graphs look organic and different every session.
 SIMULATION_MODE = True  # Set to False once ESP32 is connected via serial_reader.py
 
 def background_simulator():
     # Make sure database is seeded first
     seed_data_file()
     
+    # Continuous floating-point state variables that drift randomly
+    hr_state = random.uniform(60, 75)
+    mv_state = random.uniform(0.5, 3.0)
+    lt_state = random.uniform(0, 15)
+    tick = 0
+    
     while SIMULATION_MODE:
-        data = load_and_clean_data()
-        total_rows = len(data)
-        cycle_progress = (total_rows % 24) / 24.0
+        tick += 1
         
-        if cycle_progress < 0.15:
-            hr = random.randint(72, 85)
-            mv = random.randint(3, 6)
-            lt = random.randint(10, 40)
-        elif cycle_progress < 0.45:
-            hr = random.randint(62, 72)
-            mv = random.randint(1, 3)
-            lt = random.randint(0, 5)
-        elif cycle_progress < 0.75:
-            hr = random.randint(55, 63)
-            mv = random.randint(0, 1)
-            lt = 0
-        else:
-            hr = random.randint(60, 68)
-            mv = random.randint(1, 2)
-            lt = 0
+        # --- Organic drift: random walk + slow sinusoidal baseline shift ---
+        # Slow sine wave simulates natural circadian/ultradian rhythm
+        base_hr_shift = math.sin(tick * 0.04) * 4  # slow ~2.5 min period
+        base_lt_shift = math.sin(tick * 0.02) * 5
+        
+        # Random walk component
+        hr_state += random.uniform(-2.5, 2.5) + base_hr_shift * 0.1
+        mv_state += random.uniform(-0.8, 0.8)
+        lt_state += random.uniform(-4.0, 4.0) + base_lt_shift * 0.1
+        
+        # --- Occasional micro-events for realism (8% chance each tick) ---
+        if random.random() < 0.08:
+            # Sudden arousal event: HR spike + movement burst
+            hr_state += random.uniform(5, 12)
+            mv_state += random.uniform(2, 5)
+        if random.random() < 0.06:
+            # Light disturbance (screen glow, passing car headlights)
+            lt_state += random.uniform(15, 60)
+        if random.random() < 0.10:
+            # Return-to-calm event
+            hr_state -= random.uniform(3, 8)
+            mv_state -= random.uniform(1, 3)
+        
+        # --- Clamp to physiologically valid ranges ---
+        hr = int(max(52, min(115, hr_state)))
+        mv = int(max(0, min(10, mv_state)))
+        lt = int(max(0, min(600, lt_state)))
+        
+        # Mean-revert gently to prevent permanent drift to extremes
+        hr_state = hr_state * 0.97 + 66 * 0.03
+        mv_state = mv_state * 0.95 + 1.5 * 0.05
+        lt_state = lt_state * 0.96 + 8 * 0.04
             
         calc_stress = predict_stress(hr, mv, lt)
         
@@ -195,11 +246,6 @@ def background_simulator():
             writer.writerow([real_timestamp, hr, mv, lt, "{:.2f}".format(calc_stress)])
         trim_csv_if_needed()
         time.sleep(5)  # New data every 5 seconds
-
-# Start Simulator Daemon
-sim_thread = threading.Thread(target=background_simulator, daemon=True)
-sim_thread.start()
-
 
 @app.route("/")
 def index():
@@ -317,4 +363,10 @@ def context_aware_assistant():
     return jsonify({"reply": reply})
 
 if __name__ == "__main__":
+    # Start simulator thread only in the active Werkzeug reloader process (prevents duplicate threads)
+    if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+        print("[NIRVANA] Starting background telemetry simulator thread...")
+        sim_thread = threading.Thread(target=background_simulator, daemon=True)
+        sim_thread.start()
+        
     app.run(debug=True, port=5000)
