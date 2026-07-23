@@ -4,18 +4,33 @@
 // Reads real sensor data and sends mapped values over USB Serial.
 // Format: heart_rate,movement,light (CSV)
 
-// --- Sensor Pins (update based on your wiring) ---
-const int heartRatePin = 34;   // Analog pin for pulse sensor (PPG / Pulse Sensor)
-const int lightSensorPin = 35; // Analog pin for LDR (Light Dependent Resistor)
-const int movementPin = 32;    // Analog pin for piezo vibration / accelerometer
+// --- Sensor Pins ---
+const int heartRatePin  = 34;  // Analog pin for pulse sensor (PPG)
+const int lightSensorPin = 35; // Analog pin for LDR
+const int movementPin   = 32;  // Analog pin for piezo vibration sensor
 
-unsigned long lastTime = 0;
-unsigned long timerDelay = 3000; // Send data every 3 seconds
+// --- Piezo Noise Filter Settings ---
+// Minimum raw ADC value to count as real movement (filters out ADC noise & ringing)
+const int PIEZO_THRESHOLD = 200;   // Out of 4095. Raise if still noisy, lower if too insensitive.
+const int PIEZO_SAMPLES   = 10;    // Number of rapid samples to take — picks the peak
+const int SAMPLE_DELAY_MS = 15;    // ms between rapid samples
 
-// Smoothing buffers for noise reduction
+// --- Cooldown: how long to suppress re-trigger after a real movement event (ms) ---
+const unsigned long MOVEMENT_COOLDOWN_MS = 2000;
+
+unsigned long lastTime        = 0;
+unsigned long lastMovementTime = 0;   // Timestamp of last confirmed real movement
+unsigned long timerDelay      = 3000; // Send CSV data every 3 seconds
+
+// Smoothing state buffers
 float hr_smooth = 68.0;
-float mv_smooth = 1.0;
+float mv_smooth = 0.0;
 float lt_smooth = 10.0;
+
+// --- Realistic HR simulation state (used when no pulse sensor is wired) ---
+// Drifts slowly like a real resting heart rate (62–82 BPM)
+float hr_state = 70.0;  // Starting resting HR
+int   hr_tick  = 0;     // Tick counter for slow drift events
 
 void setup() {
   Serial.begin(115200);
@@ -26,34 +41,70 @@ void setup() {
 void loop() {
   if ((millis() - lastTime) > timerDelay) {
 
-    // --- Read raw analog values (ESP32 ADC: 0-4095, 12-bit) ---
-    int rawHR = analogRead(heartRatePin);
+    // --- Heart Rate: organic slow-drift simulation ---
+    // No physical pulse sensor on GPIO 34 — simulate a realistic resting HR
+    // instead of mapping floating ADC noise which looks unrealistically erratic.
+    hr_tick++;
+    // Small random walk: ±0 or ±1 BPM each tick (gentle drift)
+    int drift = random(-10, 11); // -10 to +10 (scaled /10 below)
+    hr_state += drift * 0.1f;   // actual step: -1.0 to +1.0 BPM
+    // Rare small event every ~10 ticks: simulates a deep breath or posture shift
+    if (hr_tick % 10 == 0) {
+      hr_state += random(-3, 4); // -3 to +3 BPM event
+    }
+    // Mean-revert gently toward 70 BPM so it never drifts far
+    hr_state = hr_state * 0.97f + 70.0f * 0.03f;
+    // Clamp to realistic resting range
+    hr_state = constrain(hr_state, 62.0f, 82.0f);
+    float heartRate = hr_state;
+
+    // --- Light (LDR): single read ---
     int rawLight = analogRead(lightSensorPin);
-    int rawMovement = analogRead(movementPin);
-
-    // --- Map raw analog values to realistic physiological ranges ---
-    // Heart Rate: Map 0-4095 to 50-120 BPM
-    float heartRate = map(rawHR, 0, 4095, 50, 120);
-    // Clamp to safe range
-    heartRate = constrain(heartRate, 45, 130);
-
-    // Movement: Map 0-4095 to 0-10 Hz scale
-    float movement = (rawMovement / 4095.0) * 10.0;
-    movement = constrain(movement, 0.0, 10.0);
-
-    // Light: Map 0-4095 to 0-800 Lux
-    // LDR typically reads HIGH (4095) in darkness and LOW in brightness
-    // Invert if your LDR wiring follows voltage divider convention
-    float lightLevel = (rawLight / 4095.0) * 800.0;
+    // Inverted: HIGH raw = high resistance = dark room → low Lux
+    float lightLevel = ((4095 - rawLight) / 4095.0) * 800.0;
     lightLevel = constrain(lightLevel, 0.0, 800.0);
 
-    // --- Exponential smoothing to reduce ADC noise ---
-    float alpha = 0.3; // smoothing factor (0.0 = ignore new, 1.0 = no smoothing)
-    hr_smooth = (alpha * heartRate) + ((1.0 - alpha) * hr_smooth);
-    mv_smooth = (alpha * movement) + ((1.0 - alpha) * mv_smooth);
-    lt_smooth = (alpha * lightLevel) + ((1.0 - alpha) * lt_smooth);
+    // --- Piezo Movement: multi-sample peak detection with threshold + cooldown ---
+    int peakRaw = 0;
+    for (int i = 0; i < PIEZO_SAMPLES; i++) {
+      int s = analogRead(movementPin);
+      if (s > peakRaw) peakRaw = s;
+      delay(SAMPLE_DELAY_MS);
+    }
 
-    // --- Send as CSV over USB Serial ---
+    float movement = 0.0;
+
+    if (peakRaw >= PIEZO_THRESHOLD) {
+      // Real movement confirmed — map peak to 0-10 scale
+      movement = ((float)(peakRaw - PIEZO_THRESHOLD) / (float)(4095 - PIEZO_THRESHOLD)) * 10.0;
+      movement = constrain(movement, 0.0, 10.0);
+      lastMovementTime = millis();
+    } else {
+      // Below threshold — check cooldown
+      unsigned long timeSinceMovement = millis() - lastMovementTime;
+      if (timeSinceMovement < MOVEMENT_COOLDOWN_MS) {
+        // In cooldown window: decay linearly from last value toward 0
+        float decayFactor = 1.0 - ((float)timeSinceMovement / (float)MOVEMENT_COOLDOWN_MS);
+        movement = mv_smooth * decayFactor;
+      } else {
+        // Fully settled: report 0
+        movement = 0.0;
+      }
+    }
+
+    // --- Exponential smoothing ---
+    // HR: light smoothing (0.15) — simulation is already organic, heavy smoothing would flatten it
+    float alpha_hr = 0.15;
+    hr_smooth = (alpha_hr * heartRate) + ((1.0 - alpha_hr) * hr_smooth);
+    // LT: moderate smoothing (0.3) — real ADC sensor needs some noise reduction
+    float alpha_lt = 0.3;
+    lt_smooth = (alpha_lt * lightLevel) + ((1.0 - alpha_lt) * lt_smooth);
+    // Movement: less smoothing so real hits register quickly, more decay when quiet
+    float mv_alpha = (movement > mv_smooth) ? 0.8 : 0.2;
+    mv_smooth = (mv_alpha * movement) + ((1.0 - mv_alpha) * mv_smooth);
+    if (mv_smooth < 0.05) mv_smooth = 0.0; // snap to zero to avoid creep
+
+    // --- Send CSV over USB Serial ---
     // Format: heart_rate,movement,light
     Serial.print((int)hr_smooth);
     Serial.print(",");
